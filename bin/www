@@ -3,92 +3,40 @@
 /**
  * Module dependencies.
  */
-
+var builder = require('botbuilder');
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
 var http = require('http');
+var restify = require('restify');
 
+var MICROSOFT_APP_ID="3484764e-c87b-4bc2-8ad9-2812be283d82";
+var MICROSOFT_APP_PASSWORD="tkfaDTMC600ifpEAL69~}![";
+
+var restify = require('restify');
+var builder = require('botbuilder');
 /**
  * Get port from environment and store in Express.
  */
 
 
-
-
-
-var port = normalizePort(process.env.PORT || '2264');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+var server = restify.createServer();
+server.listen(process.env.port || process.env.PORT || 4990, function () {
+ console.log('%s listening to %s', server.name, server.url);
+});
+// Create chat bot
+var connector = new builder.ChatConnector({
+  //uses CnG18 app
+ //appId: process.env.MICROSOFT_APP_ID,
+ //appPassword: process.env.MICROSOFT_APP_PASSWORD
+});
+var bot = new builder.UniversalBot(connector);
+// If a Post request is made to /api/messages on port 3978 of our local server, then we pass it to the bot connector to handle
+server.post('/api/messages', connector.listen());
+// =========================================================
+// Bots Dialogs 
+// =========================================================
+// This is called the root dialog. It is the first point of entry for any message the bot receives
+bot.dialog('/', function (session) {
+// Send 'hello world' to the user
+session.send(MICROSOFT_APP_ID);
+});

@@ -1,11 +1,12 @@
 var createError = require('http-errors');
 var express = require('express');
+var restify = require('restify');
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var builder = require('botbuilder');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+require('dotenv').config();
 
 var app = express();
 
@@ -19,16 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-
-/*var connector = new builder.ChatConnector({
-  appId: process.env.MICROSOFT_APP_ID,
-  appPassword: process.env.MICROSOFT_APP_PASSWORD
- });
- var bot = new builder.UniversalBot(connector);*/
-// catch 404 and forward to error handler
+//catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
