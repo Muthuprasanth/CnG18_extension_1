@@ -120,16 +120,7 @@ const msg = {
 to: 'blazearvindh@yahoo.com',
 from: 'blazearvindh@gmail.com',
 subject: 'Hello attachment',
-html: '<p>Here’s an attachment for you!</p>',
-attachments: [
-{
-content: 'Some base 64 encoded attachment content',
-filename: 'some-attachment.txt',
-type: 'plain/text',
-disposition: 'attachment',
-contentId: 'mytext'
-},
-],
+html: '<p>Here’s an attachment for you!</p>'
 };
 
       /*var transporter = nodemailer.createTransport({
