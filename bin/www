@@ -139,11 +139,11 @@ function sendEmail(){
       from: 'blazearvindh@gmail.com',
       to: 'blazearvindh@yahoo.com',
       subject: 'Congratulations! You are selected for the first level of interview with us',
-      text: 'Please Find the attached document for the candidate assessment',
-        attachments: [{
+      text: 'Please Find the attached document for the candidate assessment'+answer,
+       /* attachments: [{
         filename: 'message1.docx',
         content:answer
-        }]
+        }]*/
       };
 
       transporter.sendMail(mailOptions, function(error, info){
