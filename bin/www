@@ -111,7 +111,12 @@ bot.dialog('/print', function (session) {
 
 
         fs.appendFile('message1.docx', answer, function (err) {
-        if (err) throw err;
+        if (err) 
+          {
+            session.send(err);
+            throw err;
+
+          };
         console.log('Saved!');
         sendEmail();
         });
