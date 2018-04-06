@@ -102,31 +102,13 @@ var bot = new builder.UniversalBot(connector, [
 
 
 bot.dialog('/print', function (session) {
-
+session.send("printed");
       for (var key in qna) {
         answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
         // console.log(qna[key]);
         }
 
- sendEmail();
-
-      /*  fs.appendFile('message1.docx', answer, function (err) {
-        if (err) 
-          {
-            session.send(err);
-            throw err;
-
-          };
-        console.log('Saved!');
-        sendEmail();
-        });*/
-      
-
-});
-
-
-function sendEmail(){
-  console.log("send mail");
+console.log("send mail");
       var transporter = nodemailer.createTransport(smtpTransport({
       service: 'gmail',
       auth: {
@@ -153,7 +135,51 @@ function sendEmail(){
       console.log('Email sent: ' + info.response);
       }
       }); 
+
+      /*  fs.appendFile('message1.docx', answer, function (err) {
+        if (err) 
+          {
+            session.send(err);
+            throw err;
+
+          };
+        console.log('Saved!');
+        sendEmail();
+        });*/
+      
+
+});
+
+
+/*function sendEmail(){
+  console.log("send mail");
+      var transporter = nodemailer.createTransport(smtpTransport({
+      service: 'gmail',
+      auth: {
+      user: 'blazearvindh@gmail.com',
+      pass: 'thelegend'
       }
+      }));
+
+      var mailOptions = {
+      from: 'blazearvindh@gmail.com',
+      to: 'blazearvindh@yahoo.com',
+      subject: 'Congratulations! You are selected for the first level of interview with us',
+      text: 'Please Find the attached document for the candidate assessment'+answer,
+       /* attachments: [{
+        filename: 'message1.docx',
+        content:answer
+        }]
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+      console.log(error);
+      } else {
+      console.log('Email sent: ' + info.response);
+      }
+      }); 
+      }*/
 
 
 //.set('storage', inMemoryStorage); 
