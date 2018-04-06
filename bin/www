@@ -114,13 +114,13 @@ session.send("printed");
 session.send(answer);
 session.send("printed2");
 console.log("send mail");
-      var transporter = nodemailer.createTransport(smtpTransport({
+      var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
       user: 'blazearvindh@gmail.com',
       pass: 'thelegend'
       }
-      }));
+      });
 
       var mailOptions = {
       from: 'blazearvindh@gmail.com',
