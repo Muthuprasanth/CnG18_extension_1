@@ -12,10 +12,12 @@ var restify = require('restify');
 const fs = require('fs');
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
+const sgMail = require('@sendgrid/mail');
 
 
 var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
 var MICROSOFT_APP_PASSWORD="lxhzsAWN636!@igSVVO89|*";
+var SENDGRID_API_KEY= "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";
 
 var restify = require('restify');
 var builder = require('botbuilder');
@@ -113,9 +115,25 @@ session.send("printed");
         }
 session.send(answer);
 session.send("printed2");
-console.log("send mail");
-      var transporter = nodemailer.createTransport({
-      service: 'gmail',
+sgMail.setApiKey(SENDGRID_API_KEY);
+const msg = {
+to: 'blazearvindh@yahoo.com',
+from: 'blazearvindh@gmail.com',
+subject: 'Hello attachment',
+html: '<p>Here’s an attachment for you!</p>',
+attachments: [
+{
+content: 'Some base 64 encoded attachment content',
+filename: 'some-attachment.txt',
+type: 'plain/text',
+disposition: 'attachment',
+contentId: 'mytext'
+},
+],
+};
+
+      /*var transporter = nodemailer.createTransport({
+      service: 'smtp.gmail.com',
       auth: {
       user: 'blazearvindh@gmail.com',
       pass: 'thelegend'
@@ -123,14 +141,14 @@ console.log("send mail");
       });
 
       var mailOptions = {
-      from: 'blazearvindh@gmail.com',
+      from: '"Aravindan Uthayasuriyan" blazearvindh@gmail.com',
       to: 'blazearvindh@yahoo.com',
       subject: 'Congratulations! You are selected for the first level of interview with us',
       text: 'Please Find the attached document for the candidate assessment'+answer,
        /* attachments: [{
         filename: 'message1.docx',
         content:answer
-        }]*/
+        }]
       };
 
       transporter.sendMail(mailOptions, function(error, info){
