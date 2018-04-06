@@ -95,6 +95,10 @@ var bot = new builder.UniversalBot(connector, [
         session.endDialog("thank you");
         session.beginDialog("/print");
         
+
+
+
+
       //  k=0;
     }
 ]);
@@ -107,7 +111,8 @@ session.send("printed");
         answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
         // console.log(qna[key]);
         }
-
+session.send(answer);
+session.send("printed2");
 console.log("send mail");
       var transporter = nodemailer.createTransport(smtpTransport({
       service: 'gmail',
