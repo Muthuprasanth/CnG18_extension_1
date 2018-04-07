@@ -6,7 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@sendgrid/mail": "^6.2.1",
     "botbuilder": "^3.14.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
