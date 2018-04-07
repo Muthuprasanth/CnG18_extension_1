@@ -1,8 +1,4 @@
-#!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
 var builder = require('botbuilder');
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
@@ -12,12 +8,10 @@ var restify = require('restify');
 const fs = require('fs');
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-const sgMail = require('@sendgrid/mail');
 
 
 var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
 var MICROSOFT_APP_PASSWORD="lxhzsAWN636!@igSVVO89|*";
-var SENDGRID_API_KEY= "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";
 
 var restify = require('restify');
 var builder = require('botbuilder');
@@ -77,24 +71,24 @@ var bot = new builder.UniversalBot(connector, [
     function (session) {
       getRandomInt();
         session.send("Your Interview starts now");
-        builder.Prompts.text(session, java[0]);
+        builder.Prompts.text(session, java[question_num[k]]);
     },
     function (session, results) {
        qna[java[question_num[k]]]=results.response;
        k++;
-        qna[java[0]]=results.response;
+        qna[java[question_num[k]]]=results.response;
         // k++;
-        builder.Prompts.text(session, java[1]);
+        builder.Prompts.text(session, java[question_num[k]]);
     },
     function (session, results) {
-       qna[java[1]]=results.response;
-     // k++;
-        builder.Prompts.text(session, java[2]);
+       qna[java[question_num[k]]]=results.response;
+      k++;
+        builder.Prompts.text(session, java[question_num[k]]);
     },
 
     function (session, results) {
-        qna[java[2]]=results.response;
-        session.endDialog("thank you");
+        qna[java[question_num[k]]]=results.response;
+        session.endDialog("Thank you...You have completed the Interview...We will reach out to you Soon ");
         session.beginDialog("/print");
         
 
@@ -108,35 +102,28 @@ var bot = new builder.UniversalBot(connector, [
 
 
 bot.dialog('/print', function (session) {
-session.send("printed");
+//session.send("printed");
       for (var key in qna) {
         answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
         // console.log(qna[key]);
         }
-session.send(answer);
-session.send("printed2");
-sgMail.setApiKey(SENDGRID_API_KEY);
-const msg = {
-to: 'blazearvindh@yahoo.com',
-from: 'blazearvindh@gmail.com',
-subject: 'Hello attachment',
-html: '<p>Here’s an attachment for you!</p>'
-};
-
-      /*var transporter = nodemailer.createTransport({
-      service: 'smtp.gmail.com',
+//session.send(answer);
+//session.send("printed2");
+console.log("send mail");
+      var transporter = nodemailer.createTransport(smtpTransport({
+      service: 'gmail',
       auth: {
       user: 'blazearvindh@gmail.com',
       pass: 'thelegend'
       }
-      });
+      }));
 
       var mailOptions = {
-      from: '"Aravindan Uthayasuriyan" blazearvindh@gmail.com',
+      from: 'blazearvindh@gmail.com',
       to: 'blazearvindh@yahoo.com',
-      subject: 'Congratulations! You are selected for the first level of interview with us',
-      text: 'Please Find the attached document for the candidate assessment'+answer,
-       /* attachments: [{
+      subject: 'candidate assessment details',
+      text: 'Please Find the attached document for the candidate assessment',
+       attachments: [{
         filename: 'message1.docx',
         content:answer
         }]
@@ -144,11 +131,11 @@ html: '<p>Here’s an attachment for you!</p>'
 
       transporter.sendMail(mailOptions, function(error, info){
       if (error) {
-        session.send(error);
+        session.send("error");
       console.log(error);
       } else {
-        session.send("corrected");
-      console.log('nt: ' + info.response);
+       // session.send("corrected");
+      console.log('Email sent: ' + info.response);
       }
       }); 
 
@@ -157,7 +144,6 @@ html: '<p>Here’s an attachment for you!</p>'
           {
             session.send(err);
             throw err;
-
           };
         console.log('Saved!');
         sendEmail();
@@ -176,7 +162,6 @@ html: '<p>Here’s an attachment for you!</p>'
       pass: 'thelegend'
       }
       }));
-
       var mailOptions = {
       from: 'blazearvindh@gmail.com',
       to: 'blazearvindh@yahoo.com',
@@ -187,7 +172,6 @@ html: '<p>Here’s an attachment for you!</p>'
         content:answer
         }]
       };
-
       transporter.sendMail(mailOptions, function(error, info){
       if (error) {
       console.log(error);
@@ -210,11 +194,9 @@ bot.dialog('/', function (session) {
 // Send 'hello world' to the user
 //session.send(session.message.user);
 //session.send(MICROSOFT_APP_ID);
-
 session.send("Your Interview strats now");
 session.beginDialog("/questions");
 });
-
 bot.dialog("/questions", [
     //question = java[getRandomInt()];
     function (session) {
@@ -240,7 +222,6 @@ bot.dialog("/questions", [
       k++;
       builder.Prompts.text(session,java[question_num[k]]);
     },
-
     function (session, results) {
        console.log("I am fifth");
      qna[java[question_num[k]]]=results.response;
