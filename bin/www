@@ -141,7 +141,7 @@ console.log("send mail");
 
       transporter.sendMail(mailOptions, function(error, info){
       if (error) {
-     //   session.send(error);
+        session.send(" ERROR Mail is not send");
       console.log(error);
       } else {
       //  session.send("corrected");
