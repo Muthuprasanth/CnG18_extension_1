@@ -84,8 +84,8 @@ var bot = new builder.UniversalBot(connector, [
         builder.Prompts.text(session, java[0]);
     },
     function (session, results) {
-      // qna[java[question_num[k]]]=results.response;
-       //k++;
+       qna[java[question_num[k]]]=results.response;
+       k++;
         qna[java[0]]=results.response;
         // k++;
         builder.Prompts.text(session, java[1]);
@@ -110,24 +110,6 @@ var bot = new builder.UniversalBot(connector, [
 ]);
 
 
-//help dialog starts
-bot.dialog('help', function (session, args, next) {
-    //Send a help message
-    session.endDialog("Global help menu.");
-})
-// Once triggered, will start a new dialog as specified by
-// the 'onSelectAction' option.
-.triggerAction({
-    matches: /^help$/i,
-    onSelectAction: (session, args, next) => {
-        // Add the help dialog to the top of the dialog stack 
-        // (override the default behavior of replacing the stack)
-        session.beginDialog(args.action, args);
-    }
-});
-//help dialog ends
-
-
 
 bot.dialog('/print', function (session) {
 //session.send("printed");
@@ -143,8 +125,7 @@ console.log("send mail");
 
 /// sendgrid api key for mprasanth113 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
 
-//--below send mail using sendgrid works well in azure deployed apps also
-/*----  var sendgrid = new Sendgrid({
+  var sendgrid = new Sendgrid({
         user: "Muthuprasanth1",//provide the login credentials
         key:"Sirius@25"
       });
@@ -162,10 +143,10 @@ console.log("send mail");
       console.log("Success.");
       session.send("Mail sended From Azure ");
     }
-  });*/
+  });
 
 
-     var transporter = nodemailer.createTransport({
+ /*     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
      // user: 'blazearvindh@gmail.com',
@@ -185,7 +166,7 @@ console.log("send mail");
         filename: 'message1.docx',
         content:answer
         }]*/
-     };
+ /*     };
 
       transporter.sendMail(mailOptions, function(error, info){
       if (error) {
@@ -196,7 +177,7 @@ console.log("send mail");
    //   console.log('nt: ' + info.response);
       session.send("Your report is send to our Team");
       }
-      }); 
+      }); */
 
       /*  fs.appendFile('message1.docx', answer, function (err) {
         if (err) 
