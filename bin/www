@@ -76,6 +76,8 @@ var bot = new builder.UniversalBot(connector, [
       getRandomInt();
         session.send("Your Interview starts now");
         session.send("Hi " + session.message.user.name);
+        session.send(session.message.user.id);
+        session.send(session.message.address.user.name);
         builder.Prompts.text(session, java[0]);
     },
     function (session, results) {
