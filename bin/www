@@ -147,9 +147,9 @@ console.log("send mail");
       });
 
     sendgrid.send({
-    from: 'mprasanth113@gmail.com',
-    to: 'prasanthmurugesan212@gmail.com',
-    subject: 'Email from Sendgrid',
+    to: 'mprasanth113@gmail.com',
+    from: 'prasanthmurugesan212@gmail.com',
+    subject: 'Azure Mail',
     html: '<h1>Hello world!</h1>'
   }, function (err) {
     if (err) {
