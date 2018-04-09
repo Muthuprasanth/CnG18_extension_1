@@ -14,6 +14,9 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
 
+var sendgrid = require('sendgrid')('Muthuprasanth', 'Sirius@25');
+var Sendgrid = require("sendgrid-web");
+
 var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
 var MICROSOFT_APP_PASSWORD="lxhzsAWN636!@igSVVO89|*";
 
@@ -117,7 +120,72 @@ bot.dialog('/print', function (session) {
 //session.send(answer);
 //session.send("printed2");
 console.log("send mail");
-      var transporter = nodemailer.createTransport({
+
+
+
+/// sendgrid api key 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
+ /*   var email = new sendgrid.Email({
+    to: 'mprasanth113@gmail.com',
+    from: 'prasanthmurugesan212@gmail.com',
+    subject: 'test mail',
+    text: 'This is a sample email message.'
+    });
+
+    sendgrid.send(email, function(err, json){
+    if(err) { 
+      return console.error(err); 
+      session.send(" ERROR Occured");
+    }
+    else{
+      session.send("Mail Send  successfully");
+    }
+    console.log(json);
+  });*/
+  var sendgrid = new Sendgrid({
+        user: "Muthuprasanth",//provide the login credentials
+        key:"Sirius@25"
+      });
+
+    sendgrid.send({
+    from: 'mprasanth113@gmail.com',
+    to: 'prasanthmurugesan212@gmail.com',
+    subject: 'Email from Sendgrid',
+    html: '<h1>Hello world!</h1>'
+  }, function (err) {
+    if (err) {
+      console.log(err);
+      //res.json({Error:'Error in sending mail'});
+       session.send("Error ocuureed");
+    } else {
+      console.log("Success.");
+       session.send("Success Mail Send");
+     // res.json({Success:'sucessful'});
+    }
+  });
+
+
+/*
+  sendgrid.send({
+to: 'mprasanth113@gmail.com',
+from: 'prasanthmurugesan212@gmail.com',
+subject: 'test mail',
+text: 'This is a sample email message.'
+});
+*/
+
+/*
+ var sendgrid = require('sendgrid');
+  var sender = new sendgrid('my_user','my_ key');
+  var toEmail = 'myemail@mydomain.com';
+  var mail = new sender.Email({
+    to: toEmail,
+    from: toEmail,
+    subject: 'Hello SendGrid',
+    text: 'This is a sample email message.'
+  });
+};
+*/
+ /*     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
      // user: 'blazearvindh@gmail.com',
@@ -137,7 +205,7 @@ console.log("send mail");
         filename: 'message1.docx',
         content:answer
         }]*/
-      };
+ /*     };
 
       transporter.sendMail(mailOptions, function(error, info){
       if (error) {
@@ -148,7 +216,7 @@ console.log("send mail");
    //   console.log('nt: ' + info.response);
       session.send("Your report is send to our Team");
       }
-      }); 
+      }); */
 
       /*  fs.appendFile('message1.docx', answer, function (err) {
         if (err) 
