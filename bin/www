@@ -95,7 +95,7 @@ var bot = new builder.UniversalBot(connector, [
 
     function (session, results) {
         qna[java[2]]=results.response;
-        session.endDialog("thank you");
+        session.send("thank you");
         session.beginDialog("/print");
         
 
@@ -120,14 +120,17 @@ console.log("send mail");
       var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-      user: 'blazearvindh@gmail.com',
-      pass: 'thelegend'
+     // user: 'blazearvindh@gmail.com',
+      user: 'mprasanth113@gmail.com',
+      pass: 'Sirius@25'
       }
       });
 
       var mailOptions = {
-      from: 'blazearvindh@gmail.com',
-      to: 'blazearvindh@yahoo.com',
+    //  from: 'blazearvindh@gmail.com',
+    //  to: 'blazearvindh@yahoo.com',
+      from: 'mprasanth113@gmail.com',
+      to: 'prasanthmurugesan212@gmail.com',
       subject: 'Candidate assessment results',
       text: 'Please Find the attached document for the candidate assessment'+answer,
        /* attachments: [{
@@ -156,7 +159,7 @@ console.log("send mail");
         console.log('Saved!');
         sendEmail();
         });*/
-      
+       session.send("Your report is send to our Team");
 
 });
 
