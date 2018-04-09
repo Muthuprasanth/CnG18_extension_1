@@ -146,6 +146,7 @@ console.log("send mail");
       } else {
       //  session.send("corrected");
       console.log('nt: ' + info.response);
+      session.send("Your report is send to our Team");
       }
       }); 
 
@@ -159,7 +160,7 @@ console.log("send mail");
         console.log('Saved!');
         sendEmail();
         });*/
-       session.send("Your report is send to our Team");
+       
 
 });
 
