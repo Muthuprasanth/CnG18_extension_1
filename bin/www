@@ -14,8 +14,8 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
 
-var sendgrid = require('sendgrid')('Muthuprasanth', 'Sirius@25');
-var Sendgrid = require("sendgrid-web");
+//var sendgrid = require('sendgrid')('Muthuprasanth', 'Sirius@25');
+ var Sendgrid = require("sendgrid-web");
 
 var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
 var MICROSOFT_APP_PASSWORD="lxhzsAWN636!@igSVVO89|*";
@@ -142,7 +142,7 @@ console.log("send mail");
     console.log(json);
   });*/
   var sendgrid = new Sendgrid({
-        user: "Muthuprasanth",//provide the login credentials
+        user: "Muthuprasanth1",//provide the login credentials
         key:"Sirius@25"
       });
 
@@ -150,16 +150,14 @@ console.log("send mail");
     to: 'mprasanth113@gmail.com',
     from: 'prasanthmurugesan212@gmail.com',
     subject: 'Azure Mail',
-    html: '<h1>Hello world!</h1>'
+    html: '<h1>Hello Azure!</h1>'
   }, function (err) {
     if (err) {
       console.log(err);
-      //res.json({Error:'Error in sending mail'});
-       session.send("Error ocuureed");
+      session.send("Mail not send error");
     } else {
       console.log("Success.");
-       session.send("Success Mail Send");
-     // res.json({Success:'sucessful'});
+      session.send("Mail sended From Azure ");
     }
   });
 
