@@ -149,17 +149,17 @@ console.log("send mail");
      var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-     // user: 'blazearvindh@gmail.com',
-      user: 'mprasanth113@gmail.com',
-      pass: 'Sirius@25'
+     // user: 'example1@gmail.com',
+      user: 'example1@gmail.com',
+      pass: 'example1'
       }
       });
 
       var mailOptions = {
-    //  from: 'blazearvindh@gmail.com',
-    //  to: 'blazearvindh@yahoo.com',
-      from: 'mprasanth113@gmail.com',
-      to: 'prasanthmurugesan212@gmail.com',
+    //  from: 'example1@gmail.com',
+    //  to: 'example1@yahoo.com',
+      from: 'example1@gmail.com',
+      to: 'example1@gmail.com',
       subject: 'Candidate assessment results',
       text: 'Please Find the attached document for the candidate assessment'+answer,
        /* attachments: [{
@@ -199,14 +199,14 @@ console.log("send mail");
       var transporter = nodemailer.createTransport(smtpTransport({
       service: 'gmail',
       auth: {
-      user: 'blazearvindh@gmail.com',
-      pass: 'thelegend'
+      user: 'example1@gmail.com',
+      pass: 'example1'
       }
       }));
 
       var mailOptions = {
-      from: 'blazearvindh@gmail.com',
-      to: 'blazearvindh@yahoo.com',
+      from: 'example1@gmail.com',
+      to: 'example1@yahoo.com',
       subject: 'Congratulations! You are selected for the first level of interview with us',
       text: 'Please Find the attached document for the candidate assessment'+answer,
        /* attachments: [{
