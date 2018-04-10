@@ -39,7 +39,7 @@ var connector = new builder.ChatConnector({
 });
 
 function getRandomInt() {
-  console.log("I am in random");
+  console.log("I am in random function");
   for(let i=0;i<5;i++)
   {
     question_num[i]= Math.floor(Math.random() * Math.floor(10));
