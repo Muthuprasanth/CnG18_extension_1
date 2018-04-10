@@ -14,11 +14,11 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
 
-//var sendgrid = require('sendgrid')('Muthuprasanth', 'Sirius@25');
+
  var Sendgrid = require("sendgrid-web");
-//---------
-var MICROSOFT_APP_ID="393589-309f-4bea-a782-dd4fdce254b4";
-var MICROSOFT_APP_PASSWORD="lxhzsA636!@igSVVO89|*";
+
+var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
+var MICROSOFT_APP_PASSWORD="lxhzsAWN636!@igSVVO89|*";
 
 var restify = require('restify');
 var builder = require('botbuilder');
@@ -39,7 +39,7 @@ var connector = new builder.ChatConnector({
 });
 
 function getRandomInt() {
-  console.log("I am in random");
+  console.log("I am in random function");
   for(let i=0;i<5;i++)
   {
     question_num[i]= Math.floor(Math.random() * Math.floor(10));
@@ -84,8 +84,8 @@ var bot = new builder.UniversalBot(connector, [
         builder.Prompts.text(session, java[0]);
     },
     function (session, results) {
-       qna[java[question_num[k]]]=results.response;
-       k++;
+      // qna[java[question_num[k]]]=results.response;
+       //k++;
         qna[java[0]]=results.response;
         // k++;
         builder.Prompts.text(session, java[1]);
@@ -110,6 +110,24 @@ var bot = new builder.UniversalBot(connector, [
 ]);
 
 
+//help dialog starts
+bot.dialog('help', function (session, args, next) {
+    //Send a help message
+    session.endDialog("Global help menu.");
+})
+// Once triggered, will start a new dialog as specified by
+// the 'onSelectAction' option.
+.triggerAction({
+    matches: /^help$/i,
+   // onSelectAction: (session, args, next) => {
+        // Add the help dialog to the top of the dialog stack 
+        // (override the default behavior of replacing the stack)
+     //   session.beginDialog(args.action, args);
+   // }
+});
+//help dialog ends
+
+
 
 bot.dialog('/print', function (session) {
 //session.send("printed");
@@ -123,51 +141,32 @@ console.log("send mail");
 
 
 
-/// sendgrid api key for mprasanth113 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
 
-  /*var sendgrid = new Sendgrid({
-        user: "PrasanthChowthri",//provide the login credentials
-        key:"Sirius@25"
-      });
 
-    sendgrid.send({
-    to: 'mprasanth113@gmail.com',
-    from: 'prasanthchowthri@gmail.com',
-    subject: 'Azure Mail',
-    html: '<h1>Hello Azure!</h1>'
-  }, function (err) {
-    if (err) {
-      console.log(err);
-      session.send("Mail not send error");
-    } else {
-      console.log("Success.");
-      session.send("Mail sended From Azure ");
-    }
-  });*/
+
 
 
      var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
      // user: 'blazearvindh@gmail.com',
-     //-------
-      user: 'example1@gmail.com',
-      pass: 'fffff@25'
+      user: 'mprasanth113@gmail.com',
+      pass: 'Sirius@25'
       }
       });
 
       var mailOptions = {
     //  from: 'blazearvindh@gmail.com',
     //  to: 'blazearvindh@yahoo.com',
-      from: 'example1@gmail.com',
-      to: 'example2@gmail.com',
+      from: 'mprasanth113@gmail.com',
+      to: 'prasanthmurugesan212@gmail.com',
       subject: 'Candidate assessment results',
       text: 'Please Find the attached document for the candidate assessment'+answer,
        /* attachments: [{
         filename: 'message1.docx',
         content:answer
         }]*/
-    };
+     };
 
       transporter.sendMail(mailOptions, function(error, info){
       if (error) {
