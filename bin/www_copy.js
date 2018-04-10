@@ -14,7 +14,7 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
 
-//var sendgrid = require('sendgrid')('Muthuprasanth', 'Sirius@25');
+//var sendgrid = require('sendgrid')('Muthuprasanth', 'example125');
  var Sendgrid = require("sendgrid-web");
 
 var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
