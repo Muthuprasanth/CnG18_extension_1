@@ -17,8 +17,8 @@ var smtpTransport = require('nodemailer-smtp-transport');
 
  var Sendgrid = require("sendgrid-web");
 
-var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
-var MICROSOFT_APP_PASSWORD="lxhzsAWN636!@igSVVO89|*";
+var MICROSOFT_APP_ID="393589-309f-4bea-a782-dd4fdce254b4";
+var MICROSOFT_APP_PASSWORD="lxhA636!@igSVVO89|*";
 
 var restify = require('restify');
 var builder = require('botbuilder');
