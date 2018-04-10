@@ -14,7 +14,7 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
 
-//var sendgrid = require('sendgrid')('Muthuprasanth', 'Sirius@25');
+
  var Sendgrid = require("sendgrid-web");
 
 var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
@@ -141,28 +141,9 @@ console.log("send mail");
 
 
 
-/// sendgrid api key for mprasanth113 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
 
-//--below send mail using sendgrid works well in azure deployed apps also
-/*----  var sendgrid = new Sendgrid({
-        user: "Muthuprasanth1",//provide the login credentials
-        key:"Sirius@25"
-      });
 
-    sendgrid.send({
-    to: 'mprasanth113@gmail.com',
-    from: 'prasanthmurugesan212@gmail.com',
-    subject: 'Azure Mail',
-    html: '<h1>Hello Azure!</h1>'
-  }, function (err) {
-    if (err) {
-      console.log(err);
-      session.send("Mail not send error");
-    } else {
-      console.log("Success.");
-      session.send("Mail sended From Azure ");
-    }
-  });*/
+
 
 
      var transporter = nodemailer.createTransport({
