@@ -1,31 +1,22 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-var builder = require('botbuilder');
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
 var http = require('http');
-var restify = require('restify');
 
 const fs = require('fs');
-var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
+//var nodemailer = require('nodemailer');
+//var smtpTransport = require('nodemailer-smtp-transport');
 
-
-
- var Sendgrid = require("sendgrid-web");
-
-var MICROSOFT_APP_ID="393589-309f-4bea-a782-dd4fdce254b4";
-var MICROSOFT_APP_PASSWORD="lxhA636!@igSVVO89|*";
-
+//botbulder
 var restify = require('restify');
 var builder = require('botbuilder');
-/**
- * Get port from environment and store in Express.
- */
+//sendgrid for sending mail
+var Sendgrid = require("sendgrid-web");
+//used for getting from azure SQL DB
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
 
+var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
+var MICROSOFT_APP_PASSWORD="uayxjhSY13[:!tVCRPP472|";
 
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 4990, function () {
@@ -33,21 +24,30 @@ server.listen(process.env.port || process.env.PORT || 4990, function () {
 });
 // Create chat bot
 var connector = new builder.ChatConnector({
-  //uses CnG18 app
+  //uses CnG_18_0504 app
  appId: MICROSOFT_APP_ID,
  appPassword: MICROSOFT_APP_PASSWORD
 });
-
+var config = 
+   {
+     userName: 'Muthuprasanth', // update me
+     password: 'Sirius@25', // update me
+     server: 'sendgridazure.database.windows.net', // update me
+     options: 
+        {
+           database: 'Sendgrid_DB', //update me
+           encrypt: true
+        }
+   }
+//var connection = new Connection(config);
 function getRandomInt() {
-  console.log("I am in random function");
+  console.log("I am in random");
   for(let i=0;i<5;i++)
   {
     question_num[i]= Math.floor(Math.random() * Math.floor(10));
   }
   console.log("randommm",question_num);
   }
-
-
 
 var java = [ 'What is difference between JDK,JRE and JVM?', 
 'What is JIT compiler?', 
@@ -67,13 +67,7 @@ var answer="";
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
-
-//bot.use(Middleware.dialogVersion({version: 1.0, resetCommand: /^reset/i}));
-
-// If a Post request is made to /api/messages on port 3978 of our local server, then we pass it to the bot connector to handle
 server.post('/api/messages', connector.listen());
-//var inMemoryStorage = new builder.MemoryBotStorage();
-
 var bot = new builder.UniversalBot(connector, [
     function (session) {
       getRandomInt();
@@ -84,8 +78,8 @@ var bot = new builder.UniversalBot(connector, [
         builder.Prompts.text(session, java[0]);
     },
     function (session, results) {
-      // qna[java[question_num[k]]]=results.response;
-       //k++;
+       qna[java[question_num[k]]]=results.response;
+       k++;
         qna[java[0]]=results.response;
         // k++;
         builder.Prompts.text(session, java[1]);
@@ -100,96 +94,68 @@ var bot = new builder.UniversalBot(connector, [
         qna[java[2]]=results.response;
         session.send("thank you");
         session.beginDialog("/print");
-        
-
-
-
-
       //  k=0;
     }
 ]);
 
-
-//help dialog starts
-bot.dialog('help', function (session, args, next) {
-    //Send a help message
-    session.endDialog("Global help menu.");
-})
-// Once triggered, will start a new dialog as specified by
-// the 'onSelectAction' option.
-.triggerAction({
-    matches: /^help$/i,
-   // onSelectAction: (session, args, next) => {
-        // Add the help dialog to the top of the dialog stack 
-        // (override the default behavior of replacing the stack)
-     //   session.beginDialog(args.action, args);
-   // }
-});
-//help dialog ends
-
-
-
 bot.dialog('/print', function (session) {
 //session.send("printed");
-      for (var key in qna) {
-        answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
-        // console.log(qna[key]);
-        }
-//session.send(answer);
-//session.send("printed2");
-console.log("send mail");
+  var sendgridCredentials = [];
+  var next=0;
+  for (var key in qna) {
+    answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
+    // console.log(qna[key]);
+    }
+  console.log("send mail");
+  let promiseTOGetSendgridCredential =  new Promise(function(resolve,reject){
+    var connection = new Connection(config);
+    connection.on('connect', function(err) {
+       if (err) 
+       {
+          console.log(err)
+       }
+      else
+       {
+        console.log("inside else odf sql");
+        let  tediousRequest = new Request(
+          "SELECT  Username,Password FROM dbo.Sendgrid_Account",
+          function(err, rowCount, rows) 
+            {
+                resolve();
+            }
+          );
+          tediousRequest.on('row', function(columns) {
+             columns.forEach(function(column) {
+             sendgridCredentials[next]=column.value;
+             next++;
+           });
+          });
+          console.log("first",sendgridCredentials);
+          connection.execSql(tediousRequest);
+       }
+    });
+  });
 
-
-
-
-
-
-
-
-     var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-     // user: 'example1@gmail.com',
-      user: 'example1@gmail.com',
-      pass: 'example1'
-      }
-      });
-
-      var mailOptions = {
-    //  from: 'example1@gmail.com',
-    //  to: 'example1@yahoo.com',
-      from: 'example1@gmail.com',
-      to: 'example1@gmail.com',
-      subject: 'Candidate assessment results',
-      text: 'Please Find the attached document for the candidate assessment'+answer,
-       /* attachments: [{
-        filename: 'message1.docx',
-        content:answer
-        }]*/
-     };
-
-      transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        session.send(" ERROR Mail is not send");
-      console.log(error);
+  promiseTOGetSendgridCredential.then(function(){
+    console.log("second",sendgridCredentials);
+    var sendgrid = new Sendgrid({
+      user: sendgridCredentials[0],//provide the login credentials
+      key:sendgridCredentials[1]
+    });
+    sendgrid.send({
+      to: 'mprasanth113@gmail.com',
+      from: 'mprasanth113@gmail.com',
+      subject: 'Interview Report',
+      html: answer
+    }, function (err) {
+      if (err) {
+        console.log("Mail error",err);
       } else {
-      //  session.send("corrected");
-   //   console.log('nt: ' + info.response);
-      session.send("Your report is send to our Team");
+        console.log("Success Mail sended From Azure ");
+        session.send("Your Interview Report is send to our HR");
       }
-      }); 
-
-      /*  fs.appendFile('message1.docx', answer, function (err) {
-        if (err) 
-          {
-            session.send(err);
-            throw err;
-
-          };
-        console.log('Saved!');
-        sendEmail();
-        });*/
-       
+    });
+  });
 
 });
 
