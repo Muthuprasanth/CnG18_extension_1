@@ -15,6 +15,24 @@ var Sendgrid = require("sendgrid-web");
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 
+var DelimiterStream = require('delimiter-stream');
+var StringDecoder = require('string_decoder').StringDecoder;
+var decoder = new StringDecoder('utf8');
+/*var java = [];
+var jk=0;
+
+var linestream = new DelimiterStream(); 
+var input = fs.createReadStream('somefile.txt');
+linestream.on('data', function(chunk) {
+  //console.log(decoder.write(chunk));
+  java[jk]=decoder.write(chunk);
+  jk++;
+ // console.log("----------------------");
+});
+input.pipe(linestream);
+
+console.log("hiihihihd",java)
+*/
 var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
 var MICROSOFT_APP_PASSWORD="uayxjhSY13[:!tVCRPP472|";
 
@@ -70,7 +88,8 @@ console.log("dfsfdsf------- csfsdf");
 server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(connector, [
     function (session) {
-      getRandomInt();
+     // getRandomInt();
+     console.log("dfsfdsf------- 2");
         session.send("Your Interview starts now");
         session.send("Hi " + session.message.user.name);
         session.send(session.message.user.id);
@@ -116,7 +135,6 @@ bot.dialog('/print', function (session) {
        }
       else
        {
-        console.log("inside else odf sql");
         let  tediousRequest = new Request(
           "SELECT  Username,Password FROM dbo.Sendgrid_Account",
           function(err, rowCount, rows) 
@@ -130,14 +148,13 @@ bot.dialog('/print', function (session) {
              next++;
            });
           });
-          console.log("first",sendgridCredentials);
           connection.execSql(tediousRequest);
        }
     });
   });
 
   promiseTOGetSendgridCredential.then(function(){
-    console.log("second",sendgridCredentials);
+  //  console.log("second",sendgridCredentials);
     var sendgrid = new Sendgrid({
       user: sendgridCredentials[0],//provide the login credentials
       key:sendgridCredentials[1]
