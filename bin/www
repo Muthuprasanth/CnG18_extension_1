@@ -15,8 +15,7 @@ var Sendgrid = require("sendgrid-web");
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 
-var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
-var MICROSOFT_APP_PASSWORD="uayxjhSY13[:!tVCRPP472|";
+
 /**
  * Get port from environment and store in Express.
  */
