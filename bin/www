@@ -5,13 +5,17 @@ var http = require('http');
 
 const fs = require('fs');
 
+var restify = require('restify');
+var builder = require('botbuilder');
 var Sendgrid = require("sendgrid-web");
+
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
 
 var MICROSOFT_APP_ID="393589-309f-4bea-a782-dd4fdce254b4";
 var MICROSOFT_APP_PASSWORD="lxhA636!@igSVVO89|*";
 
-var restify = require('restify');
-var builder = require('botbuilder');
+
 /**
  * Get port from environment and store in Express.
  */
