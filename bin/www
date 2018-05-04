@@ -19,7 +19,7 @@ var java = [];
 var jk=0;
 
 var linestream = new DelimiterStream(); 
-var input = fs.createReadStream('somefile.txt');
+var input = fs.createReadStream('./somefile.txt');
 linestream.on('data', function(chunk) {
   //console.log(decoder.write(chunk));
   java[jk]=decoder.write(chunk);
