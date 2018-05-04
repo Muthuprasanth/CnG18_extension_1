@@ -1,31 +1,29 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-var builder = require('botbuilder');
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
 var http = require('http');
-var restify = require('restify');
 
 const fs = require('fs');
-var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
+//var nodemailer = require('nodemailer');
+//var smtpTransport = require('nodemailer-smtp-transport');
 
-
-//var sendgrid = require('sendgrid')('Muthuprasanth', 'example125');
- var Sendgrid = require("sendgrid-web");
-
-var MICROSOFT_APP_ID="393589-309f-4bea-a782-dd4fdce254b4";
-var MICROSOFT_APP_PASSWORD="lxhA636!@igSVVO89|*";
-
+//botbulder
 var restify = require('restify');
 var builder = require('botbuilder');
+//sendgrid for sending mail
+var Sendgrid = require("sendgrid-web");
+//used for getting from azure SQL DB
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
+
+var DelimiterStream = require('delimiter-stream');
+var StringDecoder = require('string_decoder').StringDecoder;
+var decoder = new StringDecoder('utf8');
+
 /**
  * Get port from environment and store in Express.
  */
-
+var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
+var MICROSOFT_APP_PASSWORD="uayxjhSY13[:!tVCRPP472|";
 
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 4990, function () {
