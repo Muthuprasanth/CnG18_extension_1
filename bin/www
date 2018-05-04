@@ -95,87 +95,62 @@ var bot = new builder.UniversalBot(connector, [
     }
 ]);
 
-
-
 bot.dialog('/print', function (session) {
 //session.send("printed");
-      for (var key in qna) {
-        answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
-        // console.log(qna[key]);
-        }
-//session.send(answer);
-//session.send("printed2");
-console.log("send mail");
-
-
-
-/// sendgrid api key for mprasanth113 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
-
-  var sendgrid = new Sendgrid({
-        user: "example1",//provide the login credentials
-        key:"example15"
-      });
-
-    sendgrid.send({
-    to: 'example1@gmail.com',
-    from: 'example1@gmail.com',
-    subject: 'Azure Mail',
-    html: '<h1>Hello Azure!</h1>'
-  }, function (err) {
-    if (err) {
-      console.log(err);
-      session.send("Mail not send error");
-    } else {
-      console.log("Success.");
-      session.send("Mail sended From Azure ");
+  var sendgridCredentials = [];
+  var next=0;
+  for (var key in qna) {
+    answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
+    // console.log(qna[key]);
     }
+  console.log("send mail");
+  let promiseTOGetSendgridCredential =  new Promise(function(resolve,reject){
+    var connection = new Connection(config);
+    connection.on('connect', function(err) {
+       if (err) 
+       {
+          console.log(err)
+       }
+      else
+       {
+        let  tediousRequest = new Request(
+          "SELECT  Username,Password FROM dbo.Sendgrid_Account",
+          function(err, rowCount, rows) 
+            {
+                resolve();
+            }
+          );
+          tediousRequest.on('row', function(columns) {
+             columns.forEach(function(column) {
+             sendgridCredentials[next]=column.value;
+             next++;
+           });
+          });
+          connection.execSql(tediousRequest);
+       }
+    });
   });
 
-
- /*     var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-     // user: 'example1@gmail.com',
-      user: 'example1@gmail.com',
-      pass: 'example125'
-      }
-      });
-
-      var mailOptions = {
-    //  from: 'example1@gmail.com',
-    //  to: 'example1@yahoo.com',
-      from: 'example1@gmail.com',
-      to: 'example1@gmail.com',
-      subject: 'Candidate assessment results',
-      text: 'Please Find the attached document for the candidate assessment'+answer,
-       /* attachments: [{
-        filename: 'message1.docx',
-        content:answer
-        }]*/
- /*     };
-
-      transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        session.send(" ERROR Mail is not send");
-      console.log(error);
+  promiseTOGetSendgridCredential.then(function(){
+  //  console.log("second",sendgridCredentials);
+    var sendgrid = new Sendgrid({
+      user: sendgridCredentials[0],//provide the login credentials
+      key:sendgridCredentials[1]
+    });
+    sendgrid.send({
+      to: 'mprasanth113@gmail.com',
+      from: 'mprasanth113@gmail.com',
+      subject: 'Interview Report',
+      html: answer
+    }, function (err) {
+      if (err) {
+        console.log("Mail error",err);
       } else {
-      //  session.send("corrected");
-   //   console.log('nt: ' + info.response);
-      session.send("Your report is send to our Team");
+        console.log("Success Mail sended From Azure ");
+        session.send("Your Interview Report is send to our HR");
       }
-      }); */
-
-      /*  fs.appendFile('message1.docx', answer, function (err) {
-        if (err) 
-          {
-            session.send(err);
-            throw err;
-
-          };
-        console.log('Saved!');
-        sendEmail();
-        });*/
-       
+    });
+  });
 
 });
 
