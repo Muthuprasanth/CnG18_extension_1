@@ -154,43 +154,6 @@ bot.dialog('/print', function (session) {
 
 });
 
-
-/*function sendEmail(){
-  console.log("send mail");
-      var transporter = nodemailer.createTransport(smtpTransport({
-      service: 'gmail',
-      auth: {
-      user: 'example1@gmail.com',
-      pass: 'example1'
-      }
-      }));
-
-      var mailOptions = {
-      from: 'example1@gmail.com',
-      to: 'example1@yahoo.com',
-      subject: 'Congratulations! You are selected for the first level of interview with us',
-      text: 'Please Find the attached document for the candidate assessment'+answer,
-       /* attachments: [{
-        filename: 'message1.docx',
-        content:answer
-        }]
-      };
-
-      transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-      console.log(error);
-      } else {
-      console.log('Email sent: ' + info.response);
-      }
-      }); 
-      }*/
-
-
-//.set('storage', inMemoryStorage); 
-
-// =========================================================
-// Bots Dialogs 
-// =========================================================
 // This is called the root dialog. It is the first point of entry for any message the bot receives
 /*
 var bot = new builder.UniversalBot(connector);
