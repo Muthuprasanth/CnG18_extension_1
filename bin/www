@@ -169,7 +169,6 @@ bot.dialog('/print', function (session) {
       pass: 'example1'
       }
       }));
-
       var mailOptions = {
       from: 'example1@gmail.com',
       to: 'example1@yahoo.com',
@@ -180,7 +179,6 @@ bot.dialog('/print', function (session) {
         content:answer
         }]
       };
-
       transporter.sendMail(mailOptions, function(error, info){
       if (error) {
       console.log(error);
@@ -203,11 +201,9 @@ bot.dialog('/', function (session) {
 // Send 'hello world' to the user
 //session.send(session.message.user);
 //session.send(MICROSOFT_APP_ID);
-
 session.send("Your Interview strats now");
 session.beginDialog("/questions");
 });
-
 bot.dialog("/questions", [
     //question = java[getRandomInt()];
     function (session) {
@@ -233,7 +229,6 @@ bot.dialog("/questions", [
       k++;
       builder.Prompts.text(session,java[question_num[k]]);
     },
-
     function (session, results) {
        console.log("I am fifth");
      qna[java[question_num[k]]]=results.response;
@@ -243,4 +238,3 @@ bot.dialog("/questions", [
    
 ]);
 */
-
