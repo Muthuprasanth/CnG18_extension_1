@@ -46,8 +46,6 @@ function getRandomInt() {
   console.log("randommm",question_num);
   }
 
-
-
 var java = [ 'What is difference between JDK,JRE and JVM?', 
 'What is JIT compiler?', 
 'What is the main difference between Java platform and other platforms?',
@@ -66,13 +64,7 @@ var answer="";
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
-
-//bot.use(Middleware.dialogVersion({version: 1.0, resetCommand: /^reset/i}));
-
-// If a Post request is made to /api/messages on port 3978 of our local server, then we pass it to the bot connector to handle
 server.post('/api/messages', connector.listen());
-//var inMemoryStorage = new builder.MemoryBotStorage();
-
 var bot = new builder.UniversalBot(connector, [
     function (session) {
       getRandomInt();
@@ -99,11 +91,6 @@ var bot = new builder.UniversalBot(connector, [
         qna[java[2]]=results.response;
         session.send("thank you");
         session.beginDialog("/print");
-        
-
-
-
-
       //  k=0;
     }
 ]);
