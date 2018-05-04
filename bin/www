@@ -12,14 +12,8 @@ var Sendgrid = require("sendgrid-web");
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 
-var MICROSOFT_APP_ID="393589-309f-4bea-a782-dd4fdce254b4";
-var MICROSOFT_APP_PASSWORD="lxhA636!@igSVVO89|*";
-
-
-/**
- * Get port from environment and store in Express.
- */
-
+var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
+var MICROSOFT_APP_PASSWORD="uayxjhSY13[:!tVCRPP472|";
 
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 4990, function () {
