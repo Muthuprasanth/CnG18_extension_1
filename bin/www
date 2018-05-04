@@ -66,7 +66,7 @@ function getRandomInt() {
   }
   console.log("randommm",question_num);
   }
-
+//java questions
 var java = [ 'What is difference between JDK,JRE and JVM?', 
 'What is JIT compiler?', 
 'What is the main difference between Java platform and other platforms?',
