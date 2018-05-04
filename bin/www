@@ -79,14 +79,14 @@ var question;
 var qna=[];
 var question_num=[];
 var k=0;
-var answer="";
+
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
 server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(connector, [
     function (session) {
-      getRandomInt();
+    //  getRandomInt();
         session.send("Your Interview starts now");
       /*  session.send("Hi " + session.message.user.name);
         session.send(session.message.user.id);
@@ -94,8 +94,8 @@ var bot = new builder.UniversalBot(connector, [
         builder.Prompts.text(session, java[0]);
     },
     function (session, results) {
-       qna[java[question_num[k]]]=results.response;
-       k++;
+      // qna[java[question_num[k]]]=results.response;
+       //k++;
         qna[java[0]]=results.response;
         // k++;
         builder.Prompts.text(session, java[1]);
@@ -118,6 +118,7 @@ bot.dialog('/print', function (session) {
 //session.send("printed");
   var sendgridCredentials = [];
   var next=0;
+  var answer="";
   for (var key in qna) {
     answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
     // console.log(qna[key]);
@@ -167,6 +168,7 @@ bot.dialog('/print', function (session) {
       } else {
         console.log("Success Mail sended From Azure ");
         session.send("Your Interview Report is send to our HR");
+        answer="";
       }
     });
   });
