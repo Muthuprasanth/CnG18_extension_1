@@ -44,7 +44,8 @@ var connector = new builder.ChatConnector({
  appId: MICROSOFT_APP_ID,
  appPassword: MICROSOFT_APP_PASSWORD
 });
-var config = 
+
+/*var config = 
 {
  userName: 'Muthuprasanth', // update me
  password: 'Sirius@25', // update me
@@ -54,7 +55,18 @@ var config =
      database: 'Sendgrid_DB', //update me
      encrypt: true
   }
-}
+}*/
+ var config = 
+   {
+     userName: 'Muthuprasanth', // update me
+     password: 'Sirius@25', // update me
+     server: 'sendgridcredential.database.windows.net', // update me
+     options: 
+        {
+           database: 'sendgridCred', //update me
+           encrypt: true
+        }
+   }
 
 function getRandomInt() {
   console.log("I am in random");
