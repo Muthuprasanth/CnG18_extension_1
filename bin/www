@@ -146,7 +146,7 @@ bot.dialog('/print', function (session) {
       else
        {
         let  tediousRequest = new Request(
-          "SELECT  Username,Password FROM dbo.Sendgrid_Account",
+          "SELECT  Username,Password FROM dbo.SengridAcct",
           function(err, rowCount, rows) 
             {
                 resolve();
