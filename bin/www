@@ -164,7 +164,7 @@ bot.dialog('/print', function (session) {
   });
 
   promiseTOGetSendgridCredential.then(function(){
-  console.log("sendgridCredentials---------",sendgridCredentials);
+  console.log("sendgridCredentials---------",Sendgrid);
     var sendgrid = new Sendgrid({
       user: sendgridCredentials[0],//provide the login credentials
       key:sendgridCredentials[1]
