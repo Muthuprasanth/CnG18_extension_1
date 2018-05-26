@@ -136,6 +136,7 @@ bot.dialog('/print', function (session) {
     // console.log(qna[key]);
     }
   console.log("send mail");
+   console.log("send mail");
   let promiseTOGetSendgridCredential =  new Promise(function(resolve,reject){
     var connection = new Connection(config);
     connection.on('connect', function(err) {
