@@ -30,9 +30,8 @@ input.pipe(linestream);
 
 console.log("hiihihihd",java)
 
-
-var MICROSOFT_APP_ID="3935f689-309f-4bea-a782-dd4fdce254b4";
-var MICROSOFT_APP_PASSWORD="uayxjhSY13[:!tVCRPP472|";
+var MICROSOFT_APP_ID="9c011e01-a307-4aa5-b9a6-13b3b5df47d1";
+var MICROSOFT_APP_PASSWORD="qmebxjYOX413uQBIP53#[);";
 
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 4990, function () {
@@ -56,17 +55,17 @@ var connector = new builder.ChatConnector({
      encrypt: true
   }
 }*/
- var config = 
-   {
-     userName: 'Muthuprasanth', // update me
-     password: 'Sirius@25', // update me
-     server: 'sendgridcredential.database.windows.net', // update me
-     options: 
-        {
-           database: 'sendgridCred', //update me
-           encrypt: true
-        }
-   }
+var config =
+{
+  userName: 'Muthuprasanth', // update me
+  password: 'Sirius@25', // update me
+  server: 'textanalsisapi.database.windows.net', // update me
+  options:
+  {
+    database: 'textanalayserapi', //update me
+    encrypt: true
+  }
+}
 
 function getRandomInt() {
   console.log("I am in random");
@@ -147,7 +146,7 @@ bot.dialog('/print', function (session) {
       else
        {
         let  tediousRequest = new Request(
-          "SELECT  Username,Password FROM dbo.SengridAcct",
+          "SELECT  username,password FROM dbo.userdetails",
           function(err, rowCount, rows) 
             {
                 resolve();
@@ -165,6 +164,7 @@ bot.dialog('/print', function (session) {
   });
 
   promiseTOGetSendgridCredential.then(function(){
+
   console.log("sendgridCredentials---------",sendgridCredentials);
     var sendgrid = new Sendgrid({
       user: sendgridCredentials[0],//provide the login credentials
@@ -180,7 +180,8 @@ bot.dialog('/print', function (session) {
         console.log("Mail error",err);
       } else {
         console.log("Success Mail sended From Azure ");
-        session.send("Your Interview Report is send to our HR");
+        session.endDialog("Your Interview Report is send to our HR");
+        //session.send("Your Interview Report is send to our HR");
         answer="";
       }
     });
