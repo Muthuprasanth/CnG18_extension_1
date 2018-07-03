@@ -18,6 +18,7 @@ var decoder = new StringDecoder('utf8');
 var java = [];
 var jk=0;
 
+console.log("updated");
 var linestream = new DelimiterStream(); 
 var input = fs.createReadStream('somefile.txt');
 linestream.on('data', function(chunk) {
