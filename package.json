@@ -20,6 +20,7 @@
     "nodemailer": "^4.6.4",
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^1.17.3",
+    "request": "^2.87.0",
     "restify": "^7.1.0",
     "sendgrid": "^5.2.3",
     "sendgrid-web": "0.0.5",

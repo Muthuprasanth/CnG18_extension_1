@@ -1,0 +1,55 @@
+Class library, Common Language Runtime , Dynamic Language Runtime, Application Domains, Cross-language interoperability, Runtime Hosts, Framework security.
+It contains Version of assembly, Security identity,Scope of the assembly, To resolve references to resources and classes.
+It is part of the  security mechanism that prevents unauthorized access of resources and operations, and restricts the managed code to perform particular tasks and operations.
+All .NET source code is compiled to Intermediate Language. IL is then converted to machine code by a Just-In-Time compiler.
+It is a service for storing large numbers of messages that can be accessed from anywhere via authenticated calls using HTTP or HTTPS.
+
+
+
+
+
+qnakeyphrases [ 'Dynamic Language Runtime',
+  'Common Language Runtime',
+  'Runtime Hosts',
+  'Cross-language interoperability',
+  'Application Domains' ]
+Common Language Runtime, Common Type System, Class library, Cross-language interoperability, Dynamic Language Runtime, Common Language Specification and Runtime Hosts
+0.8
+
+qnakeyphrases [ 'Version of assembly',
+  'Security identity',
+  'Scope',
+  'references' ]
+  Manifest contains all the metadata needed to specify the Version of assembly  and security identity and all metadata needed to define the scope of the assembly
+0.75
+
+qnakeyphrases [ 'operations',
+  'unauthorized access of resources',
+  'managed code',
+  'particular tasks',
+  'security mechanism' ]
+  It  is a security mechanism by which the common language runtime can restrict the managed code to execute operations with a limited set of permissions.
+  0.6
+
+
+qnakeyphrases [ 'machine code',
+  '.NET source code',
+  'Intermediate Language',
+  'Time compiler' ]
+Intermediate language (IL) is an object-oriented programming language designed to be used by compilers for the .NET Framework before static or dynamic compilation to machine code
+0.5
+
+qnakeyphrases [ 'authenticated calls',
+  'HTTPS',
+  'service',
+  'large numbers of messages' ]
+  It is a service for storing large numbers of messages that can be accessed from anywhere via authenticated calls using HTTP or HTTPS.
+  1
+  
+
+
+
+
+
+
+

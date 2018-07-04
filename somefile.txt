@@ -1,8 +1,8 @@
-What is difference between JDK,JRE and JVM What is the main difference between Java platform and other platformsWhat is the main difference between Java platform and other platforms?
-What is JIT compiler?
-What is the main difference between Java platform and other platforms?
-What is classloader?
-What if I write static public void instead of public static void?
+What are the main components of .NET Framework? 
+What is manifest in .NET Framework? 
+What is code access security (CAS)? 
+What is an IL?
+Explain about azure queues.
 What is the default value of the local variables?
 What is constructor?
 Can you make a constructor final?
