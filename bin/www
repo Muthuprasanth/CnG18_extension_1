@@ -151,7 +151,9 @@ var bot = new builder.UniversalBot(connector, [
         qnakeyphrases = await textanalyics(answers[0]);
         console.log("qnakeyphrases",qnakeyphrases);
         subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+        console.log("score1 "+score+" subtotal1 "+subtotal);
         score = score+subtotal;
+        console.log("score 2"+score+" subtotal2 "+subtotal);
         builder.Prompts.text(session, java[1]);
     },
     async function (session, results) {
@@ -166,8 +168,9 @@ var bot = new builder.UniversalBot(connector, [
         qnakeyphrases = await textanalyics(answers[1]);
         console.log("qnakeyphrases",qnakeyphrases);
         subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+        console.log("score1 "+score+" subtotal1 "+subtotal);
         score = score+subtotal;
-        console.log("score is",score);
+        console.log("score 2"+score+" subtotal2 "+subtotal);
         builder.Prompts.text(session, java[2]);
     },
     async function (session, results) {
@@ -181,8 +184,9 @@ var bot = new builder.UniversalBot(connector, [
       qnakeyphrases = await textanalyics(answers[2]);
       console.log("qnakeyphrases",qnakeyphrases);
       subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+      console.log("score1 "+score+" subtotal1 "+subtotal);
       score = score+subtotal;
-      console.log("score is",score);
+      console.log("score 2"+score+" subtotal2 "+subtotal);
       builder.Prompts.text(session, java[3]);
    },
 
@@ -197,8 +201,9 @@ var bot = new builder.UniversalBot(connector, [
         qnakeyphrases = await textanalyics(answers[3]);
         console.log("qnakeyphrases",qnakeyphrases);
         subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+        console.log("score1 "+score+" subtotal1 "+subtotal);
         score = score+subtotal;
-        console.log("score is",score);
+        console.log("score 2"+score+" subtotal2 "+subtotal);
         builder.Prompts.text(session, java[4]);
       //  session.send("thank you");
       //  session.beginDialog("/print");
@@ -215,8 +220,9 @@ var bot = new builder.UniversalBot(connector, [
       qnakeyphrases = await textanalyics(answers[4]);
       console.log("qnakeyphrases",qnakeyphrases);
       subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+      console.log("score1 "+score+" subtotal1 "+subtotal);
       score = score+subtotal;
-      console.log("score is",score);
+      console.log("score 2"+score+" subtotal2 "+subtotal);
       session.send("thank you");
      // session.send("Your score is "+score);
       session.beginDialog("/print");
