@@ -154,7 +154,7 @@ var bot = new builder.UniversalBot(connector, [
         subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
         console.log("score1 "+score+" subtotal1 "+subtotal);
         score = score+subtotal;
-        console.log("score 2"+score+" subtotal2 "+subtotal);
+        console.log("score2 "+score+" subtotal2 "+subtotal);
         builder.Prompts.text(session, java[1]);
     },
     async function (session, results) {
@@ -171,7 +171,7 @@ var bot = new builder.UniversalBot(connector, [
         subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
         console.log("score1 "+score+" subtotal1 "+subtotal);
         score = score+subtotal;
-        console.log("score 2"+score+" subtotal2 "+subtotal);
+        console.log("score2 "+score+" subtotal2 "+subtotal);
         builder.Prompts.text(session, java[2]);
     },
     async function (session, results) {
@@ -187,7 +187,7 @@ var bot = new builder.UniversalBot(connector, [
       subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
       console.log("score1 "+score+" subtotal1 "+subtotal);
       score = score+subtotal;
-      console.log("score 2"+score+" subtotal2 "+subtotal);
+      console.log("score2 "+score+" subtotal2 "+subtotal);
       builder.Prompts.text(session, java[3]);
    },
 
@@ -204,7 +204,7 @@ var bot = new builder.UniversalBot(connector, [
         subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
         console.log("score1 "+score+" subtotal1 "+subtotal);
         score = score+subtotal;
-        console.log("score 2"+score+" subtotal2 "+subtotal);
+        console.log("score2 "+score+" subtotal2 "+subtotal);
         builder.Prompts.text(session, java[4]);
       //  session.send("thank you");
       //  session.beginDialog("/print");
@@ -223,7 +223,7 @@ var bot = new builder.UniversalBot(connector, [
       subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
       console.log("score1 "+score+" subtotal1 "+subtotal);
       score = score+subtotal;
-      console.log("score 2"+score+" subtotal2 "+subtotal);
+      console.log("score2 "+score+" subtotal2 "+subtotal);
       session.send("thank you");
      // session.send("Your score is "+score);
       session.beginDialog("/print");
