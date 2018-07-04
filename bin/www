@@ -138,6 +138,7 @@ var bot = new builder.UniversalBot(connector, [
         builder.Prompts.text(session, java[0]);
     },
     async function (session, results) {
+        score = 0;
       // qna[java[question_num[k]]]=results.response;
        //k++;
         qna[java[0]]=results.response;
