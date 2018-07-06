@@ -19,9 +19,6 @@ var request = require('request');
 
 var decoder = new StringDecoder('utf8');
 
-var AdaptiveCards = require("adaptivecards");
-var adaptiveCard = new AdaptiveCards.AdaptiveCard();
-
 var java = [];
 var jk=0,ans=0;
 var answers =[];
@@ -140,6 +137,8 @@ var bot = new builder.UniversalBot(connector, [
       //builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
            
       // session.send(card1);
+      session.send("Hi " + session.user.userName);
+      session.send("Hi " + session.user.username);
       /*  session.send("Hi " + session.message.user.name);
         session.send(session.message.user.id);
         session.send(session.message.address.user.name);*/
@@ -147,12 +146,13 @@ var bot = new builder.UniversalBot(connector, [
        // builder.Prompts.text(session, java[0]);
     },
     async function (session, results) {
-      console.log("yes or No value is ",results.response.entity);
+      //console.log("Yes or No value is ",results.response.entity);
         score = 0;
       // qna[java[question_num[k]]]=results.response;
        //k++;
         qna[java[0]]=results.response;
         session.sendTyping();
+        confirmMessage(session, results);
         candidateresponsekeyphrases = await textanalyics(results.response);
         console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
         // k++;
@@ -306,6 +306,11 @@ bot.dialog('/print', function (session) {
   });
 
 });
+
+function confirmMessage(session, results)
+{
+
+}
 
 function comparepheases(candidateresponsekeyphrases,qnakeyphrases)
 {
