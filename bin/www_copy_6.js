@@ -18,10 +18,6 @@ var StringDecoder = require('string_decoder').StringDecoder;
 var request = require('request');
 
 var decoder = new StringDecoder('utf8');
-
-var AdaptiveCards = require("adaptivecards");
-var adaptiveCard = new AdaptiveCards.AdaptiveCard();
-
 var java = [];
 var jk=0,ans=0;
 var answers =[];
@@ -124,7 +120,6 @@ var qna=[];
 var question_num=[];
 var k=0;
 let score = 0;
-var choice = ["Yes","Wait"];
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
@@ -134,20 +129,15 @@ var bot = new builder.UniversalBot(connector, [
       let candidateresponsekeyphrases,qnakeyphrases,qnaresponse;
       let subtotal;
     //  getRandomInt();
-      session.sendTyping();
-      session.send("Your Interview starts now");   
-      builder.Prompts.text(session, java[0]);
-      //builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
-           
-      // session.send(card1);
+        session.sendTyping();
+        session.send("Your Interview starts now");
       /*  session.send("Hi " + session.message.user.name);
         session.send(session.message.user.id);
         session.send(session.message.address.user.name);*/
-       // builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?","yes|no");
-       // builder.Prompts.text(session, java[0]);
+        builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
+        builder.Prompts.text(session, java[0]);
     },
     async function (session, results) {
-      console.log("yes or No value is ",results.response.entity);
         score = 0;
       // qna[java[question_num[k]]]=results.response;
        //k++;
