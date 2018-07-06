@@ -134,7 +134,7 @@ var bot = new builder.UniversalBot(connector, [
       /*  session.send("Hi " + session.message.user.name);
         session.send(session.message.user.id);
         session.send(session.message.address.user.name);*/
-        builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
+       // builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
         builder.Prompts.text(session, java[0]);
     },
     async function (session, results) {
