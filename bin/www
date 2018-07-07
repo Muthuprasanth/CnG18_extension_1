@@ -118,6 +118,7 @@ var question_num=[];
 var k=0;
 let score = 0;
 var choice = ["Yes","Wait"];
+let choiceresponse ="";
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
@@ -131,8 +132,10 @@ var bot = new builder.UniversalBot(connector, [
         session.send("Your Interview starts now");
        /* session.send("Hi1 " + session.message.user.name);
         session.send("hi2 "+session.message.user.id);*/
+        session.send("hiihihihi");
         session.send("hi3 "+session.message.address.user.name);
-
+        builder.SuggestedActions(['red', 'green', 'blue'], 'Choose a color');
+        console.log("aallalalalalalallaal");
         builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
         builder.Prompts.text(session, java[0]);
     },
