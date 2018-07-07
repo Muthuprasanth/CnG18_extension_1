@@ -134,7 +134,20 @@ var bot = new builder.UniversalBot(connector, [
         session.send("hi2 "+session.message.user.id);*/
         session.send("hiihihihi");
         session.send("hi3 "+session.message.address.user.name);
-        builder.SuggestedActions(['red', 'green', 'blue'], 'Choose a color');
+      //  builder.SuggestedActions(['red', 'green', 'blue'], 'Choose a color');
+      var msg = new builder.Message(session)
+            .text("Hi! What is your favorite color?")
+            .suggestedActions(
+                builder.SuggestedActions.create(
+                    session,[
+                        builder.CardAction.imBack(session, "green", "green"),
+                        builder.CardAction.imBack(session, "blue", "blue"),
+                        builder.CardAction.imBack(session, "red", "red")
+                    ]
+                )
+            );
+        builder.Prompts.choice(session, msg, ["green", "blue", "red"]);
+    //  builder.suggestedActions.create()
         console.log("aallalalalalalallaal");
         builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
         builder.Prompts.text(session, java[0]);
