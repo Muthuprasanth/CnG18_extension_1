@@ -117,6 +117,7 @@ var qna=[];
 var question_num=[];
 var k=0;
 let score = 0;
+var choice = ["Yes","Wait"];
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
@@ -128,10 +129,12 @@ var bot = new builder.UniversalBot(connector, [
     //  getRandomInt();
         session.sendTyping();
         session.send("Your Interview starts now");
-      /*  session.send("Hi " + session.message.user.name);
-        session.send(session.message.user.id);
-        session.send(session.message.address.user.name);*/
-
+        session.send("Hi1 " + session.message.user.name);
+        session.send("hi2 "+session.message.user.id);
+        session.send("hi3 "+session.message.address.user.name);
+        session.send("Hi4 " + session.user.userName);
+        session.send("Hi5 " + session.user.username);
+        builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
         builder.Prompts.text(session, java[0]);
     },
     async function (session, results) {
