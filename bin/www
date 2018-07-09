@@ -16,11 +16,13 @@ var StringDecoder = require('string_decoder').StringDecoder;
 
 var request = require('request');
 
+var juice = require('juice');
+
 var decoder = new StringDecoder('utf8');
 var java = [];
 var jk=0,ans=0;
 var answers =[];
-var candidateanswer = "";
+var candidateanswer = "",candidatename = "";
 console.log("updated");
 var linestream = new DelimiterStream(); 
 var input = fs.createReadStream('somefile.txt');
@@ -134,6 +136,7 @@ var bot = new builder.UniversalBot(connector, [
         session.send("hi2 "+session.message.user.id);*/
         session.send("hiihihihi");
         session.send("hi3 "+session.message.address.user.name);
+        candidatename = session.message.address.user.name;
         console.log("aallalalalalalallaal");
        
         builder.Prompts.text(session, java[0]);
@@ -294,7 +297,7 @@ bot.dialog('/print', function (session) {
   var sendgridCredentials = [];
   var next=0;
   let answer="";
-  var htmlstart="<!DOCTYPE html> <html><head><style> body { background-color: lightblue;}"+
+  var htmlstart="<!DOCTYPE html> <html><head><style> body { background-color: lightblue; border:2px solid grey; padding:10px; } p {color:red}"+
   "</style></head><body>";
   var htmlend  = "</body></html>";
   for (var key in qna) {
@@ -337,12 +340,16 @@ bot.dialog('/print', function (session) {
       user: sendgridCredentials[0],//provide the login credentials
       key:sendgridCredentials[1]
     });
-    let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
+  //  let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
+  let response ="<p style='color:red'>"+"Candidate "+ candidatename +" got <b>"+score+" </b> in the interview <br>"+ answer +"</p>";
+  let response1 = htmlstart+" <p>The Candidate "+ candidatename +" got <b>"+score+" </b> in the interview </p>"+ answer + htmlend;
+  let response2 =  juice(response1);
+  console.log(" response2 = ",response2);
     sendgrid.send({
       to: 'mprasanth113@gmail.com',
       from: 'mprasanth113@gmail.com',
       subject: 'Interview Report',
-      html: response,
+      html: response2,
     }, function (err) {
       if (err) {
         console.log("Mail error",err);

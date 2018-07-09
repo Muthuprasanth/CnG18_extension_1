@@ -20,7 +20,7 @@ var decoder = new StringDecoder('utf8');
 var java = [];
 var jk=0,ans=0;
 var answers =[];
-var candidateanswer = "";
+var candidateanswer = "",candidatename = "";
 console.log("updated");
 var linestream = new DelimiterStream(); 
 var input = fs.createReadStream('somefile.txt');
@@ -117,7 +117,6 @@ var qna=[];
 var question_num=[];
 var k=0;
 let score = 0;
-var choice = ["Yes","Wait"];
 let choiceresponse ="";
 var choice = ["Yes","Wait"];
 //getRandomInt();
@@ -135,6 +134,7 @@ var bot = new builder.UniversalBot(connector, [
         session.send("hi2 "+session.message.user.id);*/
         session.send("hiihihihi");
         session.send("hi3 "+session.message.address.user.name);
+        candidatename = session.message.address.user.name;
         console.log("aallalalalalalallaal");
        
         builder.Prompts.text(session, java[0]);
@@ -264,11 +264,12 @@ var bot = new builder.UniversalBot(connector, [
 bot.dialog('confirm', [
   function (session,args) {
   //  console.log("color is "+args.candidateanswer);
-      builder.Prompts.text(session, 'Do you want to continue with prev answer',);
+    //  builder.Prompts.text(session, 'Do you want to continue with prev answer');
+    builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   },
   function (session, results) {
       //session.endDialogWithResult(results);
-      if(results.response.toUpperCase() === "NO")
+      if(results.response.entity.toUpperCase() === "YES")
       {
         results.candidateanswer = candidateanswer;
         session.endDialogWithResult(results);
@@ -337,7 +338,9 @@ bot.dialog('/print', function (session) {
       user: sendgridCredentials[0],//provide the login credentials
       key:sendgridCredentials[1]
     });
-    let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
+  //  let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
+  let response ="<p style='color:red'>"+"Candidate "+ candidatename +" got <b>"+score+" </b> in the interview <br>"+ answer +"</p>";
+  
     sendgrid.send({
       to: 'mprasanth113@gmail.com',
       from: 'mprasanth113@gmail.com',
