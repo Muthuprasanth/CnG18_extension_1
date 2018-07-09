@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
 var http = require('http');
@@ -21,6 +20,7 @@ var decoder = new StringDecoder('utf8');
 var java = [];
 var jk=0,ans=0;
 var answers =[];
+var candidateanswer = "";
 console.log("updated");
 var linestream = new DelimiterStream(); 
 var input = fs.createReadStream('somefile.txt');
@@ -44,7 +44,6 @@ answerlinestream.on('data', function(chunk) {
 answerinput.pipe(answerlinestream);
 console.log("Answer file",answers);
 
-
 var MICROSOFT_APP_ID="9c011e01-a307-4aa5-b9a6-13b3b5df47d1";
 var MICROSOFT_APP_PASSWORD="qmebxjYOX413uQBIP53#[);";
 
@@ -60,7 +59,6 @@ var connector = new builder.ChatConnector({
 });
 
 /*
-
    async function (session, results) {
        qna[java[1]]=results.response;
        candidateresponsekeyphrases = await textanalyics(results.response);
@@ -69,7 +67,6 @@ var connector = new builder.ChatConnector({
      
         builder.Prompts.text(session, java[2]);
     },
-
 */
 
 
@@ -120,6 +117,9 @@ var qna=[];
 var question_num=[];
 var k=0;
 let score = 0;
+var choice = ["Yes","Wait"];
+let choiceresponse ="";
+var choice = ["Yes","Wait"];
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
@@ -131,119 +131,178 @@ var bot = new builder.UniversalBot(connector, [
     //  getRandomInt();
         session.sendTyping();
         session.send("Your Interview starts now");
-      /*  session.send("Hi " + session.message.user.name);
-        session.send(session.message.user.id);
-        session.send(session.message.address.user.name);*/
-       // builder.Prompts.confirm(session, "Are you sure you wish to cancel your order?");
+       /* session.send("Hi1 " + session.message.user.name);
+        session.send("hi2 "+session.message.user.id);*/
+        session.send("hiihihihi");
+        session.send("hi3 "+session.message.address.user.name);
+        console.log("aallalalalalalallaal");
+       
         builder.Prompts.text(session, java[0]);
     },
-    async function (session, results) {
-        score = 0;
-      // qna[java[question_num[k]]]=results.response;
-       //k++;
-        qna[java[0]]=results.response;
-        session.sendTyping();
-        candidateresponsekeyphrases = await textanalyics(results.response);
-        console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
-        // k++;
-        console.log("gotkeyphrases");
-       // qnaresponse = await qnaMaker(java[0]);
-        //console.log("qnaresponse ",qnaresponse);
-        qnakeyphrases = await textanalyics(answers[0]);
-        console.log("qnakeyphrases",qnakeyphrases);
-        subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
-        console.log("score1 "+score+" subtotal1 "+subtotal);
-        score = score+subtotal;
-        console.log("score2 "+score+" subtotal2 "+subtotal);
-        builder.Prompts.text(session, java[1]);
-    },
-    async function (session, results) {
-       qna[java[1]]=results.response;
-       session.sendTyping();
-       candidateresponsekeyphrases = await textanalyics(results.response);
-       console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
-     // k++;    
-        console.log("gotkeyphrases");
-      //  qnaresponse = await qnaMaker(java[1]);
-      //  console.log("qnaresponse ",qnaresponse);
-        qnakeyphrases = await textanalyics(answers[1]);
-        console.log("qnakeyphrases",qnakeyphrases);
-        subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
-        console.log("score1 "+score+" subtotal1 "+subtotal);
-        score = score+subtotal;
-        console.log("score2 "+score+" subtotal2 "+subtotal);
-        builder.Prompts.text(session, java[2]);
-    },
-    async function (session, results) {
-      qna[java[2]]=results.response;
-      candidateresponsekeyphrases = await textanalyics(results.response);
-      console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+  function (session, results) {
+    score = 0;
+    candidateanswer = "";
+    candidateanswer += results.response;
+    //session.beginDialog('confirm',{ candidateanswer: candidateanswer});
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    console.log("Inside Next function after updates ",results.candidateanswer);
+    // qna[java[question_num[k]]]=results.response;
+      //k++;
+    qna[java[0]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
     // k++;
-      console.log("gotkeyphrases");
-    //  qnaresponse = await qnaMaker(java[2]);
-    //  console.log("qnaresponse ",qnaresponse);
-      qnakeyphrases = await textanalyics(answers[2]);
-      console.log("qnakeyphrases",qnakeyphrases);
-      subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
-      console.log("score1 "+score+" subtotal1 "+subtotal);
-      score = score+subtotal;
-      console.log("score2 "+score+" subtotal2 "+subtotal);
-      builder.Prompts.text(session, java[3]);
-   },
+    console.log("gotkeyphrases");
+    // qnaresponse = await qnaMaker(java[0]);
+    //console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[0]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[1]);
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    qna[java[1]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+  // k++;    
+    console.log("gotkeyphrases");
+  //  qnaresponse = await qnaMaker(java[1]);
+  //  console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[1]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[2]);
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    qna[java[2]]=results.candidateanswer;
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+  // k++;
+    console.log("gotkeyphrases");
+  //  qnaresponse = await qnaMaker(java[2]);
+  //  console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[2]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[3]);
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    qna[java[3]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+    console.log("gotkeyphrases");
+  //  qnaresponse = await qnaMaker(java[3]);
+  //  console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[3]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[4]);
+  //  session.send("thank you");
+  //  session.beginDialog("/print");
+  //  k=0;
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    qna[java[4]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+    console.log("gotkeyphrases");
+   // qnaresponse = await qnaMaker(java[4]);
+   // console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[4]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    session.send("thank you");
+   // session.send("Your score is "+score);
+    session.beginDialog("/print");
 
-    async function (session, results) {
-        qna[java[3]]=results.response;
-        session.sendTyping();
-        candidateresponsekeyphrases = await textanalyics(results.response);
-        console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
-        console.log("gotkeyphrases");
-      //  qnaresponse = await qnaMaker(java[3]);
-      //  console.log("qnaresponse ",qnaresponse);
-        qnakeyphrases = await textanalyics(answers[3]);
-        console.log("qnakeyphrases",qnakeyphrases);
-        subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
-        console.log("score1 "+score+" subtotal1 "+subtotal);
-        score = score+subtotal;
-        console.log("score2 "+score+" subtotal2 "+subtotal);
-        builder.Prompts.text(session, java[4]);
-      //  session.send("thank you");
-      //  session.beginDialog("/print");
-      //  k=0;
-    },
-    async function (session, results) {
-      qna[java[4]]=results.response;
-      session.sendTyping();
-      candidateresponsekeyphrases = await textanalyics(results.response);
-      console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
-      console.log("gotkeyphrases");
-     // qnaresponse = await qnaMaker(java[4]);
-     // console.log("qnaresponse ",qnaresponse);
-      qnakeyphrases = await textanalyics(answers[4]);
-      console.log("qnakeyphrases",qnakeyphrases);
-      subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
-      console.log("score1 "+score+" subtotal1 "+subtotal);
-      score = score+subtotal;
-      console.log("score2 "+score+" subtotal2 "+subtotal);
-      session.send("thank you");
-     // session.send("Your score is "+score);
-      session.beginDialog("/print");
-
-    //  k=0;
-    },
+  //  k=0;
+  },
 ]);
+
+
+bot.dialog('confirm', [
+  function (session,args) {
+  //  console.log("color is "+args.candidateanswer);
+      builder.Prompts.text(session, 'Do you want to continue with prev answer',);
+  },
+  function (session, results) {
+      //session.endDialogWithResult(results);
+      if(results.response.toUpperCase() === "NO")
+      {
+        results.candidateanswer = candidateanswer;
+        session.endDialogWithResult(results);
+       //session.endDialog();
+      }
+      else{
+        builder.Prompts.text(session, 'Please Continue your answer');
+      }
+  },
+  function (session , results) {
+    
+    candidateanswer += results.response;
+    console.log("candidateanswer is ",candidateanswer);
+    session.beginDialog('confirm',{candidateanswer:candidateanswer});
+  }
+
+]);
+
 
 bot.dialog('/print', function (session) {
 //session.send("printed");
   //session.send("The candidate score is "+score);
   var sendgridCredentials = [];
   var next=0;
-  var answer="";
+  let answer="";
+  var htmlstart="<!DOCTYPE html> <html><head><style> body { background-color: lightblue;}"+
+  "</style></head><body>";
+  var htmlend  = "</body></html>";
   for (var key in qna) {
-    answer += "Question : "+key+"\n\tanswer : "+qna[key]+"\n";
+    answer += "<br> <b>Question :</b> "+key+"<br> <b>answer :</b> "+qna[key];
     // console.log(qna[key]);
     }
+  console.log("send mail ");
   console.log("send mail");
-   console.log("send mail");
   let promiseTOGetSendgridCredential =  new Promise(function(resolve,reject){
     var connection = new Connection(config);
     connection.on('connect', function(err) {
@@ -278,11 +337,12 @@ bot.dialog('/print', function (session) {
       user: sendgridCredentials[0],//provide the login credentials
       key:sendgridCredentials[1]
     });
+    let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
     sendgrid.send({
       to: 'mprasanth113@gmail.com',
       from: 'mprasanth113@gmail.com',
       subject: 'Interview Report',
-      html: "The Candidate got <b>"+score+" </b> in the interview \n"+answer,
+      html: response,
     }, function (err) {
       if (err) {
         console.log("Mail error",err);
@@ -420,11 +480,9 @@ bot.dialog('/', function (session) {
 // Send 'hello world' to the user
 //session.send(session.message.user);
 //session.send(MICROSOFT_APP_ID);
-
 session.send("Your Interview strats now");
 session.beginDialog("/questions");
 });
-
 bot.dialog("/questions", [
     //question = java[getRandomInt()];
     function (session) {
@@ -450,7 +508,6 @@ bot.dialog("/questions", [
       k++;
       builder.Prompts.text(session,java[question_num[k]]);
     },
-
     function (session, results) {
        console.log("I am fifth");
      qna[java[question_num[k]]]=results.response;
@@ -460,4 +517,3 @@ bot.dialog("/questions", [
    
 ]);
 */
-
