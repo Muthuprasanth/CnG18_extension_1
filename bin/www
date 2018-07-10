@@ -134,11 +134,8 @@ var bot = new builder.UniversalBot(connector, [
         session.send("Your Interview starts now");
        /* session.send("Hi1 " + session.message.user.name);
         session.send("hi2 "+session.message.user.id);*/
-        session.send("hiihihihi");
         session.send("hi3 "+session.message.address.user.name);
-        candidatename = session.message.address.user.name;
-        console.log("aallalalalalalallaal");
-       
+        candidatename = session.message.address.user.name;      
         builder.Prompts.text(session, java[0]);
     },
   function (session, results) {
@@ -266,7 +263,6 @@ var bot = new builder.UniversalBot(connector, [
 bot.dialog('confirm', [
   function (session,args) {
   //  console.log("color is "+args.candidateanswer);
-    //  builder.Prompts.text(session, 'Do you want to continue with prev answer');
     builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   },
   function (session, results) {
@@ -396,8 +392,6 @@ function qnaMaker(question) {
       'Authorization':'EndpointKey 316818ad-d8b1-4918-82b8-f0d7b02b91af',
       'Content-Type':'application/json',
       //'Ocp-Apim-Subscription-Key': '2437ab2f3fc04c65a3a2322e3463fca8',
-      // 'Content-Type':'application/json',
-      // 'Accept':'application/json',
     },
     body: JSON.stringify(documents),
     // body: documents,
@@ -414,18 +408,9 @@ function qnaMaker(question) {
         // console.log("body content is",body);
         body_ = JSON.parse(body);
         //console.log("qnamake response",body_.answers[0].answer);
-        answer = body_.answers[0].answer;
-        // let body__ = JSON.stringify (body_, null, '  ');
-       // let keyphrases = body_.documents[0].keyPhrases;
-       // let keyphrasesarray =[];
-       // keyphrasesarray = keyphrases;
-        // console.log ("output type is", typeof keyphrases,Object.keys(keyphrases).length);  
-        // console.log ("output is",body_.documents[0].keyPhrases[146]);  
-        // console.log ("output keyphrases is",body_.documents[0].keyPhrases);   
+        answer = body_.answers[0].answer; 
         resolve(answer);
       }
-      // var thesaurus = require("thesaurus");
-      // console.log(thesaurus.find("java"));
 
     });
   });
@@ -465,15 +450,9 @@ function textanalyics(question) {
         // let body__ = JSON.stringify (body_, null, '  ');
         let keyphrases = body_.documents[0].keyPhrases;
         let keyphrasesarray =[];
-        keyphrasesarray = keyphrases;
-        // console.log ("output type is", typeof keyphrases,Object.keys(keyphrases).length);  
-        // console.log ("output is",body_.documents[0].keyPhrases[146]);  
-        // console.log ("output keyphrases is",body_.documents[0].keyPhrases);   
+        keyphrasesarray = keyphrases;  
         resolve(keyphrasesarray);
       }
-      // var thesaurus = require("thesaurus");
-      // console.log(thesaurus.find("java"));
-
     });
   });
 
