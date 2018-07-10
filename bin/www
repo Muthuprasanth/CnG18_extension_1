@@ -297,8 +297,8 @@ bot.dialog('/print', function (session) {
   var sendgridCredentials = [];
   var next=0;
   let answer="";
-  var htmlstart="<!DOCTYPE html> <html><head><style> body { background-color: lightblue; border:2px solid grey; padding:10px; } p {color:red}"+
-  "</style></head><body>";
+  var htmlstart="<!DOCTYPE html> <html><head><style> body { border:2px solid grey; padding:10px; }"
+  + ".head{ text-align:center; margin:0 0 20px 0;}</style></head><body>";
   var htmlend  = "</body></html>";
   for (var key in qna) {
     answer += "<br> <b>Question :</b> "+key+"<br> <b>answer :</b> "+qna[key];
@@ -342,7 +342,7 @@ bot.dialog('/print', function (session) {
     });
   //  let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
   let response ="<p style='color:red'>"+"Candidate "+ candidatename +" got <b>"+score+" </b> in the interview <br>"+ answer +"</p>";
-  let response1 = htmlstart+" <p>The Candidate "+ candidatename +" got <b>"+score+" </b> in the interview </p>"+ answer + htmlend;
+  let response1 = htmlstart+"<h2 class='head'>Interview Report</h2><h4>Candidate Name:"+candidatename+"</h4><h4>Candidate Score: "+score +"</h4>"+ answer + htmlend;
   let response2 =  juice(response1);
   console.log(" response2 = ",response2);
     sendgrid.send({
