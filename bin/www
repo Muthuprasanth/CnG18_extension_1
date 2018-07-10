@@ -301,7 +301,7 @@ bot.dialog('/print', function (session) {
   + ".head{ text-align:center; margin:0 0 20px 0;}</style></head><body>";
   var htmlend  = "</body></html>";
   for (var key in qna) {
-    answer += "<br> <b>Question :</b> "+key+"<br> <b>answer :</b> "+qna[key];
+    answer += "<b>Question :</b> "+key+"<br> <b>Answer :</b> "+qna[key]+"<br>";
     // console.log(qna[key]);
     }
   console.log("send mail ");
