@@ -120,7 +120,10 @@ var question_num=[];
 var k=0;
 let score = 0;
 let choiceresponse ="";
-var choice = ["Yes","Wait"];
+let feedbackresponse = "";
+var choice = ["Yes","Next"];
+var finalchoice = ["Yes","Finish"];
+var feedbackchoice = ["Yes","No"];
 //getRandomInt();
 
 console.log("dfsfdsf------- csfsdf");
@@ -131,11 +134,12 @@ var bot = new builder.UniversalBot(connector, [
       let subtotal;
     //  getRandomInt();
         session.sendTyping();
-        session.send("Your Interview starts now");
+        
        /* session.send("Hi1 " + session.message.user.name);
         session.send("hi2 "+session.message.user.id);*/
-        session.send("hi3 "+session.message.address.user.name);
-        candidatename = session.message.address.user.name;      
+        candidatename = session.message.address.user.name;     
+        session.send("Hi "+candidatename);
+        session.send("Your Interview starts now");     
         builder.Prompts.text(session, java[0]);
     },
   function (session, results) {
@@ -235,7 +239,7 @@ var bot = new builder.UniversalBot(connector, [
   function (session, results) {
     candidateanswer = "";
     candidateanswer += results.response;
-    session.beginDialog('confirm');
+    session.beginDialog('finish');
   },
   async function (session, results) {
     qna[java[4]]=results.candidateanswer;
@@ -251,23 +255,93 @@ var bot = new builder.UniversalBot(connector, [
     console.log("score1 "+score+" subtotal1 "+subtotal);
     score = score+subtotal;
     console.log("score2 "+score+" subtotal2 "+subtotal);
-    session.send("thank you");
+    session.beginDialog("feedback");
+    //session.send("thank you");
    // session.send("Your score is "+score);
-    session.beginDialog("/print");
+   // session.beginDialog("/print");
 
   //  k=0;
   },
+  function (session, results) {
+    //session.beginDialog("/print");
+    if( results.feedbackres  === "NO")
+    {
+      feedbackresponse = "The candidate is not interested in giving feedback";
+    }
+    else{
+      feedbackresponse = results.feedbackres;
+    }
+    session.send("Thank you");
+    session.beginDialog("/print");
+  }
 ]);
 
+bot.dialog('feedback', [
+  function (session,args) {
+  //  console.log("color is "+args.candidateanswer);
+  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
+  builder.Prompts.choice(session, "We are interested to get your feedback about the interview. Are you interested in giving feedback", feedbackchoice,{listStyle: 3});
+  },
+  function (session, results) {
+      //session.endDialogWithResult(results);
+      let feedbackres = results.response.entity.toUpperCase();
+      if(feedbackres === "NO")
+      {
+        results.feedbackres = feedbackres;
+        session.endDialogWithResult(results);
+       //session.endDialog();
+      }
+      else{
+        builder.Prompts.text(session, 'Please share your feedback here');
+      }
+  },
+  function (session , results) {
+    
+    candidateanswer += results.response;
+    console.log("candidateanswer is ",candidateanswer);
+    results.feedbackres = candidateanswer;
+   // session.beginDialog('finish',{candidateanswer:candidateanswer});
+   session.endDialogWithResult(results);
+  }
+
+]);
+
+bot.dialog('finish', [
+  function (session,args) {
+  //  console.log("color is "+args.candidateanswer);
+  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
+  builder.Prompts.choice(session, "Do you want to continue your answer for this question?", finalchoice,{listStyle: 3});
+  },
+  function (session, results) {
+      //session.endDialogWithResult(results);
+      if(results.response.entity.toUpperCase() === "FINISH")
+      {
+        results.candidateanswer = candidateanswer;
+        session.endDialogWithResult(results);
+       //session.endDialog();
+      }
+      else{
+        builder.Prompts.text(session, 'Please Continue your answer');
+      }
+  },
+  function (session , results) {
+    
+    candidateanswer += results.response;
+    console.log("candidateanswer is ",candidateanswer);
+    session.beginDialog('finish',{candidateanswer:candidateanswer});
+  }
+
+]);
 
 bot.dialog('confirm', [
   function (session,args) {
   //  console.log("color is "+args.candidateanswer);
-    builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
+  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
+  builder.Prompts.choice(session, "Do you want to continue your answer for this question?", choice,{listStyle: 3});
   },
   function (session, results) {
       //session.endDialogWithResult(results);
-      if(results.response.entity.toUpperCase() === "YES")
+      if(results.response.entity.toUpperCase() === "NEXT")
       {
         results.candidateanswer = candidateanswer;
         session.endDialogWithResult(results);
@@ -296,11 +370,12 @@ bot.dialog('/print', function (session) {
   var htmlstart="<!DOCTYPE html> <html><head><style> body { border:2px solid grey; padding:10px; }"
   + ".head{ text-align:center; margin:0 0 20px 0;}</style></head><body>";
   var htmlend  = "</body></html>";
+  let qno =1;
   for (var key in qna) {
-    answer += "<b>Question :</b> "+key+"<br> <b>Answer :</b> "+qna[key]+"<br>";
+    answer += "<b>"+qno+")Question :</b> "+key+"<br> <b>Answer :</b> "+qna[key]+"<br><br>";
+    qno++;
     // console.log(qna[key]);
     }
-  console.log("send mail ");
   console.log("send mail");
   let promiseTOGetSendgridCredential =  new Promise(function(resolve,reject){
     var connection = new Connection(config);
@@ -338,7 +413,7 @@ bot.dialog('/print', function (session) {
     });
   //  let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
   let response ="<p style='color:red'>"+"Candidate "+ candidatename +" got <b>"+score+" </b> in the interview <br>"+ answer +"</p>";
-  let response1 = htmlstart+"<h2 class='head'>Interview Report</h2><h4>Candidate Name:"+candidatename+"</h4><h4>Candidate Score: "+score +"</h4>"+ answer + htmlend;
+  let response1 = htmlstart+"<h2 class='head'>Interview Report</h2><h4>Candidate Name:"+candidatename+"</h4><h4>Candidate Score: "+score +"</h4>"+ answer +"<br><br><p><b>Feedback : </b>"+feedbackresponse +"</p><br><br>" + htmlend;
   let response2 =  juice(response1);
   console.log(" response2 = ",response2);
     sendgrid.send({
@@ -351,7 +426,8 @@ bot.dialog('/print', function (session) {
         console.log("Mail error",err);
       } else {
         console.log("Success Mail sended From Azure ");
-        session.endDialog("Your Interview Report is send to our HR");
+        session.send("Soon our HR will reach out to you");
+        session.endDialog("For any queries reach out our HR @ sirius.indiahr@siriuscom.com");
         //session.send("Your Interview Report is send to our HR");
         answer="";
       }
@@ -429,7 +505,7 @@ function textanalyics(question) {
   var options3 = {
     method: 'post',
     headers: {
-      'Ocp-Apim-Subscription-Key': 'ad883f4fcd994bc190b723810ac525c5',
+      'Ocp-Apim-Subscription-Key': '861ca2bd458d45e89b10575963917cec',
       // 'Content-Type':'application/json',
       // 'Accept':'application/json',
     },
