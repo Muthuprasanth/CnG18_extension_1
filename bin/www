@@ -280,7 +280,7 @@ bot.dialog('feedback', [
   function (session,args) {
   //  console.log("color is "+args.candidateanswer);
   //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
-  builder.Prompts.choice(session, "We are interested to get your feedback about the interview. Are you interested in giving feedback", feedbackchoice,{listStyle: 3});
+  builder.Prompts.choice(session, "We are interested to get your feedback about the interview. Are you interested in giving feedback?", feedbackchoice,{listStyle: 3});
   },
   function (session, results) {
       //session.endDialogWithResult(results);
@@ -297,9 +297,9 @@ bot.dialog('feedback', [
   },
   function (session , results) {
     
-    candidateanswer += results.response;
-    console.log("candidateanswer is ",candidateanswer);
-    results.feedbackres = candidateanswer;
+    feedbackres = results.response;
+    //console.log("candidateanswer is ",candidateanswer);
+    results.feedbackres = feedbackres;
    // session.beginDialog('finish',{candidateanswer:candidateanswer});
    session.endDialogWithResult(results);
   }
@@ -372,7 +372,7 @@ bot.dialog('/print', function (session) {
   var htmlend  = "</body></html>";
   let qno =1;
   for (var key in qna) {
-    answer += "<b>"+qno+")Question :</b> "+key+"<br> <b>Answer :</b> "+qna[key]+"<br><br>";
+    answer += "<b>"+qno+". Question:</b> "+key+"<br> <b>Answer:</b> "+qna[key]+"<br><br>";
     qno++;
     // console.log(qna[key]);
     }
@@ -413,7 +413,7 @@ bot.dialog('/print', function (session) {
     });
   //  let response = htmlstart+" The Candidate got <b>"+score+" </b> in the interview <br>"+ answer + htmlend;
   let response ="<p style='color:red'>"+"Candidate "+ candidatename +" got <b>"+score+" </b> in the interview <br>"+ answer +"</p>";
-  let response1 = htmlstart+"<h2 class='head'>Interview Report</h2><h4>Candidate Name:"+candidatename+"</h4><h4>Candidate Score: "+score +"</h4>"+ answer +"<br><br><p><b>Feedback : </b>"+feedbackresponse +"</p><br><br>" + htmlend;
+  let response1 = htmlstart+"<h2 class='head'>Interview Report</h2><h4>Candidate Name: "+candidatename+"</h4><h4>Candidate Score: "+score +"</h4>"+ answer +"<br><br><p><b>Feedback: </b>"+feedbackresponse +"</p><br><br>" + htmlend;
   let response2 =  juice(response1);
   console.log(" response2 = ",response2);
     sendgrid.send({
