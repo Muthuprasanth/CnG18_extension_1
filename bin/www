@@ -139,7 +139,8 @@ var bot = new builder.UniversalBot(connector, [
         session.send("hi2 "+session.message.user.id);*/
         candidatename = session.message.address.user.name;     
         session.send("Hi "+candidatename);
-        session.send("We are glad that you are selected for this technical Interview");
+        session.send("Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion");
+    //    session.send("We are glad that you are selected for this technical Interview");
         session.send("Your Technical Interview starts now");     
         builder.Prompts.text(session, java[0]);
     },
