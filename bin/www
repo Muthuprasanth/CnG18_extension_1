@@ -139,7 +139,8 @@ var bot = new builder.UniversalBot(connector, [
         session.send("hi2 "+session.message.user.id);*/
         candidatename = session.message.address.user.name;     
         session.send("Hi "+candidatename);
-        session.send("Your Interview starts now");     
+        session.send("We are glad that you are selected for this technical Interview");
+        session.send("Your Technical Interview starts now");     
         builder.Prompts.text(session, java[0]);
     },
   function (session, results) {
@@ -426,7 +427,7 @@ bot.dialog('/print', function (session) {
         console.log("Mail error",err);
       } else {
         console.log("Success Mail sended From Azure ");
-        session.send("Soon our HR will reach out to you");
+        session.send("We appreciate your interest and patience in going through the entire interview process. We will keep you posted earliest more on the details about the other rounds of interview.");
         session.endDialog("For any queries reach out our HR @ sirius.indiahr@siriuscom.com");
         //session.send("Your Interview Report is send to our HR");
         answer="";
