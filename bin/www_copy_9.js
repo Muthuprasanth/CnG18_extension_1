@@ -1,3 +1,4 @@
+//lates before move to new azure account
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
 var http = require('http');
@@ -46,8 +47,8 @@ answerlinestream.on('data', function(chunk) {
 answerinput.pipe(answerlinestream);
 console.log("Answer file",answers);
 
-var MICROSOFT_APP_ID="b23753fe-a695-4f1c-a94a-86fc3a0eb8c8";
-var MICROSOFT_APP_PASSWORD="xebERNFFF03;]clxnD982+|";
+var MICROSOFT_APP_ID="9c011e01-a307-4aa5-b9a6-13b3b5df47d1";
+var MICROSOFT_APP_PASSWORD="qmebxjYOX413uQBIP53#[);";
 
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 4990, function () {
@@ -87,10 +88,10 @@ var config =
 {
   userName: 'Muthuprasanth', // update me
   password: 'Sirius@25', // update me
-  server: 'sendgridserver.database.windows.net', // update me
+  server: 'textanalsisapi.database.windows.net', // update me
   options:
   {
-    database: 'sendgridDB11', //update me
+    database: 'textanalayserapi', //update me
     encrypt: true
   }
 }
