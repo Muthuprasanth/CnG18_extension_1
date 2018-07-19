@@ -142,11 +142,14 @@ var bot = new builder.UniversalBot(connector, [
         session.send("Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion");
     //    session.send("We are glad that you are selected for this technical Interview");
         session.send("Your Technical Interview starts now");     
-        builder.Prompts.text(session, java[0]);
+     //----   builder.Prompts.text(session, java[0]);
+         builder.Prompts.text(session, java[1]);
     },
   function (session, results) {
     score = 0;
     candidateanswer = "";
+    console.log("candidate response is  ",results);
+    console.log("-------------------------------------------------");
     candidateanswer += results.response;
     //session.beginDialog('confirm',{ candidateanswer: candidateanswer});
     session.beginDialog('confirm');
@@ -163,7 +166,8 @@ var bot = new builder.UniversalBot(connector, [
     console.log("gotkeyphrases");
     // qnaresponse = await qnaMaker(java[0]);
     //console.log("qnaresponse ",qnaresponse);
-    qnakeyphrases = await textanalyics(answers[0]);
+    qnakeyphrases = await textanalyics(answers[1]);
+    //----qnakeyphrases = await textanalyics(answers[0]);
     console.log("qnakeyphrases",qnakeyphrases);
     subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
     console.log("score1 "+score+" subtotal1 "+subtotal);
@@ -507,7 +511,7 @@ function textanalyics(question) {
   var options3 = {
     method: 'post',
     headers: {
-      'Ocp-Apim-Subscription-Key': '861ca2bd458d45e89b10575963917cec',
+      'Ocp-Apim-Subscription-Key': '5675f88386734d2a9779bb5eaf48ffea',
       // 'Content-Type':'application/json',
       // 'Accept':'application/json',
     },
