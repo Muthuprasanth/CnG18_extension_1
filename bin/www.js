@@ -171,7 +171,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
          // 'Authorization':'EndpointKey 316818ad-d8b1-4918-82b8-f0d7b02b91af',
           //'Content-Type':'application/json',
           //'Ocp-Apim-Subscription-Key': '2437ab2f3fc04c65a3a2322e3463fca8',
-          responseType: 'arraybuffer'
+          Accept: 'arraybuffer'
         },
      //   body: JSON.stringify(documents),
         // body: documents,
@@ -180,14 +180,15 @@ var bot = new builder.UniversalBot(connector, function (session) {
       }
       //let promiseTOTextAnalytics = 
       return new Promise(function (resolve, reject) {
-        request(options3, function (err, result, body) {
+        request(options3, function (err, body,result) {
           if (err) {
             console.log("error is ", err);
             // res.json({ message: 'Error occurred in Reading a file'+ err });
           }
           else {
-            audioContext.decodeAudioData(resp, function (buffer) {
+            context.decodeAudioData(body, function (buffer) {
               // encode AudioBuffer to WAV
+              console.log("my audio is " ,buffer);
               var wav = toWav(buffer)
               console.log("my audio is " ,wav);
               // do something with the WAV ArrayBuffer ...
