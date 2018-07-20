@@ -23,6 +23,8 @@ var toWav = require('audiobuffer-to-wav')
 var xhr1 = require('xhr');
 const AudioContext = require('web-audio-api').AudioContext;
 var context = new AudioContext();
+var HttpClient = require('http-client').createFetch;
+var httpClient = new HttpClient();
 
 
 var decoder = new StringDecoder('utf8');
@@ -143,7 +145,7 @@ server.post('/api/messages', connector.listen());
 var inMemoryStorage = new builder.MemoryBotStorage();
 
 
-var bot = new builder.UniversalBot(connector, function (session) {
+var bot = new builder.UniversalBot(connector, async function (session) {
 
     var msg = session.message;
     if (msg.attachments.length) {
@@ -152,6 +154,9 @@ var bot = new builder.UniversalBot(connector, function (session) {
       console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
       audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
       console.log("audiouri is",audiouri);
+      var attachmentData = 
+    await httpClient.GetByteArrayAsync(audiouri);
+    console.log("attacheddata from url ",attachmentData);
     /*  xhr1({
         uri: audiouri,
         responseType: 'arraybuffer'
@@ -165,7 +170,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
           // do something with the WAV ArrayBuffer ...
         })
       })*/
-      var options3 = {
+    /*  var options3 = {
      //   method: 'post',
         headers: {
          // 'Authorization':'EndpointKey 316818ad-d8b1-4918-82b8-f0d7b02b91af',
@@ -197,7 +202,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
           }
     
         });
-      });
+      });*/
 
         // Message with attachment, proceed to download it.
         // Skype & MS Teams attachment URLs are secured by a JwtToken, so we need to pass the token from our bot.
