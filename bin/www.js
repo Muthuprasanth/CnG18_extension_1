@@ -184,7 +184,7 @@ var bot = new builder.UniversalBot(connector, [
     candidateanswer += results.response;
     session.beginDialog('confirm');
   },
-  async function (session, results) {
+  /*async function (session, results) {
     qna[java[1]]=results.candidateanswer;
     session.sendTyping();
     candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
@@ -250,7 +250,7 @@ var bot = new builder.UniversalBot(connector, [
     candidateanswer = "";
     candidateanswer += results.response;
     session.beginDialog('finish');
-  },
+  },*/
   async function (session, results) {
     qna[java[4]]=results.candidateanswer;
     session.sendTyping();
