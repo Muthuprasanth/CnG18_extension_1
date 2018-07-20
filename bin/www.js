@@ -171,7 +171,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
          // 'Authorization':'EndpointKey 316818ad-d8b1-4918-82b8-f0d7b02b91af',
           //'Content-Type':'application/json',
           //'Ocp-Apim-Subscription-Key': '2437ab2f3fc04c65a3a2322e3463fca8',
-          Accept: 'arraybuffer'
+          Accept: Buffer.from(ArrayBuffer)
         },
      //   body: JSON.stringify(documents),
         // body: documents,
