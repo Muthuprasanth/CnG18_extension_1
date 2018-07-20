@@ -155,7 +155,7 @@ var bot = new builder.UniversalBot(connector, async function (session) {
       audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
       console.log("audiouri is",audiouri);
 
-      load('http://example.net/audio/file.mp3').then(function (buffer) {
+      load(audiouri).then(function (buffer) {
         console.log("Audio Buffer is  ",buffer) // => <AudioBuffer>
         var wav = toWav(buffer)
         console.log("my wav format audio is " ,wav);
