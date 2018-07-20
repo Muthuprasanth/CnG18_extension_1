@@ -114,8 +114,6 @@ function getRandomInt() {
  'Can you make a constructor final?',
  'What is static variable?',
  'What is static block?'];*/
-// var inMemoryStorage = new builder.MemoryBotStorage();
- 
 var question;
 var qna=[];
 var question_num=[];
@@ -130,72 +128,163 @@ var feedbackchoice = ["Yes","No"];
 
 console.log("dfsfdsf------- csfsdf");
 server.post('/api/messages', connector.listen());
+var bot = new builder.UniversalBot(connector, [
+  async  function (session) {
+      let candidateresponsekeyphrases,qnakeyphrases,qnaresponse;
+      let subtotal;
+    //  getRandomInt();
+        session.sendTyping();
+        
+       /* session.send("Hi1 " + session.message.user.name);
+        session.send("hi2 "+session.message.user.id);*/
+        candidatename = session.message.address.user.name;     
+        session.send("Hi "+candidatename);
+        session.send("Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion");
+    //    session.send("We are glad that you are selected for this technical Interview");
+        session.send("Your Technical Interview starts now");     
+     //----   builder.Prompts.text(session, java[0]);
+         builder.Prompts.text(session, java[1]);
+    },
+  function (session, results) {
+    score = 0;
+    candidateanswer = "";
+    console.log("session contains   ",session);
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++");
+    console.log("session message is  ",session.message);
+    console.log("-------------------------------------------------");
+    console.log("candidate response is  ",results);
+    console.log("-------------------------------------------------");
+    candidateanswer += results.response;
+    //session.beginDialog('confirm',{ candidateanswer: candidateanswer});
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    console.log("Inside Next function after updates ",results.candidateanswer);
+    // qna[java[question_num[k]]]=results.response;
+      //k++;
+    qna[java[0]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+    // k++;
+    console.log("gotkeyphrases");
+    // qnaresponse = await qnaMaker(java[0]);
+    //console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[1]);
+    //----qnakeyphrases = await textanalyics(answers[0]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[1]);
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('confirm');
+  },
+  /*async function (session, results) {
+    qna[java[1]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+  // k++;    
+    console.log("gotkeyphrases");
+  //  qnaresponse = await qnaMaker(java[1]);
+  //  console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[1]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[2]);
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    qna[java[2]]=results.candidateanswer;
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+  // k++;
+    console.log("gotkeyphrases");
+  //  qnaresponse = await qnaMaker(java[2]);
+  //  console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[2]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[3]);
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('confirm');
+  },
+  async function (session, results) {
+    qna[java[3]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+    console.log("gotkeyphrases");
+  //  qnaresponse = await qnaMaker(java[3]);
+  //  console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[3]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    builder.Prompts.text(session, java[4]);
+  //  session.send("thank you");
+  //  session.beginDialog("/print");
+  //  k=0;
+  },
+  function (session, results) {
+    candidateanswer = "";
+    candidateanswer += results.response;
+    session.beginDialog('finish');
+  },*/
+  async function (session, results) {
+    qna[java[4]]=results.candidateanswer;
+    session.sendTyping();
+    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
+    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
+    console.log("gotkeyphrases");
+   // qnaresponse = await qnaMaker(java[4]);
+   // console.log("qnaresponse ",qnaresponse);
+    qnakeyphrases = await textanalyics(answers[4]);
+    console.log("qnakeyphrases",qnakeyphrases);
+    subtotal =  comparepheases(candidateresponsekeyphrases,qnakeyphrases);
+    console.log("score1 "+score+" subtotal1 "+subtotal);
+    score = score+subtotal;
+    console.log("score2 "+score+" subtotal2 "+subtotal);
+    session.beginDialog("feedback");
+    //session.send("thank you");
+   // session.send("Your score is "+score);
+   // session.beginDialog("/print");
 
-
-
-var inMemoryStorage = new builder.MemoryBotStorage();
-
-
-var bot = new builder.UniversalBot(connector, function (session) {
-
-    var msg = session.message;
-    if (msg.attachments.length) {
-
-      console.log("msg    ",msg);
-        // Message with attachment, proceed to download it.
-        // Skype & MS Teams attachment URLs are secured by a JwtToken, so we need to pass the token from our bot.
-      /*  var attachment = msg.attachments[0];
-        var fileDownload = checkRequiresToken(msg)
-            ? requestWithToken(attachment.contentUrl)
-            : request(attachment.contentUrl);
-
-        fileDownload.then(
-            function (response) {
-
-                // Send reply with attachment type & size
-                var reply = new builder.Message(session)
-                    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, response.length);
-                session.send(reply);
-
-            }).catch(function (err) {
-                console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
-            });*/
-
-    } else {
-
-        // No attachments were sent
-        var reply = new builder.Message(session)
-            .text('Hi there! This sample is intented to show how can I receive attachments but no attachment was sent to me. Please try again sending a new message with an attachment.');
-        session.send(reply);
+  //  k=0;
+  },
+  function (session, results) {
+    //session.beginDialog("/print");
+    if( results.feedbackres  === "NO")
+    {
+      feedbackresponse = "The candidate is not interested in giving feedback";
     }
-
-}).set('storage', inMemoryStorage); // Register in memory storage
-
-// Request file with Authentication Header
-var requestWithToken = function (url) {
-    return obtainToken().then(function (token) {
-        return request({
-            url: url,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/octet-stream'
-            }
-        });
-    });
-};
-
-// Promise for obtaining JWT Token (requested once)
-var obtainToken = new Promise(function(resolve) {
-  connector.getAccessToken.bind(connector)
-});
-
-var checkRequiresToken = function (message) {
-    return message.source === 'skype' || message.source === 'msteams';
-};
-
-
-
-
+    else{
+      feedbackresponse = results.feedbackres;
+    }
+    session.send("Thank you");
+    session.beginDialog("/print");
+  }
+]);
 
 bot.dialog('feedback', [
   function (session,args) {
