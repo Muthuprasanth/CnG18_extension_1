@@ -24,8 +24,8 @@ var xhr1 = require('xhr');
 const AudioContext = require('web-audio-api').AudioContext;
 var context = new AudioContext();
 var HttpClient = require('http-client').createFetch;
-var httpClient = new HttpClient();
-
+//var httpClient = new HttpClient();
+var load = require('audio-loader');
 
 var decoder = new StringDecoder('utf8');
 var java = [];
@@ -154,9 +154,16 @@ var bot = new builder.UniversalBot(connector, async function (session) {
       console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
       audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
       console.log("audiouri is",audiouri);
-      var attachmentData = 
-    await httpClient.GetByteArrayAsync(audiouri);
-    console.log("attacheddata from url ",attachmentData);
+
+      load('http://example.net/audio/file.mp3').then(function (buffer) {
+        console.log("Audio Buffer is  ",buffer) // => <AudioBuffer>
+        var wav = toWav(buffer)
+        console.log("my wav format audio is " ,wav);
+      })
+
+     // var attachmentData = await HttpClient.GetByteArrayAsync(audiouri);
+   // await httpClient.GetByteArrayAsync(audiouri);
+    //console.log("attacheddata from url ",attachmentData);
     /*  xhr1({
         uri: audiouri,
         responseType: 'arraybuffer'
