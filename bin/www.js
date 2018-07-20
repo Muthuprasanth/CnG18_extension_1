@@ -19,7 +19,8 @@ var request = require('request');
 var juice = require('juice');
 
 var toWav = require('audiobuffer-to-wav')
-var xhr = require('xhr')
+//var xhr = require('xhr')
+var xhr1 = require('xhr');
 const AudioContext = require('web-audio-api').AudioContext;
 var context = new AudioContext();
 
@@ -151,8 +152,8 @@ var bot = new builder.UniversalBot(connector, function (session) {
       console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
       audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
       console.log("audiouri is",audiouri);
-      xhr({
-        uri: 'audio/track.mp3',
+      xhr1({
+        uri: audiouri,
         responseType: 'arraybuffer'
       }, function (err, body, resp) {
         if (err) throw err
