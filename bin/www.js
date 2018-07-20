@@ -18,6 +18,12 @@ var request = require('request');
 
 var juice = require('juice');
 
+var toWav = require('audiobuffer-to-wav')
+var xhr = require('xhr')
+const AudioContext = require('web-audio-api').AudioContext;
+var context = new AudioContext();
+
+
 var decoder = new StringDecoder('utf8');
 var java = [];
 var jk=0,ans=0;
@@ -140,8 +146,24 @@ var bot = new builder.UniversalBot(connector, function (session) {
 
     var msg = session.message;
     if (msg.attachments.length) {
-
+      let audiouri = "";
       console.log("msg    ",msg);
+      console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
+      audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
+      console.log("audiouri is",audiouri);
+      xhr({
+        uri: 'audio/track.mp3',
+        responseType: 'arraybuffer'
+      }, function (err, body, resp) {
+        if (err) throw err
+        // decode the MP3 into an AudioBuffer
+        audioContext.decodeAudioData(resp, function (buffer) {
+          // encode AudioBuffer to WAV
+          var wav = toWav(buffer)
+          console.log("my audio is " ,wav);
+          // do something with the WAV ArrayBuffer ...
+        })
+      })
         // Message with attachment, proceed to download it.
         // Skype & MS Teams attachment URLs are secured by a JwtToken, so we need to pass the token from our bot.
       /*  var attachment = msg.attachments[0];
