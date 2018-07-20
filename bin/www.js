@@ -145,10 +145,12 @@ var bot = new builder.UniversalBot(connector, [
      //----   builder.Prompts.text(session, java[0]);
          builder.Prompts.text(session, java[1]);
     },
-  function (session, results, Attachment) {
+  function (session, results) {
     score = 0;
     candidateanswer = "";
-    console.log("Attached candidate response is  ",results.attachment);
+    console.log("session contains   ",session);
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++");
+    console.log("session message is  ",session.message);
     console.log("-------------------------------------------------");
     console.log("candidate response is  ",results);
     console.log("-------------------------------------------------");
