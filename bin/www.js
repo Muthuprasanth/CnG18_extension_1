@@ -152,7 +152,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
       console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
       audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
       console.log("audiouri is",audiouri);
-      xhr1({
+    /*  xhr1({
         uri: audiouri,
         responseType: 'arraybuffer'
       }, function (err, body, resp) {
@@ -164,7 +164,39 @@ var bot = new builder.UniversalBot(connector, function (session) {
           console.log("my audio is " ,wav);
           // do something with the WAV ArrayBuffer ...
         })
-      })
+      })*/
+      var options3 = {
+     //   method: 'post',
+        headers: {
+         // 'Authorization':'EndpointKey 316818ad-d8b1-4918-82b8-f0d7b02b91af',
+          //'Content-Type':'application/json',
+          //'Ocp-Apim-Subscription-Key': '2437ab2f3fc04c65a3a2322e3463fca8',
+          responseType: 'arraybuffer'
+        },
+     //   body: JSON.stringify(documents),
+        // body: documents,
+        url: audiouri,
+        
+      }
+      //let promiseTOTextAnalytics = 
+      return new Promise(function (resolve, reject) {
+        request(options3, function (err, result, body) {
+          if (err) {
+            console.log("error is ", err);
+            // res.json({ message: 'Error occurred in Reading a file'+ err });
+          }
+          else {
+            audioContext.decodeAudioData(resp, function (buffer) {
+              // encode AudioBuffer to WAV
+              var wav = toWav(buffer)
+              console.log("my audio is " ,wav);
+              // do something with the WAV ArrayBuffer ...
+            });
+          }
+    
+        });
+      });
+
         // Message with attachment, proceed to download it.
         // Skype & MS Teams attachment URLs are secured by a JwtToken, so we need to pass the token from our bot.
       /*  var attachment = msg.attachments[0];
