@@ -263,7 +263,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
               })*/
               var file = fs.createWriteStream("aud.m4a");
               var request = https.get(audiouri, function(response) {
-                console.log("response is  ",audiouri);
+                console.log("response is  ",response);
                 response.pipe(file);
               });
             } else {
