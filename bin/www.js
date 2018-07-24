@@ -19,13 +19,15 @@ var request = require('request');
 var juice = require('juice');
 
 var toWav = require('audiobuffer-to-wav')
-//var xhr = require('xhr')
-var xhr1 = require('xhr');
 const AudioContext = require('web-audio-api').AudioContext;
 var context = new AudioContext();
 var HttpClient = require('http-client').createFetch;
 //var httpClient = new HttpClient();
+
 var load = require('audio-loader');
+const Lame = require("node-lame").Lame;
+var readChunk = require('read-chunk'); 
+const { BingSpeechClient, VoiceRecognitionResponse } = require('bingspeech-api-client');
 
 var decoder = new StringDecoder('utf8');
 var java = [];
@@ -80,18 +82,6 @@ var connector = new builder.ChatConnector({
     },
 */
 
-
-/*var config = 
-{
- userName: 'Muthuprasanth', // update me
- password: 'Sirius@25', // update me
- server: 'sendgridazure.database.windows.net', // update me
- options: 
-  {
-     database: 'Sendgrid_DB', //update me
-     encrypt: true
-  }
-}*/
 var config =
 {
   userName: 'Muthuprasanth', // update me
@@ -145,22 +135,51 @@ server.post('/api/messages', connector.listen());
 var inMemoryStorage = new builder.MemoryBotStorage();
 
 
-var bot = new builder.UniversalBot(connector, async function (session) {
+var bot = new builder.UniversalBot(connector, function (session) {
 
     var msg = session.message;
-    if (msg.attachments.length) {
+    //if (msg.attachments.length) {
       let audiouri = "";
       console.log("msg    ",msg);
-      console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
-      audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
-      console.log("audiouri is",audiouri);
 
-      load(audiouri).then(function (buffer) {
-        console.log("Audio Buffer is  ",buffer) // => <AudioBuffer>
-        var wav = toWav(buffer)
-        console.log("my wav format audio is " ,wav);
-      })
+     // console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
+     // audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
+     // console.log("audiouri is",audiouri);
+     //audio1.m4a  audiomp.mp3
+   //  let resp = fs.readFileSync('audio1.m4a');
+  /* const linear16 = require('linear16');
 
+    linear16('audio1.m4a', 'audio1.wav')
+   .then(outPath => console.log(outPath)); */
+     /*
+     let wav = toWav(resp);
+     console.log("my wav format audio is " ,wav);*/
+
+   /*  console.log("Resp content is ",resp);
+     context.decodeAudioData(resp, buffer => {
+       console.log("Audio Buffer is  ",buffer);
+       let wav = toWav(buffer);
+       console.log("my wav format audio is " ,wav);
+       // do something with the WAV ArrayBuffer ...
+     });*/
+
+   /*  let audioStream = fs.createReadStream("audiowav.wav"); // create audio stream from any source
+
+     // Bing Speech Key (https://www.microsoft.com/cognitive-services/en-us/subscriptions)
+     let subscriptionKey = 'c9a70ce52aae4bb592fcb80099cd2b8b';
+     
+     let client = new BingSpeechClient(subscriptionKey);
+   //  client.recognizeStream(audioStream).then(response => console.log(response.results[0].name));
+    client.recognizeStream(audioStream).then(function(response)
+    {
+      console.log("response is ",response);
+      console.log("-------------------------------------------------");
+      console.log("response is ",response.results[0]);
+    }).catch(function(error)
+    {
+      console.log("error occured is ",error);
+    });*/
+  
      // var attachmentData = await HttpClient.GetByteArrayAsync(audiouri);
    // await httpClient.GetByteArrayAsync(audiouri);
     //console.log("attacheddata from url ",attachmentData);
@@ -229,18 +248,33 @@ var bot = new builder.UniversalBot(connector, async function (session) {
             }).catch(function (err) {
                 console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
             });*/
+            if (msg.attachments.length) {
+              let audiouri = "";
+              console.log("msg    ",msg);
+              console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
+              audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
+              console.log("audiouri is",audiouri);
+        
+            /*  load(audiouri).then(function (buffer) {
+                console.log("Audio Buffer is  ",buffer) // => <AudioBuffer>
+                var wav = toWav(buffer)
+                console.log("my wav format audio is " ,wav);
+              })*/
+              var file = fs.createWriteStream("aud.m4a");
+              var request = http.get(audiouri, function(response) {
+                console.log("response is  ",audiouri);
+                response.pipe(file);
+              });
+            } else {
 
-    } else {
-
-        // No attachments were sent
-        var reply = new builder.Message(session)
-            .text('Hi there! This sample is intented to show how can I receive attachments but no attachment was sent to me. Please try again sending a new message with an attachment.');
-        session.send(reply);
-    }
+            //    No attachments were sent
+                var reply = new builder.Message(session)
+                    .text('Hi there! This sample is intented to show how can I receive attachments but no attachment was sent to me. Please try again sending a new message with an attachment.');
+                session.send(reply);
+            }
 
 }).set('storage', inMemoryStorage); // Register in memory storage
 
-// Request file with Authentication Header
 var requestWithToken = function (url) {
     return obtainToken().then(function (token) {
         return request({
@@ -262,10 +296,6 @@ var checkRequiresToken = function (message) {
     return message.source === 'skype' || message.source === 'msteams';
 };
 
-
-
-
-
 bot.dialog('feedback', [
   function (session,args) {
   //  console.log("color is "+args.candidateanswer);
@@ -286,9 +316,7 @@ bot.dialog('feedback', [
       }
   },
   function (session , results) {
-    
     feedbackres = results.response;
-    //console.log("candidateanswer is ",candidateanswer);
     results.feedbackres = feedbackres;
    // session.beginDialog('finish',{candidateanswer:candidateanswer});
    session.endDialogWithResult(results);
@@ -320,7 +348,6 @@ bot.dialog('finish', [
     console.log("candidateanswer is ",candidateanswer);
     session.beginDialog('finish',{candidateanswer:candidateanswer});
   }
-
 ]);
 
 bot.dialog('confirm', [
@@ -347,9 +374,7 @@ bot.dialog('confirm', [
     console.log("candidateanswer is ",candidateanswer);
     session.beginDialog('confirm',{candidateanswer:candidateanswer});
   }
-
 ]);
-
 
 bot.dialog('/print', function (session) {
 //session.send("printed");
@@ -524,48 +549,3 @@ function textanalyics(question) {
 
 }
 
-
-// This is called the root dialog. It is the first point of entry for any message the bot receives
-/*
-var bot = new builder.UniversalBot(connector);
-bot.dialog('/', function (session) {
-// Send 'hello world' to the user
-//session.send(session.message.user);
-//session.send(MICROSOFT_APP_ID);
-session.send("Your Interview strats now");
-session.beginDialog("/questions");
-});
-bot.dialog("/questions", [
-    //question = java[getRandomInt()];
-    function (session) {
-      console.log("I am first");
-        builder.Prompts.text(session,java[question_num[k]]);
-    },
-    // Step 2
-    function (session, results) {
-       console.log("I am second");
-      qna[java[question_num[k]]]=results.response;
-      k++;
-      builder.Prompts.text(session,java[question_num[k]]);
-    },
-     function (session, results) {
-       console.log("I am third");
-        qna[java[question_num[k]]]=results.response;
-      k++;
-      builder.Prompts.text(session,java[question_num[k]]);
-    },
-     function (session, results) {
-       console.log("I am fourth");
-       qna[java[question_num[k]]]=results.response;
-      k++;
-      builder.Prompts.text(session,java[question_num[k]]);
-    },
-    function (session, results) {
-       console.log("I am fifth");
-     qna[java[question_num[k]]]=results.response;
-      console.log("final array",qna);
-      session.endDialog("thank you");
-    }
-   
-]);
-*/
