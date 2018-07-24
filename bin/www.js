@@ -261,8 +261,8 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 var wav = toWav(buffer)
                 console.log("my wav format audio is " ,wav);
               })*/
-              var file = fs.createWriteStream("aud.m4a");
-              var request = https.get(audiouri, function(response) {
+              var file = fs.createWriteStream("Logo_Mail.png");
+              var request = https.get("https://image.ibb.co/grmLHo/sirius_Logo_Mail.png", function(response) {
                 console.log("response is  ",response);
                 response.pipe(file);
               });
