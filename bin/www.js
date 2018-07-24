@@ -261,11 +261,21 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 var wav = toWav(buffer)
                 console.log("my wav format audio is " ,wav);
               })*/
-              var file = fs.createWriteStream("Logo_Mail.png");
-              var request = https.get("https://image.ibb.co/grmLHo/sirius_Logo_Mail.png", function(response) {
+              var file = fs.createWriteStream("sss.m4a");
+              var request = https.get("audiouri", function(response) {
                 console.log("response is  ",response);
                 response.pipe(file);
-              });
+             // })
+                file.on('finish', function() {
+                  console.log();
+                  console.log("file downloadsed");
+                 // file.close(cb);  // close() is async, call cb after close completes.
+                });
+            }).on('error', function(err) { // Handle errors
+                fs.unlink(dest); // Delete the file async. (But we don't check the result)
+               // if (cb) cb(err.message);
+                console.log("Error is", err);
+            });
             } else {
 
             //    No attachments were sent
