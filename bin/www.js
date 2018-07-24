@@ -28,6 +28,7 @@ var load = require('audio-loader');
 const Lame = require("node-lame").Lame;
 var readChunk = require('read-chunk'); 
 const { BingSpeechClient, VoiceRecognitionResponse } = require('bingspeech-api-client');
+var https = require('https');
 
 var decoder = new StringDecoder('utf8');
 var java = [];
@@ -261,7 +262,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 console.log("my wav format audio is " ,wav);
               })*/
               var file = fs.createWriteStream("aud.m4a");
-              var request = http.get(audiouri, function(response) {
+              var request = https.get(audiouri, function(response) {
                 console.log("response is  ",audiouri);
                 response.pipe(file);
               });
