@@ -55,13 +55,18 @@ var bot = new builder.UniversalBot(connector, function (session) {
 
                  // var wav = toWav(response)
                console.log("my wav format audio is " ,wav);
-               var file = fs.createWriteStream("sss.m4a");
-               response.pipe(file)
-               file.on('finish', function() {
+               var chunk = new Uint8Array(wav);
+               console.log(chunk); 
+                fs.appendFile('bb.wav', new Buffer(chunk), function (err) {
+                  console.log("Error in append file is",chunk);
+                });
+              // var file = fs.createWriteStream("sss.m4a");
+              // response.pipe(file)
+             /*  file.on('finish', function() {
                 console.log();
                 console.log("file downloadsed");
                // file.close(cb);  // close() is async, call cb after close completes.
-              });
+              });*/
 
 
             }).catch(function (err) {
