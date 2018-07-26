@@ -61,7 +61,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 // Send reply with attachment type & size
                 console.log("Response is  ",resp);
                 var reply = new builder.Message(session)
-                    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, response.length);
+                    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, resp.length);
                 session.send(reply);
                 audioContext.decodeAudioData(resp, buffer => {
                     let wav = toWav(buffer); 
