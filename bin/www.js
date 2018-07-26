@@ -6,7 +6,7 @@ var Promise = require('bluebird');
 var request = require('request-promise').defaults({ encoding: null });
 var toWav = require('audiobuffer-to-wav')
 var audiobuffer = require('audio-buffer')
-
+const fs = require('fs');
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 4990, function () {
@@ -52,7 +52,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 session.send(reply);
                 
                 var wav = audiobuffer(response);
-                
+
                  // var wav = toWav(response)
                console.log("my wav format audio is " ,wav);
                var file = fs.createWriteStream("sss.m4a");
