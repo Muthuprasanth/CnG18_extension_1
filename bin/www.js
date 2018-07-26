@@ -52,8 +52,17 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 session.send(reply);
                 
                 var wav = audiobuffer(response);
+                
                  // var wav = toWav(response)
                console.log("my wav format audio is " ,wav);
+               var file = fs.createWriteStream("sss.m4a");
+               response.pipe(file)
+               file.on('finish', function() {
+                console.log();
+                console.log("file downloadsed");
+               // file.close(cb);  // close() is async, call cb after close completes.
+              });
+
 
             }).catch(function (err) {
               console.log("Error thing is  ",err);
