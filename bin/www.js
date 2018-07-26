@@ -56,10 +56,10 @@ var bot = new builder.UniversalBot(connector, function (session) {
             : request(attachment.contentUrl);
 
         fileDownload.then(
-            function (response) {
+            function (resp) {
 
                 // Send reply with attachment type & size
-                console.log("Response is  ",response);
+                console.log("Response is  ",resp);
                 var reply = new builder.Message(session)
                     .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, response.length);
                 session.send(reply);
