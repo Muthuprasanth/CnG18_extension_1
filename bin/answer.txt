@@ -1,8 +1,8 @@
 Class library, Common Language Runtime , Dynamic Language Runtime, Application Domains, Cross-language interoperability, Runtime Hosts, Framework security.
-It contains Version of assembly, Security identity,Scope of the assembly, To resolve references to resources and classes.
+It contains assembly Version, Security identity,assembly scope, To resolve references to resources and classes.
 It is part of the  security mechanism that prevents unauthorized access of resources and operations, and restricts the managed code to perform particular tasks and operations.
 All .NET source code is compiled to Intermediate Language. IL is then converted to machine code by a Just-In-Time compiler.
-It is a service for storing large numbers of messages that can be accessed from anywhere via authenticated calls using HTTP or HTTPS.
+It is a service for storing  messages that can be accessed from anywhere via authenticated calls using HTTP or HTTPS.
 
 
 
@@ -46,10 +46,59 @@ qnakeyphrases [ 'authenticated calls',
   It is a service for storing large numbers of messages that can be accessed from anywhere via authenticated calls using HTTP or HTTPS.
   1
   
+  
+
+SPANISH
+
+Common Language Runtime, biblioteca de clases, sistema de tipos común, interoperabilidad entre lenguajes, Dynamic Language Runtime, Common Language Specification y Hosts de tiempo de ejecución
+
+Contiene versión de ensamblaje, identidad de seguridad, alcance de ensamblaje, para resolver referencias a recursos y clases.
+
+Es un mecanismo de seguridad que common language runtime puede restringir el código administrado para ejecutar operaciones con un conjunto limitado de permisos.
+
+Todo el código fuente de .NET se compila en lenguaje intermedio. IL se convierte a código de máquina mediante un compilador Just-In-Time.
+
+Es un servicio para almacenar mensajes a los que se puede acceder desde cualquier lugar a través de llamadas autenticadas usando HTTP o HTTPS.
+
+
+
+GERMAN
+
+Common Language Runtime, allgemeines Typsystem, Klassenbibliothek, sprachübergreifende Interoperabilität, Dynamic Language Runtime, Common Language Specification und Runtime Hosts
+
+Es enthält die Version der Assembly, Sicherheitsidentität, Umfang der Versammlung, um Verweise auf Klassen und Ressourcen zu lösen.
+
+Es ist ein Mechanismus für die gemeinsame Sprachlaufzeit Sicherheit den verwalteten Code, um Operationen mit einem begrenzten Satz von Berechtigungen einschränken kann.
+
+Intermediate Language (IL) ist eine objektorientierte Programmiersprache, die von Compilern für .NET Framework vor der statischen oder dynamischen Kompilierung in Maschinencode verwendet werden soll
+
+Es ist ein Dienst zum Speichern großer Mengen an Nachrichten, die von überall über authentifizierte Aufrufe über HTTP oder HTTPS zugegriffen werden können.
+
+
+
+FRENCH
+
+Système de Type commun, Common Language Runtime, l’interopérabilité interlangage, Dynamic Language Runtime, Common Language Specification et hôtes de Runtime, bibliothèque de classes
+
+Manifeste contient toutes les métadonnées nécessaires pour spécifier la Version de l’assembly et l’identité de sécurité et toutes les métadonnées nécessaires pour définir la portée de l’Assemblée
+
+C’est un mécanisme par lequel le common language runtime peut restreindre le code managé pour exécuter des opérations avec un jeu limité d’autorisations de sécurité.
+
+IL (intermediate language) est un langage de programmation orienté objet conçu pour être utilisé par les compilateurs pour le .NET Framework avant la compilation statique ou dynamique de code machine
+
+Il s’agit d’un service pour stocker un grand nombre de messages qui sont accessibles depuis n’importe où via des appels authentifiés à l’aide de HTTP ou HTTPS.
 
 
 
 
+ITALIAN
 
+Common Language Runtime, Common Type System, libreria di classi, l'interoperabilità tra più linguaggi, Dynamic Language Runtime, Common Language Specification e host di Runtime
 
+Manifesto contiene tutti i metadati necessari per specificare la versione di assembly e l'identità di sicurezza e tutti i metadati necessari per definire l'ambito dell'assembly 
 
+È un meccanismo di sicurezza che common language runtime consente di limitare il codice gestito per eseguire operazioni con un set limitato di autorizzazioni. 
+
+Microsoft intermediate language (IL) è un linguaggio di programmazione orientato agli oggetti progettato per essere utilizzato dai compilatori per .NET Framework prima della compilazione statica o dinamica in codice macchina  
+
+È un servizio per la memorizzazione di un numero elevato di messaggi che è possibile accedere da qualsiasi tramite chiamate autenticate tramite HTTP o HTTPS.

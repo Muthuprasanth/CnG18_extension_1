@@ -133,7 +133,7 @@ console.log("dfsfdsf------- csfsdf");
 server.post('/api/messages', connector.listen());
 
 var inMemoryStorage = new builder.MemoryBotStorage();
-var bot = new builder.UniversalBot(connector, function (session,results) {
+var bot = new builder.UniversalBot(connector, function (session) {
 
     var msg = session.message;
     //if (msg.attachments.length) {
@@ -249,8 +249,6 @@ var bot = new builder.UniversalBot(connector, function (session,results) {
             if (msg.attachments.length) {
               let audiouri = "";
               console.log("msg    ",msg);
-              console.log("----------------------");
-              console.log("results    ",results);
               console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
               audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
               console.log("audiouri is",audiouri);
