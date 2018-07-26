@@ -133,12 +133,10 @@ console.log("dfsfdsf------- csfsdf");
 server.post('/api/messages', connector.listen());
 
 var inMemoryStorage = new builder.MemoryBotStorage();
-var bot = new builder.UniversalBot(connector, function (session,results) {
+var bot = new builder.UniversalBot(connector, function (session) {
 
-    var msg = session.message;
-    //if (msg.attachments.length) {
-      let audiouri = "";
-      console.log("msg    ",msg);
+  
+     builder.Prompts.text(session, "Please send any attachment");
 
      // console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
      // audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
@@ -246,45 +244,52 @@ var bot = new builder.UniversalBot(connector, function (session,results) {
             }).catch(function (err) {
                 console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
             });*/
-            if (msg.attachments.length) {
-              let audiouri = "";
-              console.log("+++++++++++++++++++++++++++++++++++++++++++");
-              console.log("msg    ",msg);
-              console.log("----------------------");
-              console.log("results    ",results);
-              console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
-              audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
-              console.log("audiouri is",audiouri);
-        
-            /*  load(audiouri).then(function (buffer) {
-                console.log("Audio Buffer is  ",buffer) // => <AudioBuffer>
-                var wav = toWav(buffer)
-                console.log("my wav format audio is " ,wav);
-              })*/
-              var file = fs.createWriteStream("sss.m4a");
-              var request = https.get("audiouri", function(response) {
-                console.log("response is  ",response);
-                response.pipe(file);
-             // })
-                file.on('finish', function() {
-                  console.log();
-                  console.log("file downloadsed");
-                 // file.close(cb);  // close() is async, call cb after close completes.
+           },
+            function (session, results) {
+              var msg = session.message;
+              //if (msg.attachments.length) {
+                let audiouri = "";
+                console.log("msg    ",msg);
+                if (msg.attachments.length) {
+                  let audiouri = "";
+                  console.log("+++++++++++++++++++++++++++++++++++++++++++");
+                  console.log("msg    ",msg);
+                  console.log("----------------------");
+                  console.log("results    ",results);
+                  console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
+                  audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
+                  console.log("audiouri is",audiouri);
+            
+                /*  load(audiouri).then(function (buffer) {
+                    console.log("Audio Buffer is  ",buffer) // => <AudioBuffer>
+                    var wav = toWav(buffer)
+                    console.log("my wav format audio is " ,wav);
+                  })*/
+                  var file = fs.createWriteStream("sss.m4a");
+                  var request = https.get("audiouri", function(response) {
+                    console.log("response is  ",response);
+                    response.pipe(file);
+                 // })
+                    file.on('finish', function() {
+                      console.log();
+                      console.log("file downloadsed");
+                     // file.close(cb);  // close() is async, call cb after close completes.
+                    });
+                }).on('error', function(err) { // Handle errors
+                    fs.unlink(dest); // Delete the file async. (But we don't check the result)
+                   // if (cb) cb(err.message);
+                    console.log("Error is", err);
                 });
-            }).on('error', function(err) { // Handle errors
-                fs.unlink(dest); // Delete the file async. (But we don't check the result)
-               // if (cb) cb(err.message);
-                console.log("Error is", err);
-            });
-            } else {
-
-            //    No attachments were sent
-                var reply = new builder.Message(session)
-                    .text('Hi there! This sample is intented to show how can I receive attachments but no attachment was sent to me. Please try again sending a new message with an attachment.');
-                session.send(reply);
+                } else {
+    
+                //    No attachments were sent
+                    var reply = new builder.Message(session)
+                        .text('Hi there! This sample is intented to show how can I receive attachments but no attachment was sent to me. Please try again sending a new message with an attachment.');
+                    session.send(reply);
+                }
             }
 
-}).set('storage', inMemoryStorage); // Register in memory storage
+).set('storage', inMemoryStorage); // Register in memory storage
 
 var requestWithToken = function (url) {
     return obtainToken().then(function (token) {
