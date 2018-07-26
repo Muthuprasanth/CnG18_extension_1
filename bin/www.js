@@ -5,6 +5,7 @@ var restify = require('restify');
 var Promise = require('bluebird');
 var request = require('request-promise').defaults({ encoding: null });
 var toWav = require('audiobuffer-to-wav')
+var audiobuffer = require('audio-buffer')
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -49,9 +50,10 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 var reply = new builder.Message(session)
                     .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, response.length);
                 session.send(reply);
-
-                  var wav = toWav(response)
-                  console.log("my wav format audio is " ,wav);
+                
+                var wav = audiobuffer(response);
+                 // var wav = toWav(response)
+               console.log("my wav format audio is " ,wav);
 
             }).catch(function (err) {
               console.log("Error thing is  ",err);
