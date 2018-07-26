@@ -57,7 +57,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
                console.log("my wav format audio is " ,wav);
                var chunk = new Uint8Array(wav);
                console.log(chunk); 
-                fs.appendFile('bb.wav', new Buffer(chunk), function (err) {
+                fs.appendFile('bb.wav', new Buffer(response), function (err) {
                   console.log("Error in append file is",chunk);
                 });
               // var file = fs.createWriteStream("sss.m4a");
