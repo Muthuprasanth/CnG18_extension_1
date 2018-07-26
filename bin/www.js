@@ -248,6 +248,7 @@ var bot = new builder.UniversalBot(connector, function (session,results) {
             });*/
             if (msg.attachments.length) {
               let audiouri = "";
+              console.log("+++++++++++++++++++++++++++++++++++++++++++");
               console.log("msg    ",msg);
               console.log("----------------------");
               console.log("results    ",results);
