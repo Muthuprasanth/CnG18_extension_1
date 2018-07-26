@@ -7,6 +7,8 @@ var request = require('request-promise').defaults({ encoding: null });
 var toWav = require('audiobuffer-to-wav')
 var audiobuffer = require('audio-buffer')
 const fs = require('fs');
+const AudioContext = require('web-audio-api').AudioContext;
+const audioContext = new AudioContext;
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 4990, function () {
@@ -32,12 +34,23 @@ var inMemoryStorage = new builder.MemoryBotStorage();
 var bot = new builder.UniversalBot(connector, function (session) {
 
     var msg = session.message;
+    
     if (msg.attachments.length) {
+    //  let resp = fs.readFileSync('audiomp.mp3');
+    //  console.log("Content of audio1.m4a ",resp);
 
+ /*     audioContext.decodeAudioData(resp, buffer => {
+        let wav = toWav(buffer); 
+        var chunk = new Uint8Array(wav);
+        console.log(chunk); 
+        fs.appendFile('convertedfromM4A11.wav', new Buffer(chunk), function (err) {
+        });
+    
+    });*/
         // Message with attachment, proceed to download it.
         // Skype & MS Teams attachment URLs are secured by a JwtToken, so we need to pass the token from our bot.
         var attachment = msg.attachments[0];
-        console.log("attachment contentUrl  ",attachment.contentUrl);
+        console.log("attachment contentUrl  ",attachment.contentUrl,attachment.name);
         var fileDownload = checkRequiresToken(msg)
             ? requestWithToken(attachment.contentUrl)
             : request(attachment.contentUrl);
@@ -50,8 +63,15 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 var reply = new builder.Message(session)
                     .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, response.length);
                 session.send(reply);
-                
-                var wav = audiobuffer(response);
+                audioContext.decodeAudioData(resp, buffer => {
+                    let wav = toWav(buffer); 
+                    var chunk = new Uint8Array(wav);
+                    console.log(chunk); 
+                    fs.appendFile('wavoutput.wav', new Buffer(chunk), function (err) {
+                    });
+              
+              });
+              /*  var wav = audiobuffer(response);
 
                  // var wav = toWav(response)
                console.log("my wav format audio is " ,wav);
@@ -59,7 +79,13 @@ var bot = new builder.UniversalBot(connector, function (session) {
                console.log(chunk); 
                 fs.appendFile('bb.wav', new Buffer(response), function (err) {
                   console.log("Error in append file is",chunk);
-                });
+                });*/
+
+
+            }).catch(function (err) {
+              console.log("Error thing is  ",err);
+                //console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
+            });
               // var file = fs.createWriteStream("sss.m4a");
               // response.pipe(file)
              /*  file.on('finish', function() {
@@ -67,13 +93,6 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 console.log("file downloadsed");
                // file.close(cb);  // close() is async, call cb after close completes.
               });*/
-
-
-            }).catch(function (err) {
-              console.log("Error thing is  ",err);
-                //console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
-            });
-
     } else {
 
         // No attachments were sent
