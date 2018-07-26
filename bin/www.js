@@ -245,7 +245,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
                 console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
             });*/
            },
-            function (session, results) {
+            function (session) {
               var msg = session.message;
               //if (msg.attachments.length) {
                 let audiouri = "";
@@ -255,7 +255,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
                   console.log("+++++++++++++++++++++++++++++++++++++++++++");
                   console.log("msg    ",msg);
                   console.log("----------------------");
-                  console.log("results    ",results);
+                //  console.log("results    ",results);
                   console.log("url is ",msg.attachments[0].contentUrl+"/"+msg.attachments[0].name);
                   audiouri = msg.attachments[0].contentUrl+"/"+msg.attachments[0].name;
                   console.log("audiouri is",audiouri);
