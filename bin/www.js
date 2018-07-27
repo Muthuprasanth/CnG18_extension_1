@@ -253,15 +253,14 @@ bot.dialog('voiceortext',[
     let feedbackres = results.response.entity.toUpperCase();
     if(feedbackres != "VOICE")
     {
-      session.send("You can send only Voice messages");
+      session.send("You can send only Text  messages");
       session.beginDialog('questions',{ questionno: 0,score:0}); 
     }
     else{
-      session.send("You can send only Text messages");
+      session.send("You can send only Voice messages");
       session.beginDialog('voice_questions',{ questionno: 0,score:0}); 
     }
   },
-
 ]);
 
 bot.dialog('voice_questions',[ 
@@ -269,7 +268,9 @@ bot.dialog('voice_questions',[
    // questionno
    console.log("---------------  Enter into voice_questions --------------- ");
     session.dialogData.questionno = args.questionno;
+    console.log("+++++++++++++++++++++++ ",session.dialogData.questionno );
     session.dialogData.score = args.score;
+    console.log("+++++++++++++++",  session.dialogData.score);
     builder.Prompts.attachment(session, java[args.questionno]);
   },
   async function (session , results) {
