@@ -334,7 +334,7 @@ function voicetotext(msg)
               console.log("response is ",response);
               console.log("-------------------------------------------------");
               console.log("response is ",response.results[0]);
-              resolve(results[0].name);
+              resolve(response.results[0].name);
               }).catch(function(error)
               {
                 console.log("error occured is ",error);
