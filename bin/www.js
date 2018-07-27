@@ -57,9 +57,16 @@ var bot = new builder.UniversalBot(connector, [
             audioContext.decodeAudioData(resp, buffer => {
                 let wav = toWav(buffer); 
                 var chunk = new Uint8Array(wav);
+                var filename = "wavoutput_1.wav";
                 console.log(chunk); 
-                fs.appendFile('wavoutput.wav', new Buffer(chunk), function (err) {
-                    let audioStream = fs.createReadStream("wavoutput.wav"); // create audio stream from any source
+                if (fs.existsSync(filename)) {
+                  console.log("file deleted ");
+                  console.log("-------------------------------------------------");
+                  fs.unlinkSync(filename); 
+                  // Do something
+              }
+                fs.appendFile(filename, new Buffer(chunk), function (err) {
+                    let audioStream = fs.createReadStream(filename); // create audio stream from any source
                     // Bing Speech Key (https://www.microsoft.com/cognitive-services/en-us/subscriptions)
                     let subscriptionKey = 'c9a70ce52aae4bb592fcb80099cd2b8b';        
                     let client = new BingSpeechClient(subscriptionKey);
