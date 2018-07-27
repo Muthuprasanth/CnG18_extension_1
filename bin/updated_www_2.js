@@ -134,30 +134,25 @@ function issueToken()
         console.log("error is ", err);
       }
       else {
-       // console.log("body content is",body);
-       // body_ = JSON.parse(body);
         resolve(body);
       }
-
     });
   });
 }
+
 function convertToLang(token,text,lang)
 {
   let uri = "https://api.microsofttranslator.com/v2/http.svc/Translate?text="+text+"&to="+lang;
   console.log("inside convertToLang");
-  //console.log("Translator text url is ",uri);
   var options3 = {
     method: 'get',
     headers: {
       'Authorization':'Bearer '+token,
       'Content-Type':'application/json',
-      //'Ocp-Apim-Subscription-Key': 'aec47c1b9b24436792b151c743bd4b10',
     },
 
     url: uri,
   }
-  //let promiseTOTextAnalytics = 
   return new Promise(function (resolve, reject) {
     request(options3, function (err, result, body) {
       if (err) {
@@ -170,15 +165,12 @@ function convertToLang(token,text,lang)
          // console.log("after parsing",result.string._);
           resolve(result.string._);
         });
-       // body_ = JSON.parse(body);
-       
       }
-
     });
   });
 }
 
-console.log("dfsfdsf------- csfsdf");
+console.log("------Bot is going to respond you-----");
 server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(connector, [
   async  function (session) {
@@ -203,7 +195,6 @@ var bot = new builder.UniversalBot(connector, [
     {
       console.log("Not english");
      // session.endDialog("Thank you");
-   
      text = "Welcome "+candidatename;
      console.log("candidate welcome text ",text,userlang,langexpansion[userlang]);
 
@@ -295,8 +286,6 @@ bot.dialog('lang_questions',[
 ]);
 bot.dialog('lang_confirm', [
   async function (session,args) {
-  //  console.log("color is "+args.candidateanswer);
-  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   text = "Do you want to continue your answer for this question?";
   convertedtext  = await convertToLang(token,text,tolang);
   builder.Prompts.choice(session, convertedtext, choice,{listStyle: 3});
@@ -326,8 +315,6 @@ bot.dialog('lang_confirm', [
 
 bot.dialog('lang_finish', [
   async function (session,args) {
-  //  console.log("color is "+args.candidateanswer);
-  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   text = "Do you want to continue your answer for this question?";
   convertedtext  = await convertToLang(token,text,tolang);
   builder.Prompts.choice(session, convertedtext, finalchoice,{listStyle: 3});
@@ -357,16 +344,11 @@ bot.dialog('lang_finish', [
 
 bot.dialog('lang_feedback', [
   async  function (session,args) {
-  //  console.log("color is "+args.candidateanswer);
-  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   text = "We are interested to get your feedback about the interview. Are you interested in giving feedback?";
   convertedtext  = await convertToLang(token,text,tolang);
   builder.Prompts.choice(session, convertedtext, feedbackchoice,{listStyle: 3});
   },
   async function (session, results) {
-      //session.endDialogWithResult(results);
-     // text = "Please Continue your answer";
-     // convertedtext  = await convertToLang(token,text,tolang);
       let feedbackres = results.response.entity.toUpperCase();
       if(feedbackres === "NO")
       {
@@ -381,8 +363,6 @@ bot.dialog('lang_feedback', [
       }
   },
   async function (session , results) {
-    
-
     feedbackres = results.response;
     convertedtext  = await convertToLang(token,feedbackres,globallang);
     //console.log("candidateanswer is ",candidateanswer);
@@ -412,8 +392,6 @@ bot.dialog('questions',[
     else{
       session.beginDialog('confirm');
     }
-
-   // session.beginDialog('finish',{candidateanswer:candidateanswer});
   },
   async function (session, results) {
    // console.log("question number ",session.dialogData.questionno);
@@ -436,23 +414,18 @@ bot.dialog('questions',[
       session.beginDialog("feedback");
     }
   },
-
 ]);
 
 bot.dialog('feedback', [
   function (session,args) {
-  //  console.log("color is "+args.candidateanswer);
-  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   builder.Prompts.choice(session, "We are interested to get your feedback about the interview. Are you interested in giving feedback?", feedbackchoice,{listStyle: 3});
   },
   function (session, results) {
-      //session.endDialogWithResult(results);
       let feedbackres = results.response.entity.toUpperCase();
       if(feedbackres === "NO")
       {
         results.feedbackres = feedbackres;
         session.endDialogWithResult(results);
-       //session.endDialog();
       }
       else{
         builder.Prompts.text(session, 'Please share your feedback here');
@@ -466,13 +439,10 @@ bot.dialog('feedback', [
    // session.beginDialog('finish',{candidateanswer:candidateanswer});
    session.endDialogWithResult(results);
   }
-
 ]);
 
 bot.dialog('finish', [
   function (session,args) {
-  //  console.log("color is "+args.candidateanswer);
-  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   builder.Prompts.choice(session, "Do you want to continue your answer for this question?", finalchoice,{listStyle: 3});
   },
   function (session, results) {
@@ -493,13 +463,10 @@ bot.dialog('finish', [
     console.log("candidateanswer is ",candidateanswer);
     session.beginDialog('finish',{candidateanswer:candidateanswer});
   }
-
 ]);
 
 bot.dialog('confirm', [
   function (session,args) {
-  //  console.log("color is "+args.candidateanswer);
-  //  builder.Prompts.choice(session, "Shall we proceed to Next Question", choice,{listStyle: 3});
   builder.Prompts.choice(session, "Do you want to continue your answer for this question?", choice,{listStyle: 3});
   },
   function (session, results) {
@@ -520,9 +487,7 @@ bot.dialog('confirm', [
     console.log("candidateanswer is ",candidateanswer);
     session.beginDialog('confirm',{candidateanswer:candidateanswer});
   }
-
 ]);
-
 
 bot.dialog('/print', function (session) {
 //session.send("printed");
@@ -630,13 +595,10 @@ function qnaMaker(question) {
     headers: {
       'Authorization':'EndpointKey 316818ad-d8b1-4918-82b8-f0d7b02b91af',
       'Content-Type':'application/json',
-      //'Ocp-Apim-Subscription-Key': '2437ab2f3fc04c65a3a2322e3463fca8',
     },
     body: JSON.stringify(documents),
-    // body: documents,
     url: 'https://hiring-bot-2.azurewebsites.net/qnamaker/knowledgebases/50bc5e2a-da5b-4401-bc75-a73f9dd7e4e2/generateAnswer',
   }
-  //let promiseTOTextAnalytics = 
   return new Promise(function (resolve, reject) {
     request(options3, function (err, result, body) {
       if (err) {
@@ -650,16 +612,13 @@ function qnaMaker(question) {
         answer = body_.answers[0].answer; 
         resolve(answer);
       }
-
     });
   });
-
 }
 
 function textanalyics(question) {
   let body_;
  // console.log("inside textanalytics",question);
-
   let documents = {
     'documents': [
       { "language": "en", 'id': '1', 'text': question },

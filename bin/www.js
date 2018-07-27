@@ -1,3 +1,4 @@
+//first m4a is converted to wav and then it is send to bing speech and got text
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
 var builder = require('botbuilder');
@@ -24,87 +25,60 @@ var connector = new builder.ChatConnector({
     appPassword: "xebERNFFF03;]clxnD982+|"
 });
 
-// Listen for messages
+
 server.post('/api/messages', connector.listen());
 
-// Bot Storage: Here we register the state storage for your bot. 
-// Default store: volatile in-memory store - Only for prototyping!
-// We provide adapters for Azure Table, CosmosDb, SQL Azure, or you can implement your own!
-// For samples and documentation, see: https://github.com/Microsoft/BotBuilder-Azure
 var inMemoryStorage = new builder.MemoryBotStorage();
 
 
-var bot = new builder.UniversalBot(connector, function (session) {
-
-    var msg = session.message;
-    
+var bot = new builder.UniversalBot(connector, [
+  
+  function (session) {
+    builder.Prompts.attachment(session, "please send anything");
+  },
+  function (session,response) {
+    console.log("session ",session);
+  //builder.Prompts.text(session, "please send anything");
+  var msg = session.message;
+    console.log("msg ", msg);  
     if (msg.attachments.length) {
-    //  let resp = fs.readFileSync('audiomp.mp3');
-    //  console.log("Content of audio1.m4a ",resp);
-
- /*     audioContext.decodeAudioData(resp, buffer => {
-        let wav = toWav(buffer); 
-        var chunk = new Uint8Array(wav);
-        console.log(chunk); 
-        fs.appendFile('convertedfromM4A11.wav', new Buffer(chunk), function (err) {
-        });
-    
-    });*/
-        // Message with attachment, proceed to download it.
-        // Skype & MS Teams attachment URLs are secured by a JwtToken, so we need to pass the token from our bot.
         var attachment = msg.attachments[0];
         console.log("attachment contentUrl  ",attachment.contentUrl,attachment.name);
         var fileDownload = checkRequiresToken(msg)
             ? requestWithToken(attachment.contentUrl)
             : request(attachment.contentUrl);
 
-        fileDownload.then(
-            function (resp) {
-
-                // Send reply with attachment type & size
-                console.log("Response is  ",resp);
-                var reply = new builder.Message(session)
-                    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, resp.length);
-                session.send(reply);
-                audioContext.decodeAudioData(resp, buffer => {
-                    let wav = toWav(buffer); 
-                    var chunk = new Uint8Array(wav);
-                    console.log(chunk); 
-                    fs.appendFile('wavoutput.wav', new Buffer(chunk), function (err) {
-                        let audioStream = fs.createReadStream("wavoutput.wav"); // create audio stream from any source
-
-                        // Bing Speech Key (https://www.microsoft.com/cognitive-services/en-us/subscriptions)
-                        let subscriptionKey = 'c9a70ce52aae4bb592fcb80099cd2b8b';
-                        
-                        let client = new BingSpeechClient(subscriptionKey);
-                      //  client.recognizeStream(audioStream).then(response => console.log(response.results[0].name));
-                      client.recognizeStream(audioStream).then(function(response)
-                      {
-                        console.log("response is ",response);
-                        console.log("-------------------------------------------------");
-                        console.log("response is ",response.results[0]);
-                      }).catch(function(error)
-                      {
-                        console.log("error occured is ",error);
-                      });
+        fileDownload.then(function (resp) {
+            // Send reply with attachment type & size
+            console.log("Response is  ",resp);
+            var reply = new builder.Message(session)
+                .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, resp.length);
+            session.send(reply);
+            audioContext.decodeAudioData(resp, buffer => {
+                let wav = toWav(buffer); 
+                var chunk = new Uint8Array(wav);
+                console.log(chunk); 
+                fs.appendFile('wavoutput.wav', new Buffer(chunk), function (err) {
+                    let audioStream = fs.createReadStream("wavoutput.wav"); // create audio stream from any source
+                    // Bing Speech Key (https://www.microsoft.com/cognitive-services/en-us/subscriptions)
+                    let subscriptionKey = 'c9a70ce52aae4bb592fcb80099cd2b8b';        
+                    let client = new BingSpeechClient(subscriptionKey);
+                    //  client.recognizeStream(audioStream).then(response => console.log(response.results[0].name));
+                    client.recognizeStream(audioStream).then(function(response)
+                    {
+                    console.log("response is ",response);
+                    console.log("-------------------------------------------------");
+                    console.log("response is ",response.results[0]);
+                    }).catch(function(error)
+                    {
+                    console.log("error occured is ",error);
                     });
-              
-              });
-              /*  var wav = audiobuffer(response);
-
-                 // var wav = toWav(response)
-               console.log("my wav format audio is " ,wav);
-               var chunk = new Uint8Array(wav);
-               console.log(chunk); 
-                fs.appendFile('bb.wav', new Buffer(response), function (err) {
-                  console.log("Error in append file is",chunk);
-                });*/
-
-
-            }).catch(function (err) {
-              console.log("Error thing is  ",err);
-                //console.log('Error downloading attachment:', { statusCode: err.statusCode, message: err.response.statusMessage });
+                });             
             });
+
+        }).catch(function (err) {
+            console.log("Error thing is  ",err);
+        });
               // var file = fs.createWriteStream("sss.m4a");
               // response.pipe(file)
              /*  file.on('finish', function() {
@@ -113,14 +87,14 @@ var bot = new builder.UniversalBot(connector, function (session) {
                // file.close(cb);  // close() is async, call cb after close completes.
               });*/
     } else {
-
-        // No attachments were sent
         var reply = new builder.Message(session)
             .text('Hi there! This sample is intented to show how can I receive attachments but no attachment was sent to me. Please try again sending a new message with an attachment.');
         session.send(reply);
     }
 
-}).set('storage', inMemoryStorage); // Register in memory storage
+  },
+/**/
+]).set('storage', inMemoryStorage); // Register in memory storage
 
 // Request file with Authentication Header
 var requestWithToken = function (url) {
@@ -135,7 +109,6 @@ var requestWithToken = function (url) {
     });
 };
 
-// Promise for obtaining JWT Token (requested once)
 var obtainToken = Promise.promisify(connector.getAccessToken.bind(connector));
 
 var checkRequiresToken = function (message) {
