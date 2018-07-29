@@ -359,8 +359,7 @@ function voicetotext(msg)
 
 var requestWithToken = function (url) {
   return obtainToken().then(function (token) {
-    console.log("Connector token is ",token);
-    return request({
+      return request({
           url: url,
           headers: {
               'Authorization': 'Bearer ' + token,
