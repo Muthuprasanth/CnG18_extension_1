@@ -316,11 +316,11 @@ function voicetotext(msg)
 
         fileDownload.then(function (resp) {
             // Send reply with attachment type & size
-        //  console.log("Response is  ",resp);
+         console.log("Response is  ",resp);
          // var reply = new builder.Message(session)
           //    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, resp.length);
         //  session.send(reply);
-          audioContext.decodeAudioData(resp, buffer => {
+        /*  audioContext.decodeAudioData(resp, buffer => {
             let wav = toWav(buffer); 
             var chunk = new Uint8Array(wav);
           //   console.log(chunk); 
@@ -343,7 +343,7 @@ function voicetotext(msg)
               });
             });             
           });
-
+            */
         }).catch(function (err) {
             console.log("Error thing is  ",err);
             reject(error);
@@ -359,14 +359,65 @@ function voicetotext(msg)
 
 var requestWithToken = function (url) {
   return obtainToken().then(function (token) {
-    console.log("Connector token is ",token);
-    return request({
+
+        /*return request({
           url: url,
           headers: {
               'Authorization': 'Bearer ' + token,
               'Content-Type': 'application/octet-stream'
           }
+      });*/
+    console.log("Connector token is ",token);
+    uri = "https://speechtotext-service-1.azurewebsites.net/speechtotext?url="+url+"&token="+token ;
+    var options3 = {
+      method: 'get',
+      url: uri,
+    }
+    return new Promise(function (resolve, reject) {
+      request(options3, function (err, result, body) {
+        if (err) {
+          console.log("error is ", err);
+          resolve(err)
+        }
+        else {
+          console.log("body content is",body);
+         // body_ = JSON.parse(body);
+          // let body__ = JSON.stringify (body_, null, '  ');
+          resolve(body.text);
+        }
       });
+    });
+
+    /*  var options3 = {
+        method: 'post',
+        headers: {
+          'Ocp-Apim-Subscription-Key': 'b23f17068a734d43a9227ed368771909',
+          // 'Content-Type':'application/json',
+          // 'Accept':'application/json',
+        },
+        body: JSON.stringify(documents),
+        // body: documents,
+        url: 'https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases',
+      }
+      //let promiseTOTextAnalytics = 
+      return new Promise(function (resolve, reject) {
+        request(options3, function (err, result, body) {
+          if (err) {
+            console.log("error is ", err);
+            // res.json({ message: 'Error occurred in Reading a file'+ err });
+          }
+          else {
+            // console.log("body content is",body);
+            body_ = JSON.parse(body);
+            // let body__ = JSON.stringify (body_, null, '  ');
+            let keyphrases = body_.documents[0].keyPhrases;
+            let keyphrasesarray =[];
+            keyphrasesarray = keyphrases;  
+            resolve(keyphrasesarray);
+          }
+        });*/
+
+
   });
 };
 
