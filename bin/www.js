@@ -375,7 +375,7 @@ var requestWithToken = function (url) {
         },
       method: 'get',
       url: uri,
-      encoding:JSON
+     // encoding:JSON
     }
     return new Promise(function (resolve, reject) {
       request(options3, function (err, result, body) {
@@ -384,8 +384,8 @@ var requestWithToken = function (url) {
           resolve(err)
         }
         else {
-          console.log("body content is",result);
-          console.log("body content is",body);
+          console.log("before toString is",result);
+          console.log("After toString is",body.toString());
          // body_ = JSON.parse(body);
           // let body__ = JSON.stringify (body_, null, '  ');
           resolve(body.text);
