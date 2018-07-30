@@ -368,13 +368,14 @@ var requestWithToken = function (url) {
           }
       });*/
     console.log("Connector token is ",token);
-    uri = "https://speechtotext-service-1.azurewebsites.net/speechtotext?url="+url+"&token="+token ;
+    let uri = "https://speechtotext-service-1.azurewebsites.net/speechtotext?url="+url+"&token="+token ;
     var options3 = {
       headers: {
-        'Accept':'application/json',
+        'Accept':'application/json'
         },
       method: 'get',
       url: uri,
+      encoding:'string'
     }
     return new Promise(function (resolve, reject) {
       request(options3, function (err, result, body) {
@@ -396,7 +397,7 @@ var requestWithToken = function (url) {
         method: 'post',
         headers: {
           'Ocp-Apim-Subscription-Key': 'b23f17068a734d43a9227ed368771909',
-          // 'Content-Type':'application/json',
+          // `'Content-Type':'application/json',`
           // 'Accept':'application/json',
         },
         body: JSON.stringify(documents),
