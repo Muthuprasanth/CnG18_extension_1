@@ -370,6 +370,9 @@ var requestWithToken = function (url) {
     console.log("Connector token is ",token);
     uri = "https://speechtotext-service-1.azurewebsites.net/speechtotext?url="+url+"&token="+token ;
     var options3 = {
+      headers: {
+        'Accept':'application/json',
+        },
       method: 'get',
       url: uri,
     }
