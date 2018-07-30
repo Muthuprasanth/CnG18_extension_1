@@ -636,7 +636,7 @@ bot.dialog('lang_feedback', [
 ]);
 
 
-bot.dialog('/print', function (session) {
+bot.dialog('/print', async function (session) {
 //session.send("printed");
   //session.send("The candidate score is "+score);
   var sendgridCredentials = [];
@@ -708,6 +708,7 @@ bot.dialog('/print', function (session) {
           session.endDialog("For any queries reach out our HR @ sirius.indiahr@siriuscom.com");
         }
         else{
+          let token  = await issueToken();
           text = "We appreciate your interest and patience in going through the entire interview process. We will keep you posted earliest more on the details about the other rounds of interview.";
           convertedtext  = await convertToLang(token,text,tolang);
           session.send(convertedtext);
