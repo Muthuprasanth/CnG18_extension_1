@@ -679,7 +679,7 @@ bot.dialog('/print', async function (session) {
     });
   });
 
-  promiseTOGetSendgridCredential.then(async function(){
+  promiseTOGetSendgridCredential.then(function(){
   let text = "";
   let convertedtext = "";
   console.log("sendgridCredentials---------",sendgridCredentials);
@@ -697,7 +697,7 @@ bot.dialog('/print', async function (session) {
       from: 'mprasanth113@gmail.com',
       subject: 'Interview Report',
       html: response2,
-    }, function (err) {
+    }, async function (err) {
       if (err) {
         console.log("Mail error",err);
       } else {
