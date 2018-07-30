@@ -375,7 +375,7 @@ var requestWithToken = function (url) {
         },
       method: 'get',
       url: uri,
-      encoding:'string'
+      encoding:JSON
     }
     return new Promise(function (resolve, reject) {
       request(options3, function (err, result, body) {
