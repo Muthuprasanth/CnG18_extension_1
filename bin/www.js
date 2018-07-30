@@ -314,9 +314,9 @@ function voicetotext(msg)
             ? requestWithToken(attachment.contentUrl)
             : request(attachment.contentUrl);
 
-        fileDownload.then(function (resp) {
+        fileDownload.then(function (text) {
             // Send reply with attachment type & size
-         console.log("Response is  ",resp);
+         console.log("Response is  ",text);
          // var reply = new builder.Message(session)
           //    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, resp.length);
         //  session.send(reply);
@@ -384,15 +384,13 @@ var requestWithToken = function (url) {
           resolve(err)
         }
         else {
-          console.log("before toString is",result);
-
-          console.log("After toString is",body.toString());
+        //  console.log("After toString is",body.toString());
           let str = body.toString();
 
           console.log("text format",str);
          // body_ = JSON.parse(body);
           // let body__ = JSON.stringify (body_, null, '  ');
-          resolve(body.text);
+          resolve(str);
         }
       });
     });
