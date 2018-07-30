@@ -241,7 +241,7 @@ var bot = new builder.UniversalBot(connector, [
       feedbackresponse = results.feedbackres;
       console.log("feedback ",feedbackresponse);
     }
-    session.send("Thank you");
+    //session.send("Thank you");
     session.beginDialog("/print");
   }
 ]).set('storage', inMemoryStorage); ;
@@ -704,11 +704,15 @@ bot.dialog('/print', async function (session) {
         console.log("Success Mail sended From Azure ");
         if(tolang === "en")
         {
+          session.send("Thank you");
           session.send("We appreciate your interest and patience in going through the entire interview process. We will keep you posted earliest more on the details about the other rounds of interview.");
           session.endDialog("For any queries reach out our HR @ sirius.indiahr@siriuscom.com");
         }
         else{
           let token  = await issueToken();
+          text = "Thank you";
+          convertedtext  = await convertToLang(token,text,tolang);
+          session.send(convertedtext);
           text = "We appreciate your interest and patience in going through the entire interview process. We will keep you posted earliest more on the details about the other rounds of interview.";
           convertedtext  = await convertToLang(token,text,tolang);
           session.send(convertedtext);
