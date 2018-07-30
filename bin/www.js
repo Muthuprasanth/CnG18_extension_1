@@ -277,14 +277,16 @@ bot.dialog('voice_questions',[
     candidateanswer = "";
     var msg = session.message;
     console.log("msg ", msg);     
+   
     candidateanswer = await voicetotext(msg);
+    session.sendTyping();
    // candidateanswer += results.response;
     console.log("candidateanswer is ",candidateanswer);
     console.log("question number ------------------------------ ",session.dialogData.questionno);
 
    // console.log("question number ",session.dialogData.questionno);
     qna[java[session.dialogData.questionno]] = candidateanswer;
-    session.sendTyping();
+    //session.sendTyping();
     candidateresponsekeyphrases = await textanalyics(candidateanswer);
     console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
     //console.log("answer phrase is ",answers[session.dialogData.questionno]);
@@ -317,6 +319,7 @@ function voicetotext(msg)
         fileDownload.then(function (text) {
             // Send reply with attachment type & size
          console.log("Response is  ",text);
+         resolve(text);
          // var reply = new builder.Message(session)
           //    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, resp.length);
         //  session.send(reply);
