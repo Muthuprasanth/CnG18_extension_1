@@ -636,7 +636,7 @@ bot.dialog('lang_feedback', [
 ]);
 
 
-bot.dialog('/print', async function (session) {
+bot.dialog('/print', function (session) {
 //session.send("printed");
   //session.send("The candidate score is "+score);
   var sendgridCredentials = [];
@@ -679,7 +679,7 @@ bot.dialog('/print', async function (session) {
     });
   });
 
-  promiseTOGetSendgridCredential.then(function(){
+  promiseTOGetSendgridCredential.then(async function(){
   let text = "";
   let convertedtext = "";
   console.log("sendgridCredentials---------",sendgridCredentials);
