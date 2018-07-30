@@ -380,6 +380,7 @@ var requestWithToken = function (url) {
           resolve(err)
         }
         else {
+          console.log("body content is",result);
           console.log("body content is",body);
          // body_ = JSON.parse(body);
           // let body__ = JSON.stringify (body_, null, '  ');
