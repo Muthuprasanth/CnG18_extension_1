@@ -636,7 +636,7 @@ bot.dialog('lang_feedback', [
 ]);
 
 
-bot.dialog('/print', function (session) {
+bot.dialog('/print', async function (session) {
 //session.send("printed");
   //session.send("The candidate score is "+score);
   var sendgridCredentials = [];
