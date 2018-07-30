@@ -188,16 +188,11 @@ var bot = new builder.UniversalBot(connector, [
       let candidateresponsekeyphrases,qnakeyphrases,qnaresponse;
     //  getRandomInt();
         session.sendTyping();    
-       /* session.send("Hi1 " + session.message.user.name);
-        session.send("hi2 "+session.message.user.id);*/
         session.send("Hi");
         builder.Prompts.choice(session, "Please choose your preferred language for Interview", lang,{listStyle: 3});
        // candidatename = session.message.address.user.name; 
-       // session.send("Welcome "+candidatename);
-       // session.send("Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion");     
-     //----   builder.Prompts.text(session, java[0]);
-        // builder.Prompts.text(session, java[0]);
-   //      session.beginDialog('questions',{ questionno: 0,score:0});
+       //----   builder.Prompts.text(session, java[0]);
+      //      session.beginDialog('questions',{ questionno: 0,score:0});
   },
   async function (session, results) {
     candidatename = session.message.address.user.name; 
@@ -216,8 +211,8 @@ var bot = new builder.UniversalBot(connector, [
      text = "Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion";
      convertedtext  = await convertToLang(token,text,tolang);
      session.send(convertedtext);
-     session.beginDialog('voiceortext');
-    // session.beginDialog('lang_questions',{ questionno: 0,score:0});   
+    // session.beginDialog('voiceortext');
+     session.beginDialog('lang_questions',{ questionno: 0,score:0});   
     //console.log("Not english --------------------------");
     }
     else{
@@ -265,26 +260,27 @@ bot.dialog('voiceortext',[
 
 bot.dialog('voice_questions',[ 
    function (session, args) {
-   // questionno
    console.log("---------------  Enter into voice_questions --------------- ");
     session.dialogData.questionno = args.questionno;
-    console.log("+++++++++++++++++++++++ ",session.dialogData.questionno );
+    console.log("questionno ",session.dialogData.questionno );
     session.dialogData.score = args.score;
-    console.log("+++++++++++++++",  session.dialogData.score);
+    console.log("score ",  session.dialogData.score);
     builder.Prompts.attachment(session, java[args.questionno]);
   },
   async function (session) {
     candidateanswer = "";
     var msg = session.message;
-    console.log("msg ", msg);     
+   // console.log("msg ", msg);     
+   
     candidateanswer = await voicetotext(msg);
+    session.sendTyping();
    // candidateanswer += results.response;
     console.log("candidateanswer is ",candidateanswer);
     console.log("question number ------------------------------ ",session.dialogData.questionno);
 
    // console.log("question number ",session.dialogData.questionno);
     qna[java[session.dialogData.questionno]] = candidateanswer;
-    session.sendTyping();
+    //session.sendTyping();
     candidateresponsekeyphrases = await textanalyics(candidateanswer);
     console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
     //console.log("answer phrase is ",answers[session.dialogData.questionno]);
@@ -309,49 +305,20 @@ function voicetotext(msg)
   return new Promise(function (resolve, reject) {
     if (msg.attachments.length) {
         var attachment = msg.attachments[0];
-        console.log("attachment contentUrl  ",attachment.contentUrl,attachment.name);
+      //  console.log("attachment contentUrl  ",attachment.contentUrl,attachment.name);
         var fileDownload = checkRequiresToken(msg)
             ? requestWithToken(attachment.contentUrl)
             : request(attachment.contentUrl);
 
-        fileDownload.then(function (resp) {
+        fileDownload.then(function (text) {
             // Send reply with attachment type & size
-        //  console.log("Response is  ",resp);
-         // var reply = new builder.Message(session)
-          //    .text('Attachment of %s type and size of %s bytes received.', attachment.contentType, resp.length);
-        //  session.send(reply);
-          audioContext.decodeAudioData(resp, buffer => {
-            let wav = toWav(buffer); 
-            var chunk = new Uint8Array(wav);
-          //   console.log(chunk); 
-            fs.appendFile('wavoutput.wav', new Buffer(chunk), function (err) {
-              let audioStream = fs.createReadStream("wavoutput.wav"); // create audio stream from any source
-              // Bing Speech Key (https://www.microsoft.com/cognitive-services/en-us/subscriptions)
-              let subscriptionKey = 'c9a70ce52aae4bb592fcb80099cd2b8b';        
-              let client = new BingSpeechClient(subscriptionKey);
-              //  client.recognizeStream(audioStream).then(response => console.log(response.results[0].name));
-              client.recognizeStream(audioStream).then(function(response)
-              {
-              console.log("response is ",response);
-              console.log("-------------------------------------------------");
-              console.log("response is ",response.results[0]);
-              resolve(response.results[0].name);
-              }).catch(function(error)
-              {
-                console.log("error occured is ",error);
-                reject(error);
-              });
-            });             
-          });
-
+         console.log("Response is  ",text);
+         resolve(text);
         }).catch(function (err) {
             console.log("Error thing is  ",err);
             reject(error);
         });
     } else {
-       // var reply = new builder.Message(session)
-        //    .text('Hi there! This sample is intented to show how can I receive attachments but no attachment was sent to me. Please try again sending a new message with an attachment.');
-      //  session.send(reply);
       console.log("--------------- DONT SEND TEXT MESSAGES--------------- ");
     }
   });
@@ -359,13 +326,36 @@ function voicetotext(msg)
 
 var requestWithToken = function (url) {
   return obtainToken().then(function (token) {
-      return request({
+
+        /*return request({
           url: url,
           headers: {
               'Authorization': 'Bearer ' + token,
               'Content-Type': 'application/octet-stream'
           }
+      });*/
+  //  console.log("Connector token is ",token);
+    let uri = "https://speechtotext-service-1.azurewebsites.net/speechtotext?url="+url+"&token="+token ;
+    var options3 = {
+      headers: {
+        'Accept':'application/json'
+        },
+      method: 'get',
+      url: uri,
+    }
+    return new Promise(function (resolve, reject) {
+      request(options3, function (err, result, body) {
+        if (err) {
+          console.log("error is ", err);
+          resolve(err)
+        }
+        else {
+          let str = body.toString();
+          console.log("text format",str);
+          resolve(str);
+        }
       });
+    });
   });
 };
 
@@ -501,8 +491,6 @@ bot.dialog('lang_questions',[
    },
    async function (session , results) {
      candidateanswer = "";
-    // usertext = results.response;
-     //convertedtext = 
      candidateanswer += results.response;
      console.log("candidateanswer is ",candidateanswer);
      console.log("question number ------------------------------ ",session.dialogData.questionno);
