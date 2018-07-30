@@ -385,7 +385,11 @@ var requestWithToken = function (url) {
         }
         else {
           console.log("before toString is",result);
+
           console.log("After toString is",body.toString());
+          let str = body.toString();
+
+          console.log("text format",str.text);
          // body_ = JSON.parse(body);
           // let body__ = JSON.stringify (body_, null, '  ');
           resolve(body.text);
