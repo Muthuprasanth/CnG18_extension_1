@@ -505,7 +505,7 @@ bot.dialog('lang_questions',[
      //convertedtext = 
      candidateanswer += results.response;
      console.log("candidateanswer is ",candidateanswer);
-     console.log("question number ------------------------------ ",session.dialogData.questionno);
+     console.log("question number  ",session.dialogData.questionno);
      if(session.dialogData.questionno == 4)
      {
        session.beginDialog('lang_finish');
