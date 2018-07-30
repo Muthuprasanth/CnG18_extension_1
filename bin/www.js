@@ -217,6 +217,7 @@ var bot = new builder.UniversalBot(connector, [
     //console.log("Not english --------------------------");
     }
     else{
+      tolang = langexpansion[userlang];
       session.send("Welcome "+candidatename);
       session.send("Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion");     
       //session.beginDialog('questions',{ questionno: 0,score:0});
