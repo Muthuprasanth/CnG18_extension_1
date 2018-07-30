@@ -211,8 +211,8 @@ var bot = new builder.UniversalBot(connector, [
      text = "Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion";
      convertedtext  = await convertToLang(token,text,tolang);
      session.send(convertedtext);
-     session.beginDialog('voiceortext');
-    // session.beginDialog('lang_questions',{ questionno: 0,score:0});   
+    // session.beginDialog('voiceortext');
+     session.beginDialog('lang_questions',{ questionno: 0,score:0});   
     //console.log("Not english --------------------------");
     }
     else{

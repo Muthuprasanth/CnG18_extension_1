@@ -46,7 +46,7 @@ qnakeyphrases [ 'authenticated calls',
   It is a service for storing large numbers of messages that can be accessed from anywhere via authenticated calls using HTTP or HTTPS.
   1
   
-  
+
 
 SPANISH
 
@@ -60,6 +60,7 @@ Todo el código fuente de .NET se compila en lenguaje intermedio. IL se conviert
 
 Es un servicio para almacenar mensajes a los que se puede acceder desde cualquier lugar a través de llamadas autenticadas usando HTTP o HTTPS.
 
+Feedback: Buena entrevista
 
 
 GERMAN
@@ -74,6 +75,7 @@ Intermediate Language (IL) ist eine objektorientierte Programmiersprache, die vo
 
 Es ist ein Dienst zum Speichern großer Mengen an Nachrichten, die von überall über authentifizierte Aufrufe über HTTP oder HTTPS zugegriffen werden können.
 
+Feedback: Gutes Interview
 
 
 FRENCH
