@@ -380,12 +380,13 @@ function checkPlagiarism(sentence)
     headers: {
      // 'Content-Type':'application/json',
     },
-    body: JSON.stringify(body),
+    body: body,
     url: 'https://www.check-plagiarism.com/apis/checkPlag',
   }
 
   return new Promise(function (resolve, reject) {
     request(options3, function (err, result, body) {
+      if(err) console.log("Error is ", err);
       console.log("Response is  ",body);
       console.log("Response after parsing is  ",JSON.parse(body));
     });
