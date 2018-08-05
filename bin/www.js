@@ -372,8 +372,8 @@ function checkPlagiarism(sentence)
 {
   console.log("inside checkPlagiarism ");
   let body = {
-    'key':'f150f833cdbd65f94c02aed75dc606ba',
-    'data':sentence,
+    key:'f150f833cdbd65f94c02aed75dc606ba',
+    data:sentence,
   }
   var options3 = {
     method: 'post',
