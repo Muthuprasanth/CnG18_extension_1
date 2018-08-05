@@ -115,6 +115,7 @@ var feedbackchoice = ["Yes","No"];
 var lang = ["English","Spanish","German"];
 var userlang = "";
 var langexpansion = [];
+langexpansion["English"] = "en";
 langexpansion["Spanish"] = "es";
 langexpansion["German"] = "de";
 let globallang = "en";
@@ -216,6 +217,7 @@ var bot = new builder.UniversalBot(connector, [
     //console.log("Not english --------------------------");
     }
     else{
+      tolang = langexpansion[userlang];
       session.send("Welcome "+candidatename);
       session.send("Thanks for showing interest in Sirius computer solution. I am Mr.Nick the hiring bot to take over technical discussion");     
       //session.beginDialog('questions',{ questionno: 0,score:0});
@@ -234,7 +236,7 @@ var bot = new builder.UniversalBot(connector, [
       feedbackresponse = results.feedbackres;
       console.log("feedback ",feedbackresponse);
     }
-    session.send("Thank you");
+  //  session.send("Thank you");
     session.beginDialog("/print");
   }
 ]).set('storage', inMemoryStorage); ;
@@ -666,7 +668,8 @@ bot.dialog('/print', function (session) {
   });
 
   promiseTOGetSendgridCredential.then(function(){
-
+    let text = "";
+    let convertedtext = "";
   console.log("sendgridCredentials---------",sendgridCredentials);
     var sendgrid = new Sendgrid({
       user: sendgridCredentials[0],//provide the login credentials
@@ -682,13 +685,30 @@ bot.dialog('/print', function (session) {
       from: 'mprasanth113@gmail.com',
       subject: 'Interview Report',
       html: response2,
-    }, function (err) {
+    }, async function (err) {
       if (err) {
         console.log("Mail error",err);
       } else {
         console.log("Success Mail sended From Azure ");
-        session.send("We appreciate your interest and patience in going through the entire interview process. We will keep you posted earliest more on the details about the other rounds of interview.");
-        session.endDialog("For any queries reach out our HR @ sirius.indiahr@siriuscom.com");
+        if(tolang === "en")
+        {
+          session.send("Thank you");
+          session.send("We appreciate your interest and patience in going through the entire interview process. We will keep you posted earliest more on the details about the other rounds of interview.");
+          session.endDialog("For any queries reach out our HR @ sirius.indiahr@siriuscom.com");
+        }
+        else{
+          let token  = await issueToken();
+          text = "Thank you";
+          convertedtext  = await convertToLang(token,text,tolang);
+          session.send(convertedtext);
+          text = "We appreciate your interest and patience in going through the entire interview process. We will keep you posted earliest more on the details about the other rounds of interview.";
+          convertedtext  = await convertToLang(token,text,tolang);
+          session.send(convertedtext);
+          text = "For any queries reach out our HR @ sirius.indiahr@siriuscom.com";
+          convertedtext  = await convertToLang(token,text,tolang);
+          session.endDialog(convertedtext);
+        }
+
         //session.send("Your Interview Report is send to our HR");
         answer="";
       }

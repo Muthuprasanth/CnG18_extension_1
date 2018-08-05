@@ -35,6 +35,7 @@ const { BingSpeechClient, VoiceRecognitionResponse } = require('bingspeech-api-c
 var java = [];
 var jk=0,ans=0;
 var answers =[];
+var plagiarism = [];
 var candidateanswer = "",candidatename = "";
 console.log("updated");
 var linestream = new DelimiterStream(); 
@@ -91,7 +92,7 @@ function getRandomInt() {
   }
   console.log("randommm",question_num);
   }
-
+  
 /*var java = [ 'What is difference between JDK,JRE and JVM?', 
 'What is JIT compiler?', 
 'What is the main difference between Java platform and other platforms?',
@@ -301,7 +302,7 @@ bot.dialog('voice_questions',[
     }
   },
 ]);
-
+  
 function voicetotext(msg)
 {
   return new Promise(function (resolve, reject) {
@@ -367,6 +368,31 @@ var checkRequiresToken = function (message) {
   return message.source === 'skype' || message.source === 'msteams';
 };
 
+function checkPlagiarism(sentence)
+{
+  console.log("inside checkPlagiarism ");
+  let body = {
+    'key':'f150f833cdbd65f94c02aed75dc606ba',
+    'data':sentence,
+  }
+  var options3 = {
+    method: 'post',
+    headers: {
+      'key':'f150f833cdbd65f94c02aed75dc606ba',
+      'Content-Type':'application/json',
+    },
+    body: JSON.stringify(body),
+    url: 'https://www.check-plagiarism.com/apis/checkPlag',
+  }
+
+  return new Promise(function (resolve, reject) {
+    request(options3, function (err, result, body) {
+      console.log("Response is  ",text);
+      console.log("Response after parsing is  ",JSON.parse(body));
+    });
+  });
+}
+
 bot.dialog('questions',[ 
   function (session, args) {
   // questionno
@@ -391,6 +417,7 @@ bot.dialog('questions',[
   // console.log("question number ",session.dialogData.questionno);
    qna[java[session.dialogData.questionno]] = results.candidateanswer;
    session.sendTyping();
+   let plagdetect = await checkPlagiarism(results.candidateanswer);
    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
    //console.log("answer phrase is ",answers[session.dialogData.questionno]);
