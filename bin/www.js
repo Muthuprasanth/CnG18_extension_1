@@ -378,8 +378,7 @@ function checkPlagiarism(sentence)
   var options3 = {
     method: 'post',
     headers: {
-      'key':'f150f833cdbd65f94c02aed75dc606ba',
-      'Content-Type':'application/json',
+     // 'Content-Type':'application/json',
     },
     body: JSON.stringify(body),
     url: 'https://www.check-plagiarism.com/apis/checkPlag',
