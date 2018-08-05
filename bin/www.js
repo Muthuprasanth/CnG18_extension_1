@@ -372,15 +372,15 @@ function checkPlagiarism(sentence)
 {
   console.log("inside checkPlagiarism ");
   let body = {
-    key:'f150f833cdbd65f94c02aed75dc606ba',
-    data:sentence,
+    "key":"f150f833cdbd65f94c02aed75dc606ba",
+    "data":sentence,
   }
   var options3 = {
     method: 'post',
     headers: {
      // 'Content-Type':'application/json',
     },
-    body: body,
+    body: JSON.stringify(body),
     url: 'https://www.check-plagiarism.com/apis/checkPlag',
   }
 
