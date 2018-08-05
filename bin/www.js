@@ -378,7 +378,7 @@ function checkPlagiarism(sentence)
   var options3 = {
     method: 'post',
     headers: {
-     // 'Content-Type':'application/json',
+      'Content-Type':'application/json',
     },
     body: body,
     url: 'https://www.check-plagiarism.com/apis/checkPlag',
