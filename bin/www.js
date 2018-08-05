@@ -380,7 +380,7 @@ function checkPlagiarism(sentence)
     headers: {
       'Content-Type':'application/json',
     },
-    body: "key = f150f833cdbd65f94c02aed75dc606ba",
+    body: JSON.stringify("key = f150f833cdbd65f94c02aed75dc606ba"),
     url: 'https://www.check-plagiarism.com/apis',
   }
 
