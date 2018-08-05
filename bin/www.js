@@ -371,17 +371,17 @@ var checkRequiresToken = function (message) {
 function checkPlagiarism(sentence)
 {
   console.log("inside checkPlagiarism ");
-  let body = {
+ /* let body = {
     "key":"f150f833cdbd65f94c02aed75dc606ba",
     "data":sentence,
-  }
+  }*/
   var options3 = {
     method: 'post',
     headers: {
       'Content-Type':'application/json',
     },
-    body: body,
-    url: 'https://www.check-plagiarism.com/apis/checkPlag',
+    body: "key = f150f833cdbd65f94c02aed75dc606ba",
+    url: 'https://www.check-plagiarism.com/apis',
   }
 
   return new Promise(function (resolve, reject) {
