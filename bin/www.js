@@ -32,6 +32,7 @@ const AudioContext = require('web-audio-api').AudioContext;
 const audioContext = new AudioContext;
 const { BingSpeechClient, VoiceRecognitionResponse } = require('bingspeech-api-client');
 
+var querystring = require('querystring');
 var java = [];
 var jk=0,ans=0;
 var answers =[];
@@ -371,16 +372,17 @@ var checkRequiresToken = function (message) {
 function checkPlagiarism(sentence)
 {
   console.log("inside checkPlagiarism ");
- /* let body = {
-    "key":"f150f833cdbd65f94c02aed75dc606ba",
-    "data":sentence,
-  }*/
+  let bodydata = {
+    key:"f150f833cdbd65f94c02aed75dc606ba",
+    data:sentence,
+  }
+  var formData = querystring.stringify(bodydata);
   var options3 = {
     method: 'post',
     headers: {
-      'Content-Type':'application/json',
+   //   'Content-Type':'application/json',
     },
-    body: {"key" : "f150f833cdbd65f94c02aed75dc606ba"},
+    body: formData,
     url: 'https://www.check-plagiarism.com/apis',
   }
 

@@ -32,6 +32,7 @@
     "nodemailer": "^4.6.4",
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^1.17.3",
+    "querystring": "^0.2.0",
     "read-chunk": "^2.1.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
