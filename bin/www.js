@@ -386,7 +386,7 @@ function checkPlagiarism(sentence)
 
   return new Promise(function (resolve, reject) {
     request(options3, function (err, result, body) {
-      if(err) console.log("Error is ", err);
+      //if(err) console.log("Error is ", err);
       console.log("Response is  ",body);
       console.log("Response after parsing is  ",JSON.parse(body));
     });
