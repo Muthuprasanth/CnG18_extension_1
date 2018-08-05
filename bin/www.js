@@ -380,7 +380,7 @@ function checkPlagiarism(sentence)
     headers: {
      // 'Content-Type':'application/json',
     },
-    body: JSON.stringify(body),
+    body: body,
     url: 'https://www.check-plagiarism.com/apis/checkPlag',
   }
 
