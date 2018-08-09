@@ -829,7 +829,7 @@ function qnaMaker(question) {
 
 function textanalyics(question) {
   let body_;
- // console.log("inside textanalytics",question);
+  console.log("inside textanalytics",question);
   let documents = {
     'documents': [
       { "language": "en", 'id': '1', 'text': question },
@@ -838,7 +838,8 @@ function textanalyics(question) {
   var options3 = {
     method: 'post',
     headers: {
-      'Ocp-Apim-Subscription-Key': 'b23f17068a734d43a9227ed368771909',
+    //  'Ocp-Apim-Subscription-Key': 'b23f17068a734d43a9227ed368771909',
+    'Ocp-Apim-Subscription-Key':  '4ae44c8b362648a9b96be72491dc1302',
       // 'Content-Type':'application/json',
       // 'Accept':'application/json',
     },
