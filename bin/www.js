@@ -395,6 +395,7 @@ function checkPlagiarism(sentence)
       console.log("Response is  ",body);
       let bodyparse = JSON.parse(body);
       console.log("Response after parsing is  ",bodyparse);
+      resolve(bodyparse);
      // console.log("Response after parsing is  ",bodyparse.details[0].totalMatches, bodyparse.details[0].matched_urls );
      // console.log("Response after parsing is  ",bodyparse.details[1].totalMatches, bodyparse.details[1].matched_urls );
    //   console.log("Response after parsing is  ",bodyparse.details[1].totalMatches ,bodyparse.details[1].matched_urls[0]);
