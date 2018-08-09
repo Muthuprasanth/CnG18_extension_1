@@ -1,3 +1,4 @@
+//before adding plagiarism
 // this contains the updated waterfall for asking question bot asking question in a single recursive dialog
 // this also supports multiple languages(Spanish, German) using translator text api
 var app = require('../app');
@@ -36,7 +37,7 @@ var querystring = require('querystring');
 var java = [];
 var jk=0,ans=0;
 var answers =[];
-var plagiarismuri = [];
+var plagiarism = [];
 var candidateanswer = "",candidatename = "";
 console.log("updated");
 var linestream = new DelimiterStream(); 
@@ -373,31 +374,24 @@ function checkPlagiarism(sentence)
 {
   console.log("inside checkPlagiarism ");
   let bodydata = {
-    "key":"cb26de274c5feee55f16d6dfd65f8951",
-    "data":sentence,
+    key:"f150f833cdbd65f94c02aed75dc606ba",
+    data:sentence,
   }
   var formData = querystring.stringify(bodydata);
-  var contentLength = formData.length;
-  console.log("length ",contentLength, bodydata.length);
   var options3 = {
     method: 'post',
     headers: {
-       'Content-Length': contentLength,
-        'Content-Type':'application/x-www-form-urlencoded',
+   //   'Content-Type':'application/json',
     },
     body: formData,
-    url: 'https://www.check-plagiarism.com/apis/checkPlag',
+    url: 'https://www.check-plagiarism.com/apis',
   }
 
   return new Promise(function (resolve, reject) {
     request(options3, function (err, result, body) {
-      if(err) console.log("Error is ", err);
+      //if(err) console.log("Error is ", err);
       console.log("Response is  ",body);
-      let bodyparse = JSON.parse(body);
-      console.log("Response after parsing is  ",bodyparse);
-     // console.log("Response after parsing is  ",bodyparse.details[0].totalMatches, bodyparse.details[0].matched_urls );
-     // console.log("Response after parsing is  ",bodyparse.details[1].totalMatches, bodyparse.details[1].matched_urls );
-   //   console.log("Response after parsing is  ",bodyparse.details[1].totalMatches ,bodyparse.details[1].matched_urls[0]);
+      console.log("Response after parsing is  ",JSON.parse(body));
     });
   });
 }
@@ -426,27 +420,7 @@ bot.dialog('questions',[
   // console.log("question number ",session.dialogData.questionno);
    qna[java[session.dialogData.questionno]] = results.candidateanswer;
    session.sendTyping();
-   let bodyparse = await checkPlagiarism(results.candidateanswer);
-   let querycount = bodyparse.totalQueries;
-   console.log("count ",querycount);
-   let url = "";
-   for(let q=0; q<querycount; q++)
-   {
-    console.log("Total matches found ",bodyparse.details[q].totalMatches);
-    if(bodyparse.details[q].totalMatches > 0 || bodyparse.details[q].totalMatches === "10+")
-    {
-      url = bodyparse.details[q].matched_urls[0];
-      console.log("  ++++++++++++++++++++++++  Matching URL is ",bodyparse.details[q].matched_urls[0]);
-      break;
-    }
-    else{
-      console.log("++++++++++++++++++++++++ No plagiarism detected ");
-    }
-
-   }
-   console.log("First matching url is ", url);
-   plagiarismuri[session.dialogData.questionno] = url;
-   //plagiarismuri
+   let plagdetect = await checkPlagiarism(results.candidateanswer);
    candidateresponsekeyphrases = await textanalyics(results.candidateanswer);
    console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
    //console.log("answer phrase is ",answers[session.dialogData.questionno]);
@@ -683,7 +657,6 @@ bot.dialog('lang_feedback', [
 bot.dialog('/print', function (session) {
 //session.send("printed");
   //session.send("The candidate score is "+score);
-  console.log("plagiarism array is ", plagiarismuri);
   var sendgridCredentials = [];
   var next=0;
   let answer="";
