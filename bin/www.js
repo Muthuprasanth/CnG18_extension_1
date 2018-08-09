@@ -695,7 +695,7 @@ bot.dialog('/print', function (session) {
   for (var key in qna) {
     //answer += "<b>"+qno+". Question:</b> "+key+"<br> <b>Answer:</b> "+qna[key]+"<br><br>";
     answer += "<b>"+qno+". Question:</b> "+key+"<br> <b>Answer:</b> "+qna[key];
-    if(plagiarismuri[i] === "" || plagiarismuri[i].length == 0) {
+    if(plagiarismuri[qno-1] === "" || plagiarismuri[qno-1].length == 0) {
       answer += "<br><br>";
     }
     else{
