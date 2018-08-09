@@ -695,11 +695,11 @@ bot.dialog('/print', function (session) {
   for (var key in qna) {
     //answer += "<b>"+qno+". Question:</b> "+key+"<br> <b>Answer:</b> "+qna[key]+"<br><br>";
     answer += "<b>"+qno+". Question:</b> "+key+"<br> <b>Answer:</b> "+qna[key];
-    if (plagiarismuri[key] != "") {
-      answer += "<br><b>Plagiarism Detected:</b> <a href = "+plagiarismuri[qno-1]+">Click Here</a><br><br>";
+    if(plagiarismuri[i] === "" || plagiarismuri[i].length == 0) {
+      answer += "<br><br>";
     }
     else{
-      answer += "<br><br>";
+      answer += "<br><b>Plagiarism Detected:</b> <a href = "+plagiarismuri[qno-1]+">Click Here</a><br><br>";
     }
     qno++;
     // console.log(qna[key]);

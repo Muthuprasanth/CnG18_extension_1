@@ -47,6 +47,8 @@ qnakeyphrases [ 'authenticated calls',
   'HTTPS',
   'service',
   'large numbers of messages' ]
+  Azure Queue storage is a service for storing large numbers of messages that can be accessed from anywhere in the world via authenticated calls using HTTP or HTTPS. 
+
   It is a service for storing large numbers of messages that can be accessed from anywhere via authenticated calls using HTTP or HTTPS.
   1
   
