@@ -284,7 +284,27 @@ bot.dialog('voice_questions',[
 
    // console.log("question number ",session.dialogData.questionno);
     qna[java[session.dialogData.questionno]] = candidateanswer;
-    //session.sendTyping();
+    
+    let bodyparse = await checkPlagiarism(convertedtext);
+    let querycount = bodyparse.totalQueries;
+    console.log("count ",querycount);
+    let url = "";
+    for(let q=0; q<querycount; q++){
+       console.log("Total matches found ",bodyparse.details[q].totalMatches);
+       if(bodyparse.details[q].totalMatches > 0 || bodyparse.details[q].totalMatches === "10+")
+       {
+         url = bodyparse.details[q].matched_urls[0];
+         console.log("  ++++++++++++++++++++++++  Matching URL is ",bodyparse.details[q].matched_urls[0]);
+         break;
+       }
+       else{
+         console.log("++++++++++++++++++++++++ No plagiarism detected ");
+       }
+
+    }
+    console.log("First matching url is ", url);
+    plagiarismuri[session.dialogData.questionno] = url;
+
     candidateresponsekeyphrases = await textanalyics(candidateanswer);
     console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
     //console.log("answer phrase is ",answers[session.dialogData.questionno]);
@@ -573,6 +593,26 @@ bot.dialog('lang_questions',[
      convertedtext = await convertToLang(token,usertext,globallang);
      console.log("convertedtext  ",convertedtext);
      qna[java[session.dialogData.questionno]] = convertedtext;
+     let bodyparse = await checkPlagiarism(convertedtext);
+     let querycount = bodyparse.totalQueries;
+     console.log("count ",querycount);
+     let url = "";
+     for(let q=0; q<querycount; q++){
+        console.log("Total matches found ",bodyparse.details[q].totalMatches);
+        if(bodyparse.details[q].totalMatches > 0 || bodyparse.details[q].totalMatches === "10+")
+        {
+          url = bodyparse.details[q].matched_urls[0];
+          console.log("  ++++++++++++++++++++++++  Matching URL is ",bodyparse.details[q].matched_urls[0]);
+          break;
+        }
+        else{
+          console.log("++++++++++++++++++++++++ No plagiarism detected ");
+        }
+
+     }
+     console.log("First matching url is ", url);
+     plagiarismuri[session.dialogData.questionno] = url;
+
      candidateresponsekeyphrases = await textanalyics(convertedtext);
      console.log("candidateresponsekeyphrases",candidateresponsekeyphrases);
      //console.log("answer phrase is ",answers[session.dialogData.questionno]);
