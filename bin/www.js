@@ -282,7 +282,7 @@ bot.dialog('voice_questions',[
    // console.log("question number ",session.dialogData.questionno);
     qna[java[session.dialogData.questionno]] = candidateanswer;
 
-    let bodyparse = await checkPlagiarism(convertedtext);
+    let bodyparse = await checkPlagiarism(candidateanswer);
     let querycount = bodyparse.totalQueries;
     console.log("count ",querycount);
     let url = "";
