@@ -388,7 +388,7 @@ var checkRequiresToken = function (message) {
 
 function checkPlagiarism(sentence)
 {
-  console.log("inside checkPlagiarism ");
+  console.log("inside checkPlagiarism   sententce is ",sentence);
   let bodydata = {
     "key":"cb26de274c5feee55f16d6dfd65f8951",
     "data":sentence,
