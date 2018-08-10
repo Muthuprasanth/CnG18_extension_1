@@ -6,7 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "adaptivecards": "^1.0.0",
     "audio-loader": "^1.0.3",
     "audiobuffer-to-wav": "^1.0.0",
     "bingspeech-api-client": "^2.5.0",
@@ -17,7 +16,6 @@
     "delimiter-stream": "^2.0.0",
     "dotenv": "^5.0.1",
     "express": "~4.16.0",
-    "fluent-ffmpeg": "^2.1.2",
     "fs": "0.0.1-security",
     "hbs": "~4.0.1",
     "http": "0.0.0",
@@ -26,9 +24,7 @@
     "https": "^1.0.0",
     "install": "^0.11.0",
     "juice": "^4.3.1",
-    "linear16": "^1.0.1",
     "morgan": "~1.9.0",
-    "node-lame": "^1.1.0",
     "nodemailer": "^4.6.4",
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^1.17.3",
@@ -43,8 +39,6 @@
     "string_decoder": "^1.1.1",
     "tedious": "^2.3.1",
     "web-audio-api": "^0.2.2",
-    "websocket": "^1.0.26",
-    "xhr": "^2.5.0",
     "xml2js": "^0.4.19"
   }
 }

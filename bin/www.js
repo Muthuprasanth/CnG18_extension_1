@@ -2,9 +2,8 @@
 // this also supports multiple languages(Spanish, German) using translator text api
 var app = require('../app');
 var debug = require('debug')('bot-framework-and-express-1:server');
-var http = require('http');
 
-const fs = require('fs');
+var fs = require('fs');
 
 var restify = require('restify');
 var builder = require('botbuilder');
@@ -17,9 +16,7 @@ var DelimiterStream = require('delimiter-stream');
 var StringDecoder = require('string_decoder').StringDecoder;
 
 var request = require('request');
-
 var juice = require('juice');
-
 var parseString = require('xml2js').parseString;
 
 var decoder = new StringDecoder('utf8');
@@ -284,7 +281,7 @@ bot.dialog('voice_questions',[
 
    // console.log("question number ",session.dialogData.questionno);
     qna[java[session.dialogData.questionno]] = candidateanswer;
-    
+
     let bodyparse = await checkPlagiarism(convertedtext);
     let querycount = bodyparse.totalQueries;
     console.log("count ",querycount);

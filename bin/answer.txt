@@ -64,7 +64,10 @@ Es un mecanismo de seguridad que common language runtime puede restringir el có
 
 Todo el código fuente de .NET se compila en lenguaje intermedio. IL se convierte a código de máquina mediante un compilador Just-In-Time.
 
-Es un servicio para almacenar mensajes a los que se puede acceder desde cualquier lugar a través de llamadas autenticadas usando HTTP o HTTPS.
+Almacenamiento de cola azul es un servicio para almacenar gran cantidad de mensajes que pueden acceder desde cualquier lugar del mundo vía llamadas autenticadas mediante HTTP o HTTPS.
+   
+   Es un servicio para almacenar mensajes a los que se puede acceder desde cualquier lugar a través de llamadas autenticadas usando HTTP o HTTPS.
+
 
 Feedback: Buena entrevista
 
@@ -79,7 +82,9 @@ Es ist ein Mechanismus für die gemeinsame Sprachlaufzeit Sicherheit den verwalt
 
 Intermediate Language (IL) ist eine objektorientierte Programmiersprache, die von Compilern für .NET Framework vor der statischen oder dynamischen Kompilierung in Maschinencode verwendet werden soll
 
-Es ist ein Dienst zum Speichern großer Mengen an Nachrichten, die von überall über authentifizierte Aufrufe über HTTP oder HTTPS zugegriffen werden können.
+Blaue Schweif Lagerung ist ein Dienst für die Speicherung der großen Menge der Nachrichten, die von überall auf der Welt über authentifizierte Aufrufe von HTTP oder HTTPS zugegriffen werden kann.
+   
+   Es ist ein Dienst zum Speichern großer Mengen an Nachrichten, die von überall über authentifizierte Aufrufe über HTTP oder HTTPS zugegriffen werden können.
 
 Feedback: Gutes Interview
 
