@@ -726,7 +726,7 @@ bot.dialog('/print', function (session) {
   var next=0;
   let answer="";
   var htmlstart="<!DOCTYPE html> <html><head><style> body { border:2px solid grey; padding:10px; }"
-  + ".head{ text-align:center; margin:0 0 20px 0;}</style></head><body>";
+  + ".head{ text-align:center; margin:0 0 20px 0;} .dec{text-decoration:none;} </style></head><body>";
   var htmlend  = "</body></html>";
   let qno =1;
   for (var key in qna) {
@@ -736,7 +736,7 @@ bot.dialog('/print', function (session) {
       answer += "<br><br>";
     }
     else{
-      answer += "<br><b>Plagiarism Detected:</b> <a href = "+plagiarismuri[qno-1]+">Click Here</a><br><br>";
+      answer += "<br><b>Plagiarism Detected:</b> <a href = "+plagiarismuri[qno-1]+ " class = 'dec' "+">Click Here</a><br><br>";
     }
     qno++;
     // console.log(qna[key]);
